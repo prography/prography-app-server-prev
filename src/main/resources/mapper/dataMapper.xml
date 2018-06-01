@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+ 
+<mapper namespace="com.prography.appdev3.mapper.dataMapper">
+ 	
+ 	<select id="getUserInfo" resultType="com.prography.appdev3.vo.UserInfoVO">
+ 		select * from member
+ 	</select>
+ 	
+ 	<select id="getTeamPage" resultType="com.prography.appdev3.vo.TeamPageVO">
+		select * from study
+ 	</select>
+ 	
+ 	<select id="getStudyAttendance" resultType="com.prography.appdev3.vo.StudyAttendanceVO">
+		select * from stuAttendance
+ 	</select>
+ 	
+ 	<select id="getSessionAttendance" resultType="com.prography.appdev3.vo.SessionAttendanceVO">
+		select * from sesAttendance
+ 	</select>
+ 	
+ 	<select id="getSessionManage" resultType="com.prography.appdev3.vo.SessionManageVO">
+		select * from session
+ 	</select>
+ 	
+ 	<select id="getNoticeBoard" resultType="com.prography.appdev3.vo.NoticeBoardVO">
+		select * from notice
+ 	</select>
+ 	
+ 	<select id="getQnaBoard" resultType="com.prography.appdev3.vo.QnaBoardVO">
+		select * from qna
+ 	</select>
+ 	
+ 	<select id="getFreeBoard" resultType="com.prography.appdev3.vo.FreeBoardVO">
+		select * from free
+ 	</select>
+</mapper>
