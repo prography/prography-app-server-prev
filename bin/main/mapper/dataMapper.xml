@@ -6,34 +6,35 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="com.prography.appdev3.mapper.dataMapper">
  	
  	<select id="getUserInfo" resultType="com.prography.appdev3.vo.UserInfoVO">
- 		select * from member
+ 		select * from member;
  	</select>
  	
- 	<select id="getTeamPage" resultType="com.prography.appdev3.vo.TeamPageVO">
-		select * from study
+ 	<select id="getTeamInfo" resultType="com.prography.appdev3.vo.TeamInfoVO">
+		select * from team;
  	</select>
  	
  	<select id="getStudyAttendance" resultType="com.prography.appdev3.vo.StudyAttendanceVO">
-		select * from stuAttendance
+		select * from studyAttendance;
  	</select>
  	
  	<select id="getSessionAttendance" resultType="com.prography.appdev3.vo.SessionAttendanceVO">
-		select * from sesAttendance
+		select * from sessionAttendance;
  	</select>
  	
  	<select id="getSessionManage" resultType="com.prography.appdev3.vo.SessionManageVO">
-		select * from session
+		select * from session;
  	</select>
  	
- 	<select id="getNoticeBoard" resultType="com.prography.appdev3.vo.NoticeBoardVO">
-		select * from notice
- 	</select>
- 	
- 	<select id="getQnaBoard" resultType="com.prography.appdev3.vo.QnaBoardVO">
-		select * from qna
+ 	<select id="getStudyManage" resultType="com.prography.appdev3.vo.StudyManageVO">
+		select * from study;
  	</select>
  	
  	<select id="getFreeBoard" resultType="com.prography.appdev3.vo.FreeBoardVO">
-		select * from free
+		select * from free;
  	</select>
+ 	
+ 	<select id="userCheck" parameterType="String" resultType="com.prography.appdev3.vo.LoginDataVo">
+ 		 select * from member where id = #{userid} and pw = #{password};
+ 	</select>
+ 	
 </mapper>

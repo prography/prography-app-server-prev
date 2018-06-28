@@ -2,27 +2,42 @@ package com.prography.appdev3.vo;
 
 public class SessionAttendanceVO {
 	
-	private String memCode = "";
-	private int sesAbsence = 0;
-	private int totalPenalty = 0;
+	private int sesCode = 0;
+	private int memCode = 0;
+	private int sesAttendance = 0;
+	private int late = 0;
+	private int penalty = 0;
 	
-	public String getMemCode() {
+	
+	public int getSesCode() {
+		return sesCode;
+	}
+	public void setSesCode(int sesCode) {
+		this.sesCode = sesCode;
+	}
+	public int getMemCode() {
 		return memCode;
 	}
-	public void setMemCode(String memCode) {
+	public void setMemCode(int memCode) {
 		this.memCode = memCode;
 	}
-	public int getSesAbsence() {
-		return sesAbsence;
+	public int getSesAttendance() {
+		return sesAttendance;
 	}
-	public void setSesAbsence(int sesAbsence) {
-		this.sesAbsence = sesAbsence;
+	public void setSesAttendance(int sesAttendance) {
+		this.sesAttendance = sesAttendance;
 	}
-	public int getTotalPenalty() {
-		return totalPenalty;
+	public int getLate() {
+		return late;
 	}
-	public void setTotalPenalty(int totalPenalty) {
-		this.totalPenalty = totalPenalty;
+	public void setLate(int late) {
+		this.late = late;
+	}
+	public int getPenalty() {
+		return penalty;
+	}
+	public void setPenalty(int penalty) {
+		this.penalty = penalty;
 	}
 
 }

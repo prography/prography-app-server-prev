@@ -3,10 +3,10 @@ package com.prography.appdev3.vo;
 public class SessionManageVO {
 	
 	private int sesCode = 0;
-	private String memCode = "";
-	private int sesAttendance = 0;
-	private int late = 0;
-	private int penalty = 0;
+	private String sesDate = "";
+	private String sesInfo = "";
+	private String sesContent = "";
+	
 	
 	public int getSesCode() {
 		return sesCode;
@@ -14,28 +14,23 @@ public class SessionManageVO {
 	public void setSesCode(int sesCode) {
 		this.sesCode = sesCode;
 	}
-	public String getMemCode() {
-		return memCode;
+	public String getSesDate() {
+		return sesDate;
 	}
-	public void setMemCode(String memCode) {
-		this.memCode = memCode;
+	public void setSesDate(String sesDate) {
+		this.sesDate = sesDate;
 	}
-	public int getSesAttendance() {
-		return sesAttendance;
+	public String getSesInfo() {
+		return sesInfo;
 	}
-	public void setSesAttendance(int sesAttendance) {
-		this.sesAttendance = sesAttendance;
+	public void setSesInfo(String sesInfo) {
+		this.sesInfo = sesInfo;
 	}
-	public int getLate() {
-		return late;
+	public String getSesContent() {
+		return sesContent;
 	}
-	public void setLate(int late) {
-		this.late = late;
+	public void setSesContent(String sesContent) {
+		this.sesContent = sesContent;
 	}
-	public int getPenalty() {
-		return penalty;
-	}
-	public void setPenalty(int penalty) {
-		this.penalty = penalty;
-	}
+
 }

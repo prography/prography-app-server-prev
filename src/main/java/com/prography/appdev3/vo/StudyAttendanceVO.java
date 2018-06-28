@@ -2,19 +2,49 @@ package com.prography.appdev3.vo;
 
 public class StudyAttendanceVO {
 	
-	private String memCode = "";
-	private int stuAbsence = 0;
+	private int stuCode = 0;
+	private int tmCode = 0;
+	private String picture = "";
+	private String absentee = "";
+	private String memo = "";
+	private String uploadTime = "";
 	
-	public String getMemCode() {
-		return memCode;
+	
+	public int getStuCode() {
+		return stuCode;
 	}
-	public void setMemCode(String memCode) {
-		this.memCode = memCode;
+	public void setStuCode(int stuCode) {
+		this.stuCode = stuCode;
 	}
-	public int getStuAbsence() {
-		return stuAbsence;
+	public int getTmCode() {
+		return tmCode;
 	}
-	public void setStuAbsence(int stuAbsence) {
-		this.stuAbsence = stuAbsence;
+	public void setTmCode(int tmCode) {
+		this.tmCode = tmCode;
 	}
+	public String getPicture() {
+		return picture;
+	}
+	public void setPicture(String picture) {
+		this.picture = picture;
+	}
+	public String getAbsentee() {
+		return absentee;
+	}
+	public void setAbsentee(String absentee) {
+		this.absentee = absentee;
+	}
+	public String getMemo() {
+		return memo;
+	}
+	public void setMemo(String memo) {
+		this.memo = memo;
+	}
+	public String getUploadTime() {
+		return uploadTime;
+	}
+	public void setUploadTime(String uploadTime) {
+		this.uploadTime = uploadTime;
+	}
+	
 }
