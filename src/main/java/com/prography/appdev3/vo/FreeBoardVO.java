@@ -6,8 +6,8 @@ public class FreeBoardVO {
 	private String freTitle = "";
 	private String freContent = "";
 	private String freDate = "";
-	private String memCode = "";
-	private String nickname = "";
+	private int memCode = 0;
+	
 	
 	public int getFreNum() {
 		return freNum;
@@ -33,16 +33,12 @@ public class FreeBoardVO {
 	public void setFreDate(String freDate) {
 		this.freDate = freDate;
 	}
-	public String getMemCode() {
+	public int getMemCode() {
 		return memCode;
 	}
-	public void setMemCode(String memCode) {
+	public void setMemCode(int memCode) {
 		this.memCode = memCode;
 	}
-	public String getNickname() {
-		return nickname;
-	}
-	public void setNickname(String nickname) {
-		this.nickname = nickname;
-	}
+	
+	
 }

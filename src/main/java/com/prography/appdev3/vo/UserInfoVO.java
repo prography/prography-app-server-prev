@@ -1,23 +1,27 @@
 package com.prography.appdev3.vo;
 
-
-
 public class UserInfoVO {
 	
-	private String memCode = "";
+	private int memcode = 0;
 	private String id = "";
 	private String pw = "";
 	private String name = "";
 	private String nickname = "";
-	private String team = "";
+	private int tmCode = 0;
 	private String birth = "";
 	private int recBalloon = 0;
+	private int balloon = 0;
+	private String icon = "";
+	private int sesAbsent = 0;
+	private int stuAbsent = 0;
+	private int totPenalty = 0;
 	
-	public String getMemCode() {
-		return memCode;
+	
+	public int getMemcode() {
+		return memcode;
 	}
-	public void setMemCode(String memCode) {
-		this.memCode = memCode;
+	public void setMemcode(int memcode) {
+		this.memcode = memcode;
 	}
 	public String getId() {
 		return id;
@@ -43,11 +47,11 @@ public class UserInfoVO {
 	public void setNickname(String nickname) {
 		this.nickname = nickname;
 	}
-	public String getTeam() {
-		return team;
+	public int getTmCode() {
+		return tmCode;
 	}
-	public void setTeam(String team) {
-		this.team = team;
+	public void setTmCode(int tmCode) {
+		this.tmCode = tmCode;
 	}
 	public String getBirth() {
 		return birth;
@@ -67,13 +71,29 @@ public class UserInfoVO {
 	public void setBalloon(int balloon) {
 		this.balloon = balloon;
 	}
-	public int getIcon() {
+	public String getIcon() {
 		return icon;
 	}
-	public void setIcon(int icon) {
+	public void setIcon(String icon) {
 		this.icon = icon;
 	}
-	private int balloon = 0;
-	private int icon = 0;
+	public int getSesAbsent() {
+		return sesAbsent;
+	}
+	public void setSesAbsent(int sesAbsent) {
+		this.sesAbsent = sesAbsent;
+	}
+	public int getStuAbsent() {
+		return stuAbsent;
+	}
+	public void setStuAbsent(int stuAbsent) {
+		this.stuAbsent = stuAbsent;
+	}
+	public int getTotPenalty() {
+		return totPenalty;
+	}
+	public void setTotPenalty(int totPenalty) {
+		this.totPenalty = totPenalty;
+	}
 
 }
