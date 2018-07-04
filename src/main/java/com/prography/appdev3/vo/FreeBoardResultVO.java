@@ -3,7 +3,7 @@ package com.prography.appdev3.vo;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FreeBoardResultVO {
+public class FreeBoardResultVO {	//free table¿ª arrayList∑Œ π≠æÓ¡‹
 
 	
 	private boolean success = false;

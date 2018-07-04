@@ -1,22 +1,26 @@
 package com.prography.appdev3.vo;
 
-public class LoginVo {
+public class LoginVO {
 	
-	public boolean success;
-	public String message;
 	
-	public boolean isSuccess() {
-		return success;
+
+	public String id ="";
+	public String pw = "";
+	
+	
+	public String getId() {
+		return id;
 	}
-	public void setSuccess(boolean success) {
-		this.success = success;
+	public void setId(String id) {
+		this.id = id;
 	}
-	public String getMessage() {
-		return message;
+	public String getPw() {
+		return pw;
 	}
-	public void setMessage(String message) {
-		this.message = message;
+	public void setPw(String pw) {
+		this.pw = pw;
 	}
+	
 	
 	
 

@@ -1,6 +1,6 @@
 package com.prography.appdev3.vo;
 
-public class TeamInfoVO {
+public class TeamInfoVO {	//team table: 팀정보 관리
 	
 	private int tmCode = 0;
 	private String tmName = "";

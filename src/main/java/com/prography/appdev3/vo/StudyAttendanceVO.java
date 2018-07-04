@@ -1,6 +1,6 @@
 package com.prography.appdev3.vo;
 
-public class StudyAttendanceVO {
+public class StudyAttendanceVO {	//studyAttendance table: 팀별  스터디 출결관리
 	
 	private int stuCode = 0;
 	private int tmCode = 0;

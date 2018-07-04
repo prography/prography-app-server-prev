@@ -1,6 +1,6 @@
 package com.prography.appdev3.vo;
 
-public class SessionManageVO {
+public class SessionManageVO {	//session table: 林瞒喊 技记包府
 	
 	private int sesCode = 0;
 	private String sesDate = "";

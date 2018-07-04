@@ -1,6 +1,6 @@
 package com.prography.appdev3.vo;
 
-public class SessionAttendanceVO {
+public class SessionAttendanceVO {	//sessionAttendance table: 주차에 따른 개인별 세션출결 관리
 	
 	private int sesCode = 0;
 	private int memCode = 0;

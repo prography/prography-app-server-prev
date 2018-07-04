@@ -1,6 +1,6 @@
 package com.prography.appdev3.vo;
 
-public class FreeBoardVO {
+public class FreeBoardVO {	//free table: 자유게시판 관리
 	
 	private int freNum = 0;
 	private String freTitle = "";

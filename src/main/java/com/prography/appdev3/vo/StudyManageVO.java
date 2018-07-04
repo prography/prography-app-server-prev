@@ -1,6 +1,6 @@
 package com.prography.appdev3.vo;
 
-public class StudyManageVO {
+public class StudyManageVO {	//study table: 주차별 스터디 관리
 	
 	private int stuCode = 0;
 	private String stuWeek = "";

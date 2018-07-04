@@ -3,7 +3,7 @@ package com.prography.appdev3.vo;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SessionManageResultVO {
+public class SessionManageResultVO {	//session table¿ª arrayList∑Œ π≠æÓ¡‹
 
 	private boolean success = false;
 	private List<SessionManageVO> sessionManageList = new ArrayList<SessionManageVO>();

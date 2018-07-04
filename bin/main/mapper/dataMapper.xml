@@ -5,36 +5,69 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  
 <mapper namespace="com.prography.appdev3.mapper.dataMapper">
  	
- 	<select id="getUserInfo" resultType="com.prography.appdev3.vo.UserInfoVO">
- 		select * from member;
+ 	<!-- 사용자 정보DB -->
+ 	<select id="UserCheck" parameterType="String" resultType="com.prography.appdev3.vo.LoginVO">
+ 		 select * from member where id = #{id} and pw = #{pw};
  	</select>
  	
+ 	
+ 	<insert id="SignUpCheck" parameterType = "com.prography.appdev3.vo.SignUpVO">
+    	INSERT INTO member VALUES (#{memCode},#{id},#{pw},#{name}, #{nickname}, #{tmCode}, #{birth}, #{recBalloon}, #{balloon}, #{icon}, #{sesAbsent}, #{stuAbsent}, #{totPenalty});
+    </insert>
+ 	
+ 	
+	<select  id="IdCheck" resultType = "com.prography.appdev3.vo.IdCheckVO">
+		select id from member where id = #{id};
+	</select>
+ 	
+ 	
+ 	<select id="getUserInfo" resultType="com.prography.appdev3.vo.UserInfoVO">
+ 		select * from member where id = #{id};
+ 	</select>
+ 	
+ 	
+ 	
+ 	
+ 	<!-- 팀 정보DB -->
  	<select id="getTeamInfo" resultType="com.prography.appdev3.vo.TeamInfoVO">
 		select * from team;
  	</select>
  	
+ 	
+ 	
+ 	<!-- 팀별 스터디 출결DB -->
  	<select id="getStudyAttendance" resultType="com.prography.appdev3.vo.StudyAttendanceVO">
 		select * from studyAttendance;
  	</select>
  	
- 	<select id="getSessionAttendance" resultType="com.prography.appdev3.vo.SessionAttendanceVO">
-		select * from sessionAttendance;
- 	</select>
  	
- 	<select id="getSessionManage" resultType="com.prography.appdev3.vo.SessionManageVO">
-		select * from session;
- 	</select>
  	
+ 	<!-- 주차별 스터디DB -->
  	<select id="getStudyManage" resultType="com.prography.appdev3.vo.StudyManageVO">
 		select * from study;
  	</select>
  	
+ 	
+ 	
+ 	<!-- 주차에 따른 개인별 세션출결DB -->
+ 	<select id="getSessionAttendance" resultType="com.prography.appdev3.vo.SessionAttendanceVO">
+		select * from sessionAttendance;
+ 	</select>
+ 	
+ 	
+ 	
+ 	<!-- 주차별 세션DB -->
+ 	<select id="getSessionManage" resultType="com.prography.appdev3.vo.SessionManageVO">
+		select * from session;
+ 	</select>
+ 	
+ 	
+ 	
+ 	<!-- 자유게시판DB -->
  	<select id="getFreeBoard" resultType="com.prography.appdev3.vo.FreeBoardVO">
 		select * from free;
  	</select>
  	
- 	<select id="userCheck" parameterType="String" resultType="com.prography.appdev3.vo.LoginDataVo">
- 		 select * from member where id = #{userid} and pw = #{password};
- 	</select>
+ 	
  	
 </mapper>

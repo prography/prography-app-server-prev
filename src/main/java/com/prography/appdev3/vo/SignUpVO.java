@@ -1,6 +1,6 @@
 package com.prography.appdev3.vo;
 
-public class UserInfoVO { 	//member table: 회원정보 관리
+public class SignUpVO { 	
 	
 	private int memCode = 0;
 	private String id = "";

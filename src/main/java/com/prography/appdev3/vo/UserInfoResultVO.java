@@ -3,7 +3,7 @@ package com.prography.appdev3.vo;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UserInfoResultVO {
+public class UserInfoResultVO { 	//member table¿ª arrayList∑Œ π≠æÓ¡‹
 	
 	private boolean success = false;
 	private List<UserInfoVO> userInfoList = new ArrayList<UserInfoVO>();
