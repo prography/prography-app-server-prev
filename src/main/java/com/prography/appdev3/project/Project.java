@@ -45,8 +45,13 @@ public class Project {
 	
 	@RequestMapping(value = "/Login", method = RequestMethod.POST,consumes = "application/json")
 	public @ResponseBody LoginResultVO UserCheck(@RequestBody Map<String, Object> json) {//앱에서 객체로 주는 것을 제이슨으로 받아옴
-		// responseBody는 각각 http 요청 몸체를 자바 객체로 변환하고 자바 객체를 http 응답 몸체로 변환하는데 사용
-		
+		// @RequestBody 어노테이션은 @RequestMapping에 의해 POST 방식으로 전송된 HTTP 요청 데이터를 String 타입의 body 파라미터로 전달된다.(수신)
+
+		// 그리고 @ResponseBody 어노테이션이 @RequestMapping 메서드에서 적용되면 해당 메서드의 리턴 값을 HTTP 응답 데이터로 사용한다.
+
+		// simpleTest() 메서드의 리턴 값이 String 타입이므로 String 데이터를 HTTP 응답 데이터로 전송한다.(송신)
+
+
 		
 		//logger.debug("user check > " + json.get("user_id") + "/" + json.get("user_pw"));
 		
@@ -147,7 +152,7 @@ public class Project {
 	}
 	
 
-	@RequestMapping(value = "/getUserInfo", method = RequestMethod.POST, consumes = "application/json")    
+	@RequestMapping(value = "/getUserInfo", method = RequestMethod.POST, consumes = "")    
 	public @ResponseBody UserInfoResultVO getUserInfo(@RequestBody Map<String, Object> json) {
 		
 		String getUserInfo = (String)json.get("getUserInfo");//이름 dataMapper.java이름과 동일하게
@@ -176,8 +181,10 @@ public class Project {
 	
 	
 		
-	@RequestMapping("/getTeamInfo")    
-	public TeamInfoResultVO getTeamInfo() throws Exception{
+	@RequestMapping(value = "/getTeamInfo", method = RequestMethod.POST, consumes = "")    
+	public @ResponseBody TeamInfoResultVO getTeamInfo(@RequestBody Map<String, Object> json) {
+		
+		String getTeamInfo = (String)json.get("getTeamInfo");
         
 		TeamInfoResultVO result = new TeamInfoResultVO();
 		
@@ -201,8 +208,10 @@ public class Project {
    }
 	
 	
-	@RequestMapping("/getStudyAttendance")    
-	public StudyAttendanceResultVO getStudyAttendance() throws Exception{
+	@RequestMapping(value = "/getStudyAttendance", method = RequestMethod.POST, consumes = "")    
+	public @ResponseBody StudyAttendanceResultVO getStudyAttendance(@RequestBody Map<String, Object> json) {
+		
+		String getStudyAttendance = (String)json.get("getStudyAttendance");
         
 		StudyAttendanceResultVO result = new StudyAttendanceResultVO();
 		
@@ -226,8 +235,10 @@ public class Project {
    }
 	
 	
-	@RequestMapping("/getStudyManage")    
-	public StudyManageResultVO getStudyManage() throws Exception{
+	@RequestMapping(value = "/getStudyManage", method = RequestMethod.POST, consumes = "")    
+	public @ResponseBody StudyManageResultVO getStudyManage(@RequestBody Map<String, Object> json) {
+		
+		String getStudyManage = (String)json.get("getStudyManage");
         
 		StudyManageResultVO result = new StudyManageResultVO();
 		
@@ -251,8 +262,10 @@ public class Project {
    }
 	
 	
-	@RequestMapping("/getSessionAttendance")    
-	public SessionAttendanceResultVO getSessionAttendance() throws Exception{
+	@RequestMapping(value = "/getSessionAttendance", method = RequestMethod.POST, consumes = "")    
+	public @ResponseBody SessionAttendanceResultVO getSessionAttendance(@RequestBody Map<String, Object> json) {
+		
+		String getSessionAttendance = (String)json.get("getSessionAttendance");
         
 		SessionAttendanceResultVO result = new SessionAttendanceResultVO();
 		
@@ -277,8 +290,10 @@ public class Project {
 
 	
 	
-	@RequestMapping("/getSessionManage")    
-	public SessionManageResultVO getSessionManage() throws Exception{
+	@RequestMapping(value = "/getSessionManage", method = RequestMethod.POST, consumes = "")    
+	public @ResponseBody SessionManageResultVO getSessionManage(@RequestBody Map<String, Object> json) {
+		
+		String getSessionManage = (String)json.get("getSessionManage");
 	         
 		SessionManageResultVO result = new SessionManageResultVO();
 		
@@ -302,8 +317,10 @@ public class Project {
    }
 
 	
-	@RequestMapping("/getFreeBoard")    
-	public FreeBoardResultVO getFreeBoard() throws Exception{
+	@RequestMapping(value = "/getFreeBoard", method = RequestMethod.POST, consumes = "")    
+	public @ResponseBody FreeBoardResultVO getFreeBoard(@RequestBody Map<String, Object> json) {
+		
+		String getFreeBoard = (String)json.get("getFreeBoard");
         
 		FreeBoardResultVO result = new FreeBoardResultVO();
 		
