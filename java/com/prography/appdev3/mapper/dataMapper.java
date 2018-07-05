@@ -19,11 +19,11 @@ import com.prography.appdev3.vo.UserInfoVO;
 public interface dataMapper {
 	
 	//사용자 정보DB
-	public ArrayList<LoginVO> userCheck(@Param("id") String id,@Param("pw") String pw) throws Exception;//누가 로그인하는지 알려줌
-	public ArrayList<LoginVO> SignUpCheck(@Param("memCode") int memCode, @Param("id") String id, @Param("pw") String pw, @Param("name") String name, @Param("nickname") String nickname, @Param("tmCode") int tmCode, @Param("birth") String birth,
+	public ArrayList<LoginVO> userCheck(@Param("id") String id, @Param("pw") String pw);//누가 로그인하는지 알려줌
+	public void SignUpCheck(@Param("memCode") int memCode, @Param("id") String id, @Param("pw") String pw, @Param("name") String name, @Param("nickname") String nickname, @Param("tmCode") int tmCode, @Param("birth") String birth,
 			@Param("recBalloon") int recBalloon, @Param("balloon") int balloon, @Param("icon") String icon, @Param("sesAbsent") int sesAbsent, @Param("stuAbsent") int stuAbsent, @Param("totPenalty") int totPenalty);
 
-	public ArrayList<IdCheckVO> IdCheck(@Param("id") String id);
+	public IdCheckResultVO IdCheck(@Param("id") String id);
 	public void addUserInfo(UserInfoVO userInfo) throws Exception;
 	public ArrayList<UserInfoVO> getUserInfo() throws Exception;
 	

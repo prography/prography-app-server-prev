@@ -6,7 +6,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="com.prography.appdev3.mapper.dataMapper">
  	
  	<!-- 사용자 정보DB -->
- 	<select id="UserCheck" parameterType="String" resultType="com.prography.appdev3.vo.LoginVO">
+ 	<select id="userCheck" parameterType="String" resultType="com.prography.appdev3.vo.LoginVO">
  		 select * from member where id = #{id} and pw = #{pw};
  	</select>
  	

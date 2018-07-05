@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -37,7 +39,7 @@ import com.prography.appdev3.vo.UserInfoVO;
 				//이 아이를 사용해서 rest api를 만들수 있음 뷰를 만들어내는 것 뿐 아니라 데이터 처리를 위한 컨트롤러를 만들어낼 수 있음
 public class Project {
 	
-	//Logger logger = LoggerFactory.getLogger(Project.class);
+	Logger logger = LoggerFactory.getLogger(Project.class);
 
 	@Autowired	//bean이랑 비슷한 애 이거를 선언하면  getter setter를 자동으로 만들음
     private dataMapper dataMapper;//dataMapper연결
@@ -53,7 +55,7 @@ public class Project {
 
 
 		
-		//logger.debug("user check > " + json.get("user_id") + "/" + json.get("user_pw"));
+		logger.debug("user check > " + json.get("user_id") + "/" + json.get("user_pw"));
 		
 		
 		String id = (String)json.get("id");//이름 dataMapper.java이름과 동일하게
@@ -110,7 +112,7 @@ public class Project {
 
 			dataMapper.SignUpCheck(memCode, id, pw, name, nickname, tmCode, birth, recBalloon, balloon, icon, sesAbsent, stuAbsent, totPenalty);
 			signUp.setSuccess(true);
-			signUp.setMessage(null);
+			signUp.setMessage("환영합니다^_^");
 
 		} catch (Exception e) {
 
@@ -127,37 +129,38 @@ public class Project {
 	@RequestMapping(value = "/idCheck", method = RequestMethod.POST, consumes = "application/json")
 	public @ResponseBody IdCheckResultVO IdCheck(@RequestBody Map<String, Object> json) {
 
-		String userid = (String) json.get("userid");
+		String id = (String) json.get("id");
 
-		IdCheckResultVO id = new IdCheckResultVO();
+		IdCheckResultVO idCheck = new IdCheckResultVO();
 
-		ArrayList<IdCheckVO> idCheck = new ArrayList<IdCheckVO>();
+		ArrayList<IdCheckVO> idCheckList = new ArrayList<IdCheckVO>();
 
 		try {
 			idCheck = dataMapper.IdCheck(id);
 
-			if (idCheck.size() > 0) {
-				id.setSuccess(false);
-				id.setMessage("입력하신 아이디는 이미 있는 아이디 입니다. 다른 아이디를 입력해주세요");
+			if (idCheckList.size() > 0) {
+				idCheck.setSuccess(false);
+				idCheck.setMessage("입력하신 아이디는 이미 있는 아이디 입니다. 다른 아이디를 입력해주세요");
 			} else {
-				id.setSuccess(true);
+				idCheck.setSuccess(true);
 			}
 
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
-		return id;
+		return idCheck;
 
 	}
 	
 
-	@RequestMapping(value = "/getUserInfo", method = RequestMethod.POST, consumes = "")    
+	@RequestMapping(value = "/getUserInfo", method = RequestMethod.POST, consumes = "application/json")    
 	public @ResponseBody UserInfoResultVO getUserInfo(@RequestBody Map<String, Object> json) {
 		
 		String getUserInfo = (String)json.get("getUserInfo");//이름 dataMapper.java이름과 동일하게
         
 		UserInfoResultVO result = new UserInfoResultVO();
+		
 		ArrayList<UserInfoVO> userInfo = new ArrayList<UserInfoVO>();
 		try {
 
@@ -181,7 +184,7 @@ public class Project {
 	
 	
 		
-	@RequestMapping(value = "/getTeamInfo", method = RequestMethod.POST, consumes = "")    
+	@RequestMapping(value = "/getTeamInfo", method = RequestMethod.POST, consumes = "application/json")    
 	public @ResponseBody TeamInfoResultVO getTeamInfo(@RequestBody Map<String, Object> json) {
 		
 		String getTeamInfo = (String)json.get("getTeamInfo");
@@ -208,7 +211,7 @@ public class Project {
    }
 	
 	
-	@RequestMapping(value = "/getStudyAttendance", method = RequestMethod.POST, consumes = "")    
+	@RequestMapping(value = "/getStudyAttendance", method = RequestMethod.POST, consumes = "application/json")    
 	public @ResponseBody StudyAttendanceResultVO getStudyAttendance(@RequestBody Map<String, Object> json) {
 		
 		String getStudyAttendance = (String)json.get("getStudyAttendance");
@@ -235,7 +238,7 @@ public class Project {
    }
 	
 	
-	@RequestMapping(value = "/getStudyManage", method = RequestMethod.POST, consumes = "")    
+	@RequestMapping(value = "/getStudyManage", method = RequestMethod.POST, consumes = "application/json")    
 	public @ResponseBody StudyManageResultVO getStudyManage(@RequestBody Map<String, Object> json) {
 		
 		String getStudyManage = (String)json.get("getStudyManage");
@@ -262,7 +265,7 @@ public class Project {
    }
 	
 	
-	@RequestMapping(value = "/getSessionAttendance", method = RequestMethod.POST, consumes = "")    
+	@RequestMapping(value = "/getSessionAttendance", method = RequestMethod.POST, consumes = "application/json")    
 	public @ResponseBody SessionAttendanceResultVO getSessionAttendance(@RequestBody Map<String, Object> json) {
 		
 		String getSessionAttendance = (String)json.get("getSessionAttendance");
@@ -290,7 +293,7 @@ public class Project {
 
 	
 	
-	@RequestMapping(value = "/getSessionManage", method = RequestMethod.POST, consumes = "")    
+	@RequestMapping(value = "/getSessionManage", method = RequestMethod.POST, consumes = "application/json")    
 	public @ResponseBody SessionManageResultVO getSessionManage(@RequestBody Map<String, Object> json) {
 		
 		String getSessionManage = (String)json.get("getSessionManage");
@@ -317,7 +320,7 @@ public class Project {
    }
 
 	
-	@RequestMapping(value = "/getFreeBoard", method = RequestMethod.POST, consumes = "")    
+	@RequestMapping(value = "/getFreeBoard", method = RequestMethod.POST, consumes = "application/json")    
 	public @ResponseBody FreeBoardResultVO getFreeBoard(@RequestBody Map<String, Object> json) {
 		
 		String getFreeBoard = (String)json.get("getFreeBoard");
