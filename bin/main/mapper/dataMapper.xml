@@ -68,6 +68,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select * from free;
  	</select>
  	
+ 	<insert id="PostFreeBoard" parameterType = "com.prography.appdev3.vo.PostFreeBoardVO">
+    	INSERT INTO free VALUES (#{freNum},#{freTitle},#{freContent},#{freDate}, #{memCode});
+    </insert>
+ 	
  	
  	
 </mapper>

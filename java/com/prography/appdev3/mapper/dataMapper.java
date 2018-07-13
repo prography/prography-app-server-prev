@@ -46,6 +46,7 @@ public interface dataMapper {
 	
 	//자유게시판DB
 	public ArrayList<FreeBoardVO> getFreeBoard() throws Exception;
+	public void PostFreeBoard(@Param("freNum") int freNum, @Param("freTitle") String freTitle, @Param("freContent") String freContent, @Param("freDate") String freDate, @Param("memCode") int memCode);
 	
 	
 	

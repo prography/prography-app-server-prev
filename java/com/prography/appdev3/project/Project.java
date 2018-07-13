@@ -21,6 +21,7 @@ import com.prography.appdev3.vo.IdCheckResultVO;
 import com.prography.appdev3.vo.IdCheckVO;
 import com.prography.appdev3.vo.LoginResultVO;
 import com.prography.appdev3.vo.LoginVO;
+import com.prography.appdev3.vo.PostFreeResultVO;
 import com.prography.appdev3.vo.SessionAttendanceResultVO;
 import com.prography.appdev3.vo.SessionAttendanceVO;
 import com.prography.appdev3.vo.SessionManageResultVO;
@@ -320,6 +321,7 @@ public class Project {
    }
 
 	
+	
 	@RequestMapping(value = "/getFreeBoard", method = RequestMethod.POST, consumes = "application/json")    
 	public @ResponseBody FreeBoardResultVO getFreeBoard(@RequestBody Map<String, Object> json) {
 		
@@ -347,6 +349,37 @@ public class Project {
    }
 	
 	
+	//자유게시글 작성
+	@RequestMapping(value="/postFreeBoard", method = RequestMethod.POST, consumes = "application/json")
+	public @ResponseBody PostFreeResultVO PostFreeBoard (@RequestBody Map<String, Object> json) {
+		
+		PostFreeResultVO postFreeBoard = new PostFreeResultVO();
+			
+		
+		int freNum = (int) json.get("freNum");
+		String freTitle = (String) json.get("freTitle");
+		String freContent = (String) json.get("freContent");
+		String freDate = (String) json.get("freDate");
+		int memCode = (int) json.get("memCode");
+		
+	
+
+		try {
+
+			dataMapper.PostFreeBoard(freNum, freTitle, freContent, freDate, memCode);
+			postFreeBoard.setSuccess(true);
+			postFreeBoard.setMessage("글이 등록되었습니다");
+
+		} catch (Exception e) {
+
+			postFreeBoard.setSuccess(false);
+			postFreeBoard.setMessage("글을 등록하지 못했습니다");
+			e.printStackTrace();
+		}
+		return postFreeBoard;
+		
+		
+	}
 	
 
 }
