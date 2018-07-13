@@ -31,6 +31,8 @@ public interface dataMapper {
 		
 	//팀 정보DB
 	public ArrayList<TeamInfoVO> getTeamInfo() throws Exception;
+	public void PostStuMemo(@Param("stuCode") int stuCode, @Param("tmCode") int tmCode, @Param("picture") String picture, @Param("absentee") String absentee, @Param("memo") String memo, @Param("uploadTime") String uploadTime);
+	
 	
 	//팀별 스터디 출결DB
 	public ArrayList<StudyAttendanceVO> getStudyAttendance() throws Exception;

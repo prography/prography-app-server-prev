@@ -40,6 +40,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select * from studyAttendance;
  	</select>
  	
+ 	<insert id="PostStuMemo" parameterType = "com.prography.appdev3.vo.PostStuMemoVO">
+    	INSERT INTO studyAttendance VALUES (#{stuCode},#{tmCode}, #{picture}, #{absentee},#{memo}, #{uploadTime});
+    </insert>
+ 	
  	
  	
  	<!-- 주차별 스터디DB -->

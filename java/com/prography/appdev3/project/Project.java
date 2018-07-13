@@ -22,6 +22,7 @@ import com.prography.appdev3.vo.IdCheckVO;
 import com.prography.appdev3.vo.LoginResultVO;
 import com.prography.appdev3.vo.LoginVO;
 import com.prography.appdev3.vo.PostFreeResultVO;
+import com.prography.appdev3.vo.PostStuMemoResultVO;
 import com.prography.appdev3.vo.SessionAttendanceResultVO;
 import com.prography.appdev3.vo.SessionAttendanceVO;
 import com.prography.appdev3.vo.SessionManageResultVO;
@@ -46,12 +47,17 @@ public class Project {
     private dataMapper dataMapper;//dataMapper연결
 	
 	
+	
+	
+	//회원관리=====================================================================================================================================
+	
+	
+	
+	//로그인
 	@RequestMapping(value = "/Login", method = RequestMethod.POST,consumes = "application/json")
 	public @ResponseBody LoginResultVO UserCheck(@RequestBody Map<String, Object> json) {//앱에서 객체로 주는 것을 제이슨으로 받아옴
 		// @RequestBody 어노테이션은 @RequestMapping에 의해 POST 방식으로 전송된 HTTP 요청 데이터를 String 타입의 body 파라미터로 전달된다.(수신)
-
 		// 그리고 @ResponseBody 어노테이션이 @RequestMapping 메서드에서 적용되면 해당 메서드의 리턴 값을 HTTP 응답 데이터로 사용한다.
-
 		// simpleTest() 메서드의 리턴 값이 String 타입이므로 String 데이터를 HTTP 응답 데이터로 전송한다.(송신)
 
 
@@ -87,6 +93,7 @@ public class Project {
 	}
 	
 	
+	//회원가입
 	@RequestMapping(value="/signUp", method = RequestMethod.POST, consumes = "application/json")
 	public @ResponseBody SignUpResultVO SignUpCheck (@RequestBody Map<String, Object> json) {
 		
@@ -127,6 +134,7 @@ public class Project {
 	}
 	
 	
+	//ID중복확인
 	@RequestMapping(value = "/idCheck", method = RequestMethod.POST, consumes = "application/json")
 	public @ResponseBody IdCheckResultVO IdCheck(@RequestBody Map<String, Object> json) {
 
@@ -155,6 +163,7 @@ public class Project {
 	}
 	
 
+	//회원정보(member table)출력
 	@RequestMapping(value = "/getUserInfo", method = RequestMethod.POST, consumes = "application/json")    
 	public @ResponseBody UserInfoResultVO getUserInfo(@RequestBody Map<String, Object> json) {
 		
@@ -184,7 +193,14 @@ public class Project {
 	
 	
 	
+	
+	
+	
+	
+	//팀페이지=========================================================================================================================================
 		
+	
+	//팀정보(team table) 출력
 	@RequestMapping(value = "/getTeamInfo", method = RequestMethod.POST, consumes = "application/json")    
 	public @ResponseBody TeamInfoResultVO getTeamInfo(@RequestBody Map<String, Object> json) {
 		
@@ -212,6 +228,7 @@ public class Project {
    }
 	
 	
+	//팀별 스터디출결(study attendance table) 
 	@RequestMapping(value = "/getStudyAttendance", method = RequestMethod.POST, consumes = "application/json")    
 	public @ResponseBody StudyAttendanceResultVO getStudyAttendance(@RequestBody Map<String, Object> json) {
 		
@@ -239,6 +256,7 @@ public class Project {
    }
 	
 	
+	//주차별 스터디(study table)
 	@RequestMapping(value = "/getStudyManage", method = RequestMethod.POST, consumes = "application/json")    
 	public @ResponseBody StudyManageResultVO getStudyManage(@RequestBody Map<String, Object> json) {
 		
@@ -266,6 +284,49 @@ public class Project {
    }
 	
 	
+	//스터디메모 글쓰기
+	@RequestMapping(value="/postStuMemo", method = RequestMethod.POST, consumes = "application/json")
+	public @ResponseBody PostStuMemoResultVO PostStuMemo (@RequestBody Map<String, Object> json) {
+		
+		PostStuMemoResultVO postStuMemo = new PostStuMemoResultVO();
+		
+		int stuCode = (int) json.get("stuCode");
+		int tmCode = (int) json.get("tmCode");
+		String picture = (String) json.get("picture");
+		String absentee = (String) json.get("absentee");
+		String memo = (String) json.get("memo");
+		String uploadTime = (String) json.get("uploadTime");
+		
+	
+
+		try {
+
+			dataMapper.PostStuMemo(stuCode, tmCode, picture, absentee, memo, uploadTime);
+			postStuMemo.setSuccess(true);
+			postStuMemo.setMessage("글이 등록되었습니다");
+
+		} catch (Exception e) {
+
+			postStuMemo.setSuccess(false);
+			postStuMemo.setMessage("글을 등록하지 못했습니다");
+			e.printStackTrace();
+		}
+		return postStuMemo;
+		
+		
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	//세션페이지============================================================================================================================================
+	
+	
+	//주차에 따른 개인별 세션출결(session attendance table)
 	@RequestMapping(value = "/getSessionAttendance", method = RequestMethod.POST, consumes = "application/json")    
 	public @ResponseBody SessionAttendanceResultVO getSessionAttendance(@RequestBody Map<String, Object> json) {
 		
@@ -293,7 +354,7 @@ public class Project {
    }
 
 	
-	
+	//주차별 세션, 세션정보(session table)
 	@RequestMapping(value = "/getSessionManage", method = RequestMethod.POST, consumes = "application/json")    
 	public @ResponseBody SessionManageResultVO getSessionManage(@RequestBody Map<String, Object> json) {
 		
@@ -322,6 +383,11 @@ public class Project {
 
 	
 	
+	
+	//자유게시판=================================================================================================================================================
+	
+	
+	//자유게시판(free table)출력
 	@RequestMapping(value = "/getFreeBoard", method = RequestMethod.POST, consumes = "application/json")    
 	public @ResponseBody FreeBoardResultVO getFreeBoard(@RequestBody Map<String, Object> json) {
 		
@@ -349,7 +415,7 @@ public class Project {
    }
 	
 	
-	//자유게시글 작성
+	//자유게시판 글쓰기
 	@RequestMapping(value="/postFreeBoard", method = RequestMethod.POST, consumes = "application/json")
 	public @ResponseBody PostFreeResultVO PostFreeBoard (@RequestBody Map<String, Object> json) {
 		
