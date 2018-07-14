@@ -76,6 +76,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select * from session;
  	</select>
  	
+ 	<!-- 세션 정보 삽입 -->
+ 	<insert id="PostSesInfo" parameterType = "com.prography.appdev3.vo.SessionManageVO">
+    	INSERT INTO studyAttendance VALUES (#{sesCode},#{sesDate}, #{sesInfo}, #{sesContent});
+    </insert>
+ 	
  	
  	
  	<!-- 자유게시판DB -->

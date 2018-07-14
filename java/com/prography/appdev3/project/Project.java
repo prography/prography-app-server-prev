@@ -316,6 +316,8 @@ public class Project {
 	}
 	
 	
+	
+	
 	//스터디 불참자 리스트 출력
 	@RequestMapping(value = "/selectAbsentee", method = RequestMethod.POST, consumes = "application/json")    
 	public @ResponseBody UserInfoResultVO SelectAbsentee(@RequestBody Map<String, Object> json) {//제이슨으로 결과리턴
@@ -481,7 +483,6 @@ public class Project {
 		
 		
 	}
-	
 	
 	
 	
