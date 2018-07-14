@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,6 +21,8 @@ import com.prography.appdev3.vo.IdCheckResultVO;
 import com.prography.appdev3.vo.IdCheckVO;
 import com.prography.appdev3.vo.LoginResultVO;
 import com.prography.appdev3.vo.LoginVO;
+import com.prography.appdev3.vo.PostFreeResultVO;
+import com.prography.appdev3.vo.PostStuMemoResultVO;
 import com.prography.appdev3.vo.SessionAttendanceResultVO;
 import com.prography.appdev3.vo.SessionAttendanceVO;
 import com.prography.appdev3.vo.SessionManageResultVO;
@@ -36,24 +40,28 @@ import com.prography.appdev3.vo.UserInfoVO;
 @RestController //이 클래스를 송수신을 담당하는 클래스로 지정
 				//이 아이를 사용해서 rest api를 만들수 있음 뷰를 만들어내는 것 뿐 아니라 데이터 처리를 위한 컨트롤러를 만들어낼 수 있음
 public class Project {
-	
-	//Logger logger = LoggerFactory.getLogger(Project.class);
+	Logger logger = LoggerFactory.getLogger(Project.class);
 
 	@Autowired	//bean이랑 비슷한 애 이거를 선언하면  getter setter를 자동으로 만들음
     private dataMapper dataMapper;//dataMapper연결
 	
 	
+	
+	
+	//회원관리=====================================================================================================================================
+	
+	
+	
+	//로그인
 	@RequestMapping(value = "/Login", method = RequestMethod.POST,consumes = "application/json")
 	public @ResponseBody LoginResultVO UserCheck(@RequestBody Map<String, Object> json) {//앱에서 객체로 주는 것을 제이슨으로 받아옴
 		// @RequestBody 어노테이션은 @RequestMapping에 의해 POST 방식으로 전송된 HTTP 요청 데이터를 String 타입의 body 파라미터로 전달된다.(수신)
-
 		// 그리고 @ResponseBody 어노테이션이 @RequestMapping 메서드에서 적용되면 해당 메서드의 리턴 값을 HTTP 응답 데이터로 사용한다.
-
 		// simpleTest() 메서드의 리턴 값이 String 타입이므로 String 데이터를 HTTP 응답 데이터로 전송한다.(송신)
 
 
 		
-		//logger.debug("user check > " + json.get("user_id") + "/" + json.get("user_pw"));
+		logger.debug("user check > " + json.get("user_id") + "/" + json.get("user_pw"));
 		
 		
 		String id = (String)json.get("id");//이름 dataMapper.java이름과 동일하게
@@ -84,6 +92,7 @@ public class Project {
 	}
 	
 	
+	//회원가입
 	@RequestMapping(value="/signUp", method = RequestMethod.POST, consumes = "application/json")
 	public @ResponseBody SignUpResultVO SignUpCheck (@RequestBody Map<String, Object> json) {
 		
@@ -110,7 +119,7 @@ public class Project {
 
 			dataMapper.SignUpCheck(memCode, id, pw, name, nickname, tmCode, birth, recBalloon, balloon, icon, sesAbsent, stuAbsent, totPenalty);
 			signUp.setSuccess(true);
-			signUp.setMessage(null);
+			signUp.setMessage("환영합니다^_^");
 
 		} catch (Exception e) {
 
@@ -124,40 +133,43 @@ public class Project {
 	}
 	
 	
+	//ID중복확인
 	@RequestMapping(value = "/idCheck", method = RequestMethod.POST, consumes = "application/json")
 	public @ResponseBody IdCheckResultVO IdCheck(@RequestBody Map<String, Object> json) {
 
-		String userid = (String) json.get("userid");
+		String id = (String) json.get("id");
 
-		IdCheckResultVO id = new IdCheckResultVO();
+		IdCheckResultVO idCheck = new IdCheckResultVO();
 
-		ArrayList<IdCheckVO> idCheck = new ArrayList<IdCheckVO>();
+		ArrayList<IdCheckVO> idCheckList = new ArrayList<IdCheckVO>();
 
 		try {
 			idCheck = dataMapper.IdCheck(id);
 
-			if (idCheck.size() > 0) {
-				id.setSuccess(false);
-				id.setMessage("입력하신 아이디는 이미 있는 아이디 입니다. 다른 아이디를 입력해주세요");
+			if (idCheckList.size() > 0) {
+				idCheck.setSuccess(false);
+				idCheck.setMessage("입력하신 아이디는 이미 있는 아이디 입니다. 다른 아이디를 입력해주세요");
 			} else {
-				id.setSuccess(true);
+				idCheck.setSuccess(true);
 			}
 
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
-		return id;
+		return idCheck;
 
 	}
 	
 
-	@RequestMapping(value = "/getUserInfo", method = RequestMethod.POST, consumes = "")    
+	//회원정보(member table)출력
+	@RequestMapping(value = "/getUserInfo", method = RequestMethod.POST, consumes = "application/json")    
 	public @ResponseBody UserInfoResultVO getUserInfo(@RequestBody Map<String, Object> json) {
 		
 		String getUserInfo = (String)json.get("getUserInfo");//이름 dataMapper.java이름과 동일하게
         
 		UserInfoResultVO result = new UserInfoResultVO();
+		
 		ArrayList<UserInfoVO> userInfo = new ArrayList<UserInfoVO>();
 		try {
 
@@ -180,8 +192,15 @@ public class Project {
 	
 	
 	
+	
+	
+	
+	
+	//팀페이지=========================================================================================================================================
 		
-	@RequestMapping(value = "/getTeamInfo", method = RequestMethod.POST, consumes = "")    
+	
+	//팀정보(team table) 출력
+	@RequestMapping(value = "/getTeamInfo", method = RequestMethod.POST, consumes = "application/json")    
 	public @ResponseBody TeamInfoResultVO getTeamInfo(@RequestBody Map<String, Object> json) {
 		
 		String getTeamInfo = (String)json.get("getTeamInfo");
@@ -208,7 +227,8 @@ public class Project {
    }
 	
 	
-	@RequestMapping(value = "/getStudyAttendance", method = RequestMethod.POST, consumes = "")    
+	//팀별 스터디출결(study attendance table) 
+	@RequestMapping(value = "/getStudyAttendance", method = RequestMethod.POST, consumes = "application/json")    
 	public @ResponseBody StudyAttendanceResultVO getStudyAttendance(@RequestBody Map<String, Object> json) {
 		
 		String getStudyAttendance = (String)json.get("getStudyAttendance");
@@ -235,7 +255,8 @@ public class Project {
    }
 	
 	
-	@RequestMapping(value = "/getStudyManage", method = RequestMethod.POST, consumes = "")    
+	//주차별 스터디(study table)
+	@RequestMapping(value = "/getStudyManage", method = RequestMethod.POST, consumes = "application/json")    
 	public @ResponseBody StudyManageResultVO getStudyManage(@RequestBody Map<String, Object> json) {
 		
 		String getStudyManage = (String)json.get("getStudyManage");
@@ -262,7 +283,122 @@ public class Project {
    }
 	
 	
-	@RequestMapping(value = "/getSessionAttendance", method = RequestMethod.POST, consumes = "")    
+	//스터디메모 글쓰기
+	@RequestMapping(value="/postStuMemo", method = RequestMethod.POST, consumes = "application/json")
+	public @ResponseBody PostStuMemoResultVO PostStuMemo (@RequestBody Map<String, Object> json) {
+		
+		PostStuMemoResultVO postStuMemo = new PostStuMemoResultVO();
+		
+		int stuCode = (int) json.get("stuCode");
+		int tmCode = (int) json.get("tmCode");
+		String picture = (String) json.get("picture");
+		String absentee = (String) json.get("absentee");
+		String memo = (String) json.get("memo");
+		String uploadTime = (String) json.get("uploadTime");
+		
+	
+
+		try {
+
+			dataMapper.PostStuMemo(stuCode, tmCode, picture, absentee, memo, uploadTime);
+			postStuMemo.setSuccess(true);
+			postStuMemo.setMessage("글이 등록되었습니다");
+
+		} catch (Exception e) {
+
+			postStuMemo.setSuccess(false);
+			postStuMemo.setMessage("글을 등록하지 못했습니다");
+			e.printStackTrace();
+		}
+		return postStuMemo;
+		
+		
+	}
+	
+	
+	
+	
+	//스터디 불참자 리스트 출력
+	@RequestMapping(value = "/selectAbsentee", method = RequestMethod.POST, consumes = "application/json")    
+	public @ResponseBody UserInfoResultVO SelectAbsentee(@RequestBody Map<String, Object> json) {//제이슨으로 결과리턴
+		
+		int tmCode = (int)json.get("tmCode");
+        
+		UserInfoResultVO SelectAbsentee = new UserInfoResultVO();//함수
+		ArrayList<UserInfoVO> tmMemberList= new ArrayList<UserInfoVO>();//리스트
+		
+		
+		try {
+
+			 tmMemberList = dataMapper.selectAbsentee(tmCode);
+			 
+			 if(tmMemberList.size() > 0) {
+				 
+				 SelectAbsentee.setSuccess(true);
+				 SelectAbsentee.setSelectAbsentee(tmMemberList);
+				 
+			 }
+			 
+			 else {
+				 SelectAbsentee.setSuccess(false);
+			 }
+			
+			
+		}catch (Exception e) {
+			e.printStackTrace();
+			
+		}
+		
+	           
+		return SelectAbsentee;
+   }
+	
+	
+	
+	//개인 누적 스터디 출결 출력
+		@RequestMapping(value = "/getStuAbsent", method = RequestMethod.POST, consumes = "application/json")    
+		public @ResponseBody UserInfoResultVO GetStuAbsent(@RequestBody Map<String, Object> json) {//제이슨으로 결과리턴
+			
+			int memCode = (int)json.get("memCode");
+	        
+			UserInfoResultVO GetStuAbsent = new UserInfoResultVO();//함수
+			ArrayList<UserInfoVO> totStuAbsent= new ArrayList<UserInfoVO>();//리스트
+			
+			
+			try {
+
+				 totStuAbsent = dataMapper.getStuAbsent(memCode);
+				 
+				 if(totStuAbsent.size() > 0) {
+					 
+					 GetStuAbsent.setSuccess(true);
+					 GetStuAbsent.setGetStuAbsent(totStuAbsent);
+					 
+				 }
+				 
+				 else {
+					 GetStuAbsent.setSuccess(false);
+				 }
+				
+				
+			}catch (Exception e) {
+				e.printStackTrace();
+				
+			}
+			
+		           
+			return GetStuAbsent;
+	   }
+	
+	
+	
+	
+	
+	//세션페이지============================================================================================================================================
+	
+	
+	//주차에 따른 개인별 세션출결(session attendance table)
+	@RequestMapping(value = "/getSessionAttendance", method = RequestMethod.POST, consumes = "application/json")    
 	public @ResponseBody SessionAttendanceResultVO getSessionAttendance(@RequestBody Map<String, Object> json) {
 		
 		String getSessionAttendance = (String)json.get("getSessionAttendance");
@@ -289,8 +425,8 @@ public class Project {
    }
 
 	
-	
-	@RequestMapping(value = "/getSessionManage", method = RequestMethod.POST, consumes = "")    
+	//주차별 세션, 세션정보(session table)
+	@RequestMapping(value = "/getSessionManage", method = RequestMethod.POST, consumes = "application/json")    
 	public @ResponseBody SessionManageResultVO getSessionManage(@RequestBody Map<String, Object> json) {
 		
 		String getSessionManage = (String)json.get("getSessionManage");
@@ -317,7 +453,44 @@ public class Project {
    }
 
 	
-	@RequestMapping(value = "/getFreeBoard", method = RequestMethod.POST, consumes = "")    
+	
+	//세션정보입력
+	@RequestMapping(value="/postSesInfo", method = RequestMethod.POST, consumes = "application/json")
+	public @ResponseBody SessionManageResultVO PostSesInfo (@RequestBody Map<String, Object> json) {
+		
+		SessionManageResultVO postSesInfo = new SessionManageResultVO();
+		
+		int sesCode = (int) json.get("sesCode");
+		String sesDate = (String) json.get("sesDate");
+		String sesInfo = (String) json.get("sesInfo");
+		String sesContent = (String) json.get("sesContent");
+		
+	
+
+		try {
+
+			dataMapper.PostSesInfo(sesCode, sesDate, sesInfo, sesContent);
+			postSesInfo.setSuccess(true);
+			postSesInfo.setMessage("글이 등록되었습니다");
+
+		} catch (Exception e) {
+
+			postSesInfo.setSuccess(false);
+			postSesInfo.setMessage("글을 등록하지 못했습니다");
+			e.printStackTrace();
+		}
+		return postSesInfo;
+		
+		
+	}
+	
+	
+	
+	//자유게시판=================================================================================================================================================
+	
+	
+	//자유게시판(free table)출력
+	@RequestMapping(value = "/getFreeBoard", method = RequestMethod.POST, consumes = "application/json")    
 	public @ResponseBody FreeBoardResultVO getFreeBoard(@RequestBody Map<String, Object> json) {
 		
 		String getFreeBoard = (String)json.get("getFreeBoard");
@@ -344,6 +517,37 @@ public class Project {
    }
 	
 	
+	//자유게시판 글쓰기
+	@RequestMapping(value="/postFreeBoard", method = RequestMethod.POST, consumes = "application/json")
+	public @ResponseBody PostFreeResultVO PostFreeBoard (@RequestBody Map<String, Object> json) {
+		
+		PostFreeResultVO postFreeBoard = new PostFreeResultVO();
+			
+		
+		int freNum = (int) json.get("freNum");
+		String freTitle = (String) json.get("freTitle");
+		String freContent = (String) json.get("freContent");
+		String freDate = (String) json.get("freDate");
+		int memCode = (int) json.get("memCode");
+		
+	
+
+		try {
+
+			dataMapper.PostFreeBoard(freNum, freTitle, freContent, freDate, memCode);
+			postFreeBoard.setSuccess(true);
+			postFreeBoard.setMessage("글이 등록되었습니다");
+
+		} catch (Exception e) {
+
+			postFreeBoard.setSuccess(false);
+			postFreeBoard.setMessage("글을 등록하지 못했습니다");
+			e.printStackTrace();
+		}
+		return postFreeBoard;
+		
+		
+	}
 	
 
 }
