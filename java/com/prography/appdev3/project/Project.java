@@ -353,6 +353,41 @@ public class Project {
 	
 	
 	
+	//개인 누적 스터디 출결 출력
+		@RequestMapping(value = "/getStuAbsent", method = RequestMethod.POST, consumes = "application/json")    
+		public @ResponseBody UserInfoResultVO GetStuAbsent(@RequestBody Map<String, Object> json) {//제이슨으로 결과리턴
+			
+			int memCode = (int)json.get("memCode");
+	        
+			UserInfoResultVO GetStuAbsent = new UserInfoResultVO();//함수
+			ArrayList<UserInfoVO> totStuAbsent= new ArrayList<UserInfoVO>();//리스트
+			
+			
+			try {
+
+				 totStuAbsent = dataMapper.getStuAbsent(memCode);
+				 
+				 if(totStuAbsent.size() > 0) {
+					 
+					 GetStuAbsent.setSuccess(true);
+					 GetStuAbsent.setGetStuAbsent(totStuAbsent);
+					 
+				 }
+				 
+				 else {
+					 GetStuAbsent.setSuccess(false);
+				 }
+				
+				
+			}catch (Exception e) {
+				e.printStackTrace();
+				
+			}
+			
+		           
+			return GetStuAbsent;
+	   }
+	
 	
 	
 	
@@ -415,6 +450,38 @@ public class Project {
 		return result;
    }
 
+	
+	
+	//세션정보입력
+	@RequestMapping(value="/postSesInfo", method = RequestMethod.POST, consumes = "application/json")
+	public @ResponseBody SessionManageResultVO PostSesInfo (@RequestBody Map<String, Object> json) {
+		
+		SessionManageResultVO postSesInfo = new SessionManageResultVO();
+		
+		int sesCode = (int) json.get("sesCode");
+		String sesDate = (String) json.get("sesDate");
+		String sesInfo = (String) json.get("sesInfo");
+		String sesContent = (String) json.get("sesContent");
+		
+	
+
+		try {
+
+			dataMapper.PostSesInfo(sesCode, sesDate, sesInfo, sesContent);
+			postSesInfo.setSuccess(true);
+			postSesInfo.setMessage("글이 등록되었습니다");
+
+		} catch (Exception e) {
+
+			postSesInfo.setSuccess(false);
+			postSesInfo.setMessage("글을 등록하지 못했습니다");
+			e.printStackTrace();
+		}
+		return postSesInfo;
+		
+		
+	}
+	
 	
 	
 	

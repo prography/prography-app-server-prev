@@ -46,10 +46,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </insert>
     
     <!-- 스터디 불참자 고르기 -->
- 	<select id="selectAbsentee" resultType="com.prography.appdev3.vo.StudyAttendanceVO">
+ 	<select id="selectAbsentee" resultType="com.prography.appdev3.vo.UserInfoVO">
 		select name from member where tmCode = #{tmCode};
  	</select>
  	
+ 	
+ 	<!-- 개인 누적 스터디출결 출력 -->
+ 	<select id="selectAbsentee" resultType="com.prography.appdev3.vo.UserInfoVO">
+		select stuAbsent from member where memCode = #{memCode};
+ 	</select>
  	
  	
  	<!-- 주차별 스터디DB -->

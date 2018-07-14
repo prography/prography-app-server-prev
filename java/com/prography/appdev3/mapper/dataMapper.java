@@ -31,7 +31,9 @@ public interface dataMapper {
 		
 	//팀 정보DB
 	public ArrayList<TeamInfoVO> getTeamInfo() throws Exception;
-	public void PostStuMemo(@Param("stuCode") int stuCode, @Param("tmCode") int tmCode, @Param("picture") String picture, @Param("absentee") String absentee, @Param("memo") String memo, @Param("uploadTime") String uploadTime);
+	
+	//세션 정보 입력
+	public void PostSesInfo (@Param("sesCode") int sesCode, @Param("sesDate") String sesDate, @Param("sesInfo") String sesInfo, @Param("sesContent") String sesContent);
 	
 	
 	//스터디 결석자 고르기
@@ -39,6 +41,9 @@ public interface dataMapper {
 	
 	//팀별 스터디 출결DB
 	public ArrayList<StudyAttendanceVO> getStudyAttendance() throws Exception;
+	
+	//개인 누적 스터디 출결 출력
+	public ArrayList<UserInfoVO> getStuAbsent(@Param("memCode") int memCode);
 	
 	//주차별 스터디DB 
 	public ArrayList<StudyManageVO> getStudyManage() throws Exception;
@@ -49,9 +54,12 @@ public interface dataMapper {
 	//주차별 세션DB
 	public ArrayList<SessionManageVO> getSessionManage() throws Exception;
 	
+	//
+	
 	//자유게시판DB
 	public ArrayList<FreeBoardVO> getFreeBoard() throws Exception;
 	public void PostFreeBoard(@Param("freNum") int freNum, @Param("freTitle") String freTitle, @Param("freContent") String freContent, @Param("freDate") String freDate, @Param("memCode") int memCode);
+	
 	
 	
 	
