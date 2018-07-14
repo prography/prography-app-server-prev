@@ -40,7 +40,6 @@ import com.prography.appdev3.vo.UserInfoVO;
 @RestController //이 클래스를 송수신을 담당하는 클래스로 지정
 				//이 아이를 사용해서 rest api를 만들수 있음 뷰를 만들어내는 것 뿐 아니라 데이터 처리를 위한 컨트롤러를 만들어낼 수 있음
 public class Project {
-	
 	Logger logger = LoggerFactory.getLogger(Project.class);
 
 	@Autowired	//bean이랑 비슷한 애 이거를 선언하면  getter setter를 자동으로 만들음
@@ -316,6 +315,41 @@ public class Project {
 		
 	}
 	
+	
+	//스터디 불참자 리스트 출력
+	@RequestMapping(value = "/selectAbsentee", method = RequestMethod.POST, consumes = "application/json")    
+	public @ResponseBody UserInfoResultVO SelectAbsentee(@RequestBody Map<String, Object> json) {//제이슨으로 결과리턴
+		
+		int tmCode = (int)json.get("tmCode");
+        
+		UserInfoResultVO SelectAbsentee = new UserInfoResultVO();//함수
+		ArrayList<UserInfoVO> tmMemberList= new ArrayList<UserInfoVO>();//리스트
+		
+		
+		try {
+
+			 tmMemberList = dataMapper.selectAbsentee(tmCode);
+			 
+			 if(tmMemberList.size() > 0) {
+				 
+				 SelectAbsentee.setSuccess(true);
+				 SelectAbsentee.setSelectAbsentee(tmMemberList);
+				 
+			 }
+			 
+			 else {
+				 SelectAbsentee.setSuccess(false);
+			 }
+			
+			
+		}catch (Exception e) {
+			e.printStackTrace();
+			
+		}
+		
+	           
+		return SelectAbsentee;
+   }
 	
 	
 	

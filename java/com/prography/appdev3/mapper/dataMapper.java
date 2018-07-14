@@ -34,6 +34,9 @@ public interface dataMapper {
 	public void PostStuMemo(@Param("stuCode") int stuCode, @Param("tmCode") int tmCode, @Param("picture") String picture, @Param("absentee") String absentee, @Param("memo") String memo, @Param("uploadTime") String uploadTime);
 	
 	
+	//스터디 결석자 고르기
+	public ArrayList<UserInfoVO> selectAbsentee(@Param("tmCode") int tmCode);
+	
 	//팀별 스터디 출결DB
 	public ArrayList<StudyAttendanceVO> getStudyAttendance() throws Exception;
 	
