@@ -6,7 +6,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="com.prography.appdev3.mapper.dataMapper">
  	
  	<!-- 사용자 정보DB -->
- 	<select id="UserCheck" parameterType="String" resultType="com.prography.appdev3.vo.LoginVO">
+ 	<select id="userCheck" parameterType="String" resultType="com.prography.appdev3.vo.LoginVO">
  		 select * from member where id = #{id} and pw = #{pw};
  	</select>
  	
@@ -40,6 +40,21 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select * from studyAttendance;
  	</select>
  	
+ 	<!-- 스터디 메모 글쓰기 -->
+ 	<insert id="PostStuMemo" parameterType = "com.prography.appdev3.vo.PostStuMemoVO">
+    	INSERT INTO studyAttendance VALUES (#{stuCode},#{tmCode}, #{picture}, #{absentee},#{memo}, #{uploadTime});
+    </insert>
+    
+    <!-- 스터디 불참자 고르기 -->
+ 	<select id="selectAbsentee" resultType="com.prography.appdev3.vo.UserInfoVO">
+		select name from member where tmCode = #{tmCode};
+ 	</select>
+ 	
+ 	
+ 	<!-- 개인 누적 스터디출결 출력 -->
+ 	<select id="selectAbsentee" resultType="com.prography.appdev3.vo.UserInfoVO">
+		select stuAbsent from member where memCode = #{memCode};
+ 	</select>
  	
  	
  	<!-- 주차별 스터디DB -->
@@ -61,12 +76,21 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select * from session;
  	</select>
  	
+ 	<!-- 세션 정보 삽입 -->
+ 	<insert id="PostSesInfo" parameterType = "com.prography.appdev3.vo.SessionManageVO">
+    	INSERT INTO studyAttendance VALUES (#{sesCode},#{sesDate}, #{sesInfo}, #{sesContent});
+    </insert>
+ 	
  	
  	
  	<!-- 자유게시판DB -->
  	<select id="getFreeBoard" resultType="com.prography.appdev3.vo.FreeBoardVO">
 		select * from free;
  	</select>
+ 	
+ 	<insert id="PostFreeBoard" parameterType = "com.prography.appdev3.vo.PostFreeBoardVO">
+    	INSERT INTO free VALUES (#{freNum},#{freTitle},#{freContent},#{freDate}, #{memCode});
+    </insert>
  	
  	
  	
