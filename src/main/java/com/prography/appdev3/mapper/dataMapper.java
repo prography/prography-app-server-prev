@@ -1,12 +1,12 @@
 package com.prography.appdev3.mapper;
 
+
 import java.util.ArrayList;
 
 import org.apache.ibatis.annotations.Param;
 
 import com.prography.appdev3.vo.FreeBoardVO;
 import com.prography.appdev3.vo.IdCheckResultVO;
-import com.prography.appdev3.vo.IdCheckVO;
 import com.prography.appdev3.vo.LoginVO;
 import com.prography.appdev3.vo.SessionAttendanceVO;
 import com.prography.appdev3.vo.SessionManageVO;
