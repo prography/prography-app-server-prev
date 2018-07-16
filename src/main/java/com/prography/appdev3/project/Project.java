@@ -61,7 +61,7 @@ public class Project {
 
 
 		
-		logger.debug("user check > " + json.get("user_id") + "/" + json.get("user_pw"));
+		logger.debug("user check > " + json.get("id") + "/" + json.get("pw"));
 		
 		
 		String id = (String)json.get("id");//이름 dataMapper.java이름과 동일하게
@@ -72,7 +72,7 @@ public class Project {
 		ArrayList<LoginVO> loginresult = new ArrayList<LoginVO>();
 		
 		try {
-			loginresult = dataMapper.userCheck(id, pw);
+			loginresult = dataMapper.UserCheck(id, pw);
 			
 			if(loginresult.size()>0) {
 				login.setSuccess(true);

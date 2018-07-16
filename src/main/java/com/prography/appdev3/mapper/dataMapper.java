@@ -18,7 +18,7 @@ import com.prography.appdev3.vo.UserInfoVO;
 public interface dataMapper {
 
 	// 사용자 정보DB
-	public ArrayList<LoginVO> userCheck(@Param("id") String id, @Param("pw") String pw);// 누가 로그인하는지 알려줌
+	public ArrayList<LoginVO> UserCheck(@Param("id") String id, @Param("pw") String pw);// 누가 로그인하는지 알려줌
 
 	public void SignUpCheck(@Param("memCode") int memCode, @Param("id") String id, @Param("pw") String pw,
 			@Param("name") String name, @Param("nickname") String nickname, @Param("tmCode") int tmCode,
