@@ -4,15 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.jboss.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired; 
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
-
+import org.apache.commons.*;
 
 import com.prography.appdev3.mapper.dataMapper;
 import com.prography.appdev3.vo.FreeBoardResultVO;
@@ -40,7 +39,7 @@ import com.prography.appdev3.vo.UserInfoVO;
 @RestController //이 클래스를 송수신을 담당하는 클래스로 지정
 				//이 아이를 사용해서 rest api를 만들수 있음 뷰를 만들어내는 것 뿐 아니라 데이터 처리를 위한 컨트롤러를 만들어낼 수 있음
 public class Project {
-	Logger logger = LoggerFactory.getLogger(Project.class);
+	Logger logger = Logger.getLogger(this.getClass());
 
 	@Autowired	//bean이랑 비슷한 애 이거를 선언하면  getter setter를 자동으로 만들음
     private dataMapper dataMapper;//dataMapper연결
@@ -138,19 +137,25 @@ public class Project {
 	public @ResponseBody IdCheckResultVO IdCheck(@RequestBody Map<String, Object> json) {
 
 		String id = (String) json.get("id");
-
+		
 		IdCheckResultVO idCheck = new IdCheckResultVO();
-
-		ArrayList<IdCheckVO> idCheckList = new ArrayList<IdCheckVO>();
+		ArrayList<UserInfoVO> idCheckResult = new ArrayList<UserInfoVO>();
+				
 
 		try {
-			idCheck = dataMapper.IdCheck(id);
+			
+			idCheckResult=dataMapper.IdCheck(id);	
+//			logger.debug("user check > " + idCheckResult.size());
+			if(idCheckResult.isEmpty()) {	
+				idCheck.setSuccess(true);
+				idCheck.setMessage("사용할 수 있는 아이디입니다");
 
-			if (idCheckList.size() > 0) {
+				
+			}
+			else {
 				idCheck.setSuccess(false);
 				idCheck.setMessage("입력하신 아이디는 이미 있는 아이디 입니다. 다른 아이디를 입력해주세요");
-			} else {
-				idCheck.setSuccess(true);
+				
 			}
 
 		} catch (Exception e) {
@@ -163,22 +168,19 @@ public class Project {
 	
 
 	//회원정보(member table)출력
-	@RequestMapping(value = "/getUserInfo", method = RequestMethod.POST, consumes = "application/json")    
-	public @ResponseBody UserInfoResultVO getUserInfo(@RequestBody Map<String, Object> json) {
-		
-		String getUserInfo = (String)json.get("getUserInfo");//이름 dataMapper.java이름과 동일하게
+	@RequestMapping(value = "/getUserInfo", method = RequestMethod.GET)   //GET method 샘플*****(너가 원래 짜놓은 파일이랑 이거 비교해서 "GET으로 바꾸기" 바꿔놔!)
+	public @ResponseBody UserInfoResultVO getUserInfo() {
         
 		UserInfoResultVO result = new UserInfoResultVO();
 		
-		ArrayList<UserInfoVO> userInfo = new ArrayList<UserInfoVO>();
+		List<UserInfoVO> userInfoList = new ArrayList<UserInfoVO>();
 		try {
 
-			List<UserInfoVO> resultUserInfo = dataMapper.getUserInfo();
+			userInfoList = dataMapper.getUsersInfo();
 			
 			result.setSuccess(true);
-			result.setResultUserInfo(resultUserInfo);
+			result.setResultUserInfo(userInfoList);
 		}catch (Exception e) {
-			// TODO: handle exception
 			
 			e.printStackTrace();
 
@@ -200,21 +202,18 @@ public class Project {
 		
 	
 	//팀정보(team table) 출력
-	@RequestMapping(value = "/getTeamInfo", method = RequestMethod.POST, consumes = "application/json")    
-	public @ResponseBody TeamInfoResultVO getTeamInfo(@RequestBody Map<String, Object> json) {
-		
-		String getTeamInfo = (String)json.get("getTeamInfo");
+	@RequestMapping(value = "/getTeamInfo", method = RequestMethod.GET)    
+	public @ResponseBody TeamInfoResultVO getTeamInfo() {
         
 		TeamInfoResultVO result = new TeamInfoResultVO();
 		
 		try {
 
-			List<TeamInfoVO> resultTeamInfo = dataMapper.getTeamInfo();
+			List<TeamInfoVO> teamInfoList = dataMapper.getTeamsInfo();
 			
 			result.setSuccess(true);
-			result.setResultTeamInfo(resultTeamInfo);
+			result.setResultTeamInfo(teamInfoList);
 		}catch (Exception e) {
-			// TODO: handle exception
 			
 			e.printStackTrace();
 
@@ -256,7 +255,7 @@ public class Project {
 	
 	
 	//주차별 스터디(study table)
-	@RequestMapping(value = "/getStudyManage", method = RequestMethod.POST, consumes = "application/json")    
+	@RequestMapping(value = "/getStudyManage", method = RequestMethod.POST, consumes = "application/json")	//GET으로 바꾸기*****    
 	public @ResponseBody StudyManageResultVO getStudyManage(@RequestBody Map<String, Object> json) {
 		
 		String getStudyManage = (String)json.get("getStudyManage");
@@ -296,14 +295,23 @@ public class Project {
 		String memo = (String) json.get("memo");
 		String uploadTime = (String) json.get("uploadTime");
 		
-	
-
+		
 		try {
 
 			dataMapper.PostStuMemo(stuCode, tmCode, picture, absentee, memo, uploadTime);
 			postStuMemo.setSuccess(true);
 			postStuMemo.setMessage("글이 등록되었습니다");
-
+			
+			String[] absentee_array=absentee.split(",");	//*****json 파싱해서 이름을 얻음
+			for(String name:absentee_array) {				//*****파싱된 이름의 멤버의 결석횟수를 1 더함
+				try {											//*****sql 에러가 날 수 있으니 try catch. 
+					dataMapper.updateStuAbsent(name);
+				}
+				catch (Exception e){
+					e.printStackTrace();
+				}
+			}
+			
 		} catch (Exception e) {
 
 			postStuMemo.setSuccess(false);
@@ -398,7 +406,7 @@ public class Project {
 	
 	
 	//주차에 따른 개인별 세션출결(session attendance table)
-	@RequestMapping(value = "/getSessionAttendance", method = RequestMethod.POST, consumes = "application/json")    
+	@RequestMapping(value = "/getSessionAttendance", method = RequestMethod.POST, consumes = "application/json")   	//GET으로 바꾸기***** 
 	public @ResponseBody SessionAttendanceResultVO getSessionAttendance(@RequestBody Map<String, Object> json) {
 		
 		String getSessionAttendance = (String)json.get("getSessionAttendance");
@@ -426,7 +434,7 @@ public class Project {
 
 	
 	//주차별 세션, 세션정보(session table)
-	@RequestMapping(value = "/getSessionManage", method = RequestMethod.POST, consumes = "application/json")    
+	@RequestMapping(value = "/getSessionManage", method = RequestMethod.POST, consumes = "application/json")    	//GET으로 바꾸기*****
 	public @ResponseBody SessionManageResultVO getSessionManage(@RequestBody Map<String, Object> json) {
 		
 		String getSessionManage = (String)json.get("getSessionManage");
@@ -490,7 +498,7 @@ public class Project {
 	
 	
 	//자유게시판(free table)출력
-	@RequestMapping(value = "/getFreeBoard", method = RequestMethod.POST, consumes = "application/json")    
+	@RequestMapping(value = "/getFreeBoard", method = RequestMethod.POST, consumes = "application/json")    	//GET으로 바꾸기*****
 	public @ResponseBody FreeBoardResultVO getFreeBoard(@RequestBody Map<String, Object> json) {
 		
 		String getFreeBoard = (String)json.get("getFreeBoard");

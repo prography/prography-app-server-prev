@@ -26,14 +26,14 @@ public interface dataMapper {
 			@Param("icon") String icon, @Param("sesAbsent") int sesAbsent, @Param("stuAbsent") int stuAbsent,
 			@Param("totPenalty") int totPenalty);
 
-	public IdCheckResultVO IdCheck(@Param("id") String id);
+	public ArrayList<UserInfoVO> IdCheck(@Param("id") String id);
 
 	public void addUserInfo(UserInfoVO userInfo) throws Exception;
 
-	public ArrayList<UserInfoVO> getUserInfo() throws Exception;
+	public ArrayList<UserInfoVO> getUsersInfo() throws Exception;
 
 	// 팀 정보DB
-	public ArrayList<TeamInfoVO> getTeamInfo() throws Exception;
+	public ArrayList<TeamInfoVO> getTeamsInfo() throws Exception;
 
 	// 세션 정보 입력
 	public void PostSesInfo(@Param("sesCode") int sesCode, @Param("sesDate") String sesDate, @Param("sesInfo") String sesInfo, @Param("sesContent") String sesContent);
@@ -54,18 +54,22 @@ public interface dataMapper {
 	public void PostStuMemo(@Param("stuCode") int stuCode, @Param("tmCode") int tmCode,
 			@Param("picture") String picture, @Param("absentee") String absentee, @Param("memo") String memo, @Param("uploadTime") String uploadTime);
 	
+	//***** 스터디 결석 업데이트
+	public void updateStuAbsent(String memberName);
+	
 	// 주차에 따른 개인별 세션출결DB
 	public ArrayList<SessionAttendanceVO> getSessionAttendance() throws Exception;
 
 	// 주차별 세션DB
 	public ArrayList<SessionManageVO> getSessionManage() throws Exception;
 
-	//
-
 	// 자유게시판DB
 	public ArrayList<FreeBoardVO> getFreeBoard() throws Exception;
 
 	public void PostFreeBoard(@Param("freNum") int freNum, @Param("freTitle") String freTitle,
 			@Param("freContent") String freContent, @Param("freDate") String freDate, @Param("memCode") int memCode);
+
+	
+	
 
 }
