@@ -384,10 +384,15 @@ public class Project {
 		return GetStuAbsent;
 	}
 
+	
+	
+	
+	
+	
 	// sessinAttendance===============================================================================================================
 
-	// 주차에 따른 개인별 세션출결(session attendance table)
-	@RequestMapping(value = "/getSessionAttendance", method = RequestMethod.GET) // GET으로 바꾸기*****
+	// 세션 출결정보 출력
+	@RequestMapping(value = "/sessionAttendance", method = RequestMethod.GET)
 	public @ResponseBody SessionAttendanceResultVO getSessionAttendance() {
 
 		SessionAttendanceResultVO result = new SessionAttendanceResultVO();
@@ -411,10 +416,43 @@ public class Project {
 		return result;
 	}
 
+	// 세션 출결정보 입력
+	@RequestMapping(value = "/sessionAttendance", method = RequestMethod.POST, consumes = "application/json")
+	public @ResponseBody SessionAttendanceResultVO PostSessionAttendance(@RequestBody Map<String, Object> json) {
+
+		SessionAttendanceResultVO PostSessionAttendance = new SessionAttendanceResultVO();
+
+		int sesCode = (int) json.get("sesCode");
+		int memCode = (int) json.get("memCode");
+		int sesAttendance = (int) json.get("sesAttendance");
+		int late = (int) json.get("late");
+		int penalty = (int) json.get("penalty");
+
+		try {
+
+			dataMapper.PostSessionAttendance(sesCode, memCode, sesAttendance, late, penalty);
+			PostSessionAttendance.setSuccess(true);
+			PostSessionAttendance.setMessage("세션 출결정보가 등록되었습니다");
+
+		} catch (Exception e) {
+
+			PostSessionAttendance.setSuccess(false);
+			PostSessionAttendance.setMessage("세션 출결정보를 등록하지 못했습니다");
+			e.printStackTrace();
+		}
+		return PostSessionAttendance;
+
+	}
+
+	
+	
+	
+	
+	
 	// session============================================================================================================================================
 
-	// 주차별 세션, 세션정보(session table)
-	@RequestMapping(value = "/session", method = RequestMethod.GET) // GET으로 바꾸기*****
+	// 세션정보 출력
+	@RequestMapping(value = "/session", method = RequestMethod.GET)
 	public @ResponseBody SessionManageResultVO getSessionManage() {
 
 		SessionManageResultVO result = new SessionManageResultVO();
@@ -438,7 +476,7 @@ public class Project {
 		return result;
 	}
 
-	// 세션정보입력
+	// 세션정보 입력
 	@RequestMapping(value = "/session", method = RequestMethod.POST, consumes = "application/json")
 	public @ResponseBody SessionManageResultVO PostSession(@RequestBody Map<String, Object> json) {
 
@@ -465,10 +503,14 @@ public class Project {
 
 	}
 
+	
+	
+	
+
 	// freeBoard=================================================================================================================================================
 
 	// 자유게시판(free table)출력
-	@RequestMapping(value = "/freeBoard", method = RequestMethod.GET) // GET으로 바꾸기*****
+	@RequestMapping(value = "/freeBoard", method = RequestMethod.GET)
 	public @ResponseBody FreeBoardResultVO getFreeBoard() {
 
 		FreeBoardResultVO result = new FreeBoardResultVO();

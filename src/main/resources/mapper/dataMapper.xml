@@ -2,123 +2,132 @@
 <!DOCTYPE mapper 
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
- 
+
 <mapper namespace="com.prography.appdev3.mapper.dataMapper">
- 	
- 	<!-- member table=====================================================================================================-->
- 	
- 	
- 	<select id="UserCheck" parameterType="String" resultType="com.prography.appdev3.vo.LoginVO">
- 		 select * from member where id = #{id} and pw = #{pw};
- 	</select><!-- 로그인 -->
- 	
-	<select  id="IdCheck" resultType = "com.prography.appdev3.vo.IdCheckVO">
+
+	<!-- member table===================================================================================================== -->
+
+
+	<select id="UserCheck" parameterType="String" resultType="com.prography.appdev3.vo.LoginVO">
+		select * from member where id = #{id} and pw = #{pw};
+	</select><!-- 로그인 -->
+
+	<select id="IdCheck" resultType="com.prography.appdev3.vo.IdCheckVO">
 		select id from member where id = #{id};
-	</select><!-- id 중복확인-->
-	
-	
- 	<insert id="SignUpCheck" parameterType = "com.prography.appdev3.vo.SignUpVO">
-    	INSERT INTO member VALUES (#{memCode},#{id},#{pw},#{name}, #{nickname}, #{tmCode}, #{birth}, #{recBalloon}, #{balloon}, #{icon}, #{sesAbsent}, #{stuAbsent}, #{totPenalty});
-    </insert><!-- 회원가입 -->
- 	
- 	<select id="getUserInfo" resultType="com.prography.appdev3.vo.UserInfoVO">
- 		select * from member;
- 	</select>
- 	<select id="getUserInfoByMemCode" resultType="com.prography.appdev3.vo.UserInfoVO">
- 		select * from member where memCode = #{memCode};
- 	</select>
- 	<select id="getUserInfoByTeam" resultType="com.prography.appdev3.vo.UserInfoVO">
- 		select * from member where tmCode = #{tmCode};
- 	</select>
- 	
- 	
- 	
- 	
- 	
- 	<!-- *****스터디 출석 정보 업데이트  -->
- 	<update id="updateStuAbsent" parameterType="com.prography.appdev3.vo.UserInfoVO">	
- 		update member set
- 	   		stuAbsent = stuAbsent+1
-  		where name = #{name}
- 	</update>
- 	
- 	
- 	<!-- 팀 정보DB -->
- 	<select id="getTeamsInfo" resultType="com.prography.appdev3.vo.TeamInfoVO">
+	</select><!-- id 중복확인 -->
+
+
+	<insert id="SignUpCheck" parameterType="com.prography.appdev3.vo.SignUpVO">
+		INSERT INTO member VALUES (#{memCode},#{id},#{pw},#{name}, #{nickname},#{tmCode}, #{birth}, #{recBalloon}, #{balloon}, #{icon}, #{sesAbsent}, #{stuAbsent}, #{totPenalty});
+	</insert><!-- 회원가입 -->
+
+	<select id="getUserInfo" resultType="com.prography.appdev3.vo.UserInfoVO">
+		select * from member;
+	</select>
+	<select id="getUserInfoByMemCode" resultType="com.prography.appdev3.vo.UserInfoVO">
+		select * from member where memCode = #{memCode};
+	</select>
+	<select id="getUserInfoByTeam" resultType="com.prography.appdev3.vo.UserInfoVO">
+		select * from member where tmCode = #{tmCode};
+	</select>
+
+
+
+
+
+	<!-- *****스터디 출석 정보 업데이트 -->
+	<update id="updateStuAbsent" parameterType="com.prography.appdev3.vo.UserInfoVO">
+		update member set
+		stuAbsent = stuAbsent+1
+		where name = #{name}
+	</update>
+
+
+	<!-- 팀 정보DB -->
+	<select id="getTeamsInfo" resultType="com.prography.appdev3.vo.TeamInfoVO">
 		select * from team;
- 	</select>
- 	
- 	
- 	
- 	<!-- 팀별 스터디 출결DB -->
- 	<select id="getStudyAttendance" resultType="com.prography.appdev3.vo.StudyAttendanceVO">
+	</select>
+
+
+
+	<!-- 팀별 스터디 출결DB -->
+	<select id="getStudyAttendance" resultType="com.prography.appdev3.vo.StudyAttendanceVO">
 		select * from studyAttendance;
- 	</select>
- 	
- 	
- 	
- 	<!-- 주차별 스터디DB -->
- 	<select id="getStudyManage" resultType="com.prography.appdev3.vo.StudyManageVO">
+	</select>
+
+
+
+	<!-- 주차별 스터디DB -->
+	<select id="getStudyManage" resultType="com.prography.appdev3.vo.StudyManageVO">
 		select * from study;
- 	</select>
- 	
- 	
- 	<insert id="PostStuMemo" parameterType = "com.prography.appdev3.vo.PostStuMemoVO">
-    	insert into studyAttendance VALUES (#{stuCode},#{tmCode},#{picture},#{absentee}, #{memo}, #{uploadTime});
-    </insert>
- 	
- 	
- 	
- 	<!-- 주차에 따른 개인별 세션출결DB -->
- 	<select id="getSessionAttendance" resultType="com.prography.appdev3.vo.SessionAttendanceVO">
+	</select>
+
+
+	<insert id="PostStuMemo" parameterType="com.prography.appdev3.vo.PostStuMemoVO">
+		insert into studyAttendance VALUES (#{stuCode},#{tmCode},#{picture},#{absentee}, #{memo}, #{uploadTime});
+	</insert>
+
+
+
+
+	<!-- sessionAttendance table===================================================================================================== -->
+
+	<!-- 주차에 따른 개인별 세션출결DB -->
+	<select id="getSessionAttendance" resultType="com.prography.appdev3.vo.SessionAttendanceVO">
 		select * from sessionAttendance;
- 	</select>
- 	
- 	
- 	
- 	
- 	
- 	
- 	<!-- session table=====================================================================================================-->
- 	
- 	<!-- 주차별 세션DB -->
- 	<select id="getSession" resultType="com.prography.appdev3.vo.SessionManageVO">
+	</select>
+
+	<insert id="PostSessionAttendance" parameterType="com.prography.appdev3.vo.SessionAttendanceVO">
+		INSERT INTO sessionAttendance VALUES (#{sesCode},#{memCode},#{sesAttendance},#{late}, #{penalty});
+	</insert>
+
+
+
+
+
+	<!-- session table===================================================================================================== -->
+
+	<!-- 주차별 세션DB -->
+	<select id="getSession" resultType="com.prography.appdev3.vo.SessionManageVO">
 		select * from session;
- 	</select>
- 	
- 	<insert id="PostSession" parameterType = "com.prography.appdev3.vo.SessionManageVO">
-    	INSERT INTO session VALUES (#{sesCode},#{sesDate},#{sesInfo},#{sesContent});
-    </insert>
- 	
- 	
- 	
- 	<!-- free table=====================================================================================================-->
- 	
- 	
- 	<!-- 자유게시판DB 출력 및 검색 -->
- 	<select id="getFreeBoard" resultType="com.prography.appdev3.vo.FreeBoardVO">
+	</select>
+
+	<insert id="PostSession" parameterType="com.prography.appdev3.vo.SessionManageVO">
+		INSERT INTO session VALUES (#{sesCode},#{sesDate},#{sesInfo},#{sesContent});
+	</insert>
+
+
+
+
+	<!-- free table===================================================================================================== -->
+
+	<!-- 자유게시판DB 출력 및 검색 -->
+	<select id="getFreeBoard" resultType="com.prography.appdev3.vo.FreeBoardVO">
 		select * from free;
- 	</select>
- 	<select id="getFreeBoardByFreNum" resultType="com.prography.appdev3.vo.FreeBoardVO">
+	</select>
+	
+	<select id="getFreeBoardByFreNum" resultType="com.prography.appdev3.vo.FreeBoardVO">
 		select * from free where freNum = #{freNum};
- 	</select>
- 	<select id="getFreeBoardByKeyword" resultType="com.prography.appdev3.vo.FreeBoardVO">
+	</select>
+	
+	<select id="getFreeBoardByKeyword" resultType="com.prography.appdev3.vo.FreeBoardVO">
 		select * from free where freTitle LIKE freTitle = '%#{keyword}% ' or freContent = '%#{keyword}%;
- 	</select>
- 	<select id="getFreeBoardByMemCode" resultType="com.prography.appdev3.vo.FreeBoardVO">
+	</select>
+	
+	<select id="getFreeBoardByMemCode" resultType="com.prography.appdev3.vo.FreeBoardVO">
 		select * from free where memCode = #{memCode};
- 	</select>
- 	
- 	
- 	<!-- 자유게시판DB입력 -->
- 	<insert id="PostFreeBoard" parameterType = "com.prography.appdev3.vo.PostFreeBoardVO">
-    	INSERT INTO free VALUES (#{freNum},#{freTitle},#{freContent},#{freDate}, #{memCode});
-    </insert>
- 	
- 	<!-- 자유게시판DB삭제 -->
- 	<delete id="DeleteFreeBoard">
- 		DELETE FROM free WHERE freNum=#{freNum};
- 	</delete>
- 	
- 	
+	</select>
+
+
+	<!-- 자유게시판DB입력 -->
+	<insert id="PostFreeBoard" parameterType="com.prography.appdev3.vo.PostFreeBoardVO">
+		INSERT INTO free VALUES (#{freNum},#{freTitle},#{freContent},#{freDate},#{memCode});
+	</insert>
+
+	<!-- 자유게시판DB삭제 -->
+	<delete id="DeleteFreeBoard">
+		DELETE FROM free WHERE freNum=#{freNum};
+	</delete>
+
+
 </mapper>

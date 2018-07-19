@@ -8,8 +8,15 @@ public class SessionAttendanceResultVO {	//sessionAttendance table¿ª arrayList∑Œ
 	
 	private boolean success = false;
 	private List<SessionAttendanceVO> sesAttendanceList = new ArrayList<SessionAttendanceVO>();
+	public String message = "";
 	
 	
+	public String getMessage() {
+		return message;
+	}
+	public void setMessage(String message) {
+		this.message = message;
+	}
 	public boolean isSuccess() {
 		return success;
 	}
