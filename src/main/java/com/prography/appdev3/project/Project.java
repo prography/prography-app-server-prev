@@ -49,7 +49,7 @@ public class Project {
 
 
 
-	//회원관리=====================================================================================================================================
+	//member=====================================================================================================================================
 
 
 
@@ -93,47 +93,6 @@ public class Project {
 	}
 
 
-	//회원가입
-	@RequestMapping(value="/signUp", method = RequestMethod.POST, consumes = "application/json")
-	public @ResponseBody SignUpResultVO SignUpCheck (@RequestBody Map<String, Object> json) {
-
-		SignUpResultVO signUp = new SignUpResultVO();
-
-
-		int memCode = (int) json.get("memCode");
-		String id = (String) json.get("id");
-		String pw = (String) json.get("pw");
-		String name = (String) json.get("name");
-		String nickname = (String) json.get("nickname");
-		int tmCode = (int) json.get("tmCode");
-		String birth = (String) json.get("birth");
-		int recBalloon = (int) json.get("recBalloon");
-		int balloon = (int) json.get("balloon");
-		String icon = (String) json.get("icon");
-		int sesAbsent = (int) json.get("sesAbsent");
-		int stuAbsent = (int) json.get("stuAbsent");
-		int totPenalty = (int) json.get("totPenalty");
-
-
-
-		try {
-
-			dataMapper.SignUpCheck(memCode, id, pw, name, nickname, tmCode, birth, recBalloon, balloon, icon, sesAbsent, stuAbsent, totPenalty);
-			signUp.setSuccess(true);
-			signUp.setMessage("환영합니다^_^");
-
-		} catch (Exception e) {
-
-			signUp.setSuccess(false);
-			signUp.setMessage("입력한 아이디는 이미 있는 아이디입니다. 다른 아이디로 가입해주세요");
-			e.printStackTrace();
-		}
-		return signUp;
-
-
-	}
-
-
 	//ID중복확인
 	@RequestMapping(value = "/idCheck", method = RequestMethod.POST, consumes = "application/json")
 	public @ResponseBody IdCheckResultVO IdCheck(@RequestBody Map<String, Object> json) {
@@ -168,13 +127,58 @@ public class Project {
 
 	}
 
+	
+	
+	
+	
+	//회원가입
+		@RequestMapping(value="/member", method = RequestMethod.POST, consumes = "application/json")
+		public @ResponseBody SignUpResultVO SignUpCheck (@RequestBody Map<String, Object> json) {
+
+			SignUpResultVO signUp = new SignUpResultVO();
+
+
+			int memCode = (int) json.get("memCode");
+			String id = (String) json.get("id");
+			String pw = (String) json.get("pw");
+			String name = (String) json.get("name");
+			String nickname = (String) json.get("nickname");
+			int tmCode = (int) json.get("tmCode");
+			String birth = (String) json.get("birth");
+			int recBalloon = (int) json.get("recBalloon");
+			int balloon = (int) json.get("balloon");
+			String icon = (String) json.get("icon");
+			int sesAbsent = (int) json.get("sesAbsent");
+			int stuAbsent = (int) json.get("stuAbsent");
+			int totPenalty = (int) json.get("totPenalty");
+
+
+
+			try {
+
+				dataMapper.SignUpCheck(memCode, id, pw, name, nickname, tmCode, birth, recBalloon, balloon, icon, sesAbsent, stuAbsent, totPenalty);
+				signUp.setSuccess(true);
+				signUp.setMessage("환영합니다^_^");
+
+			} catch (Exception e) {
+
+				signUp.setSuccess(false);
+				signUp.setMessage("입력한 아이디는 이미 있는 아이디입니다. 다른 아이디로 가입해주세요");
+				e.printStackTrace();
+			}
+			return signUp;
+
+
+		}
+	
 
 	//회원정보(member table)출력
-	@RequestMapping(value = "/getUserInfo", method = RequestMethod.GET)   //#getUsersInfo => getUserInfo
+	@RequestMapping(value = "/member", method = RequestMethod.GET)   //#getUsersInfo => getUserInfo
 	public @ResponseBody UserInfoResultVO getUserInfo(@RequestParam(value="memCode", required=false) Integer memCode, @RequestParam(value="tmCode", required=false) Integer tmCode) {
        UserInfoResultVO result = new UserInfoResultVO();
     	List<UserInfoVO> userInfoList = new ArrayList<UserInfoVO>();
     	if(memCode!=null){
+    		
     		try {
 
 				userInfoList = dataMapper.getUserInfoByMemCode(memCode);

@@ -5,21 +5,21 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  
 <mapper namespace="com.prography.appdev3.mapper.dataMapper">
  	
- 	<!-- 사용자 정보DB -->
+ 	<!-- member table=====================================================================================================-->
+ 	
+ 	
  	<select id="UserCheck" parameterType="String" resultType="com.prography.appdev3.vo.LoginVO">
  		 select * from member where id = #{id} and pw = #{pw};
- 	</select>
- 	
- 	
- 	<insert id="SignUpCheck" parameterType = "com.prography.appdev3.vo.SignUpVO">
-    	INSERT INTO member VALUES (#{memCode},#{id},#{pw},#{name}, #{nickname}, #{tmCode}, #{birth}, #{recBalloon}, #{balloon}, #{icon}, #{sesAbsent}, #{stuAbsent}, #{totPenalty});
-    </insert>
- 	
+ 	</select><!-- 로그인 -->
  	
 	<select  id="IdCheck" resultType = "com.prography.appdev3.vo.IdCheckVO">
 		select id from member where id = #{id};
-	</select>
- 	
+	</select><!-- id 중복확인-->
+	
+	
+ 	<insert id="SignUpCheck" parameterType = "com.prography.appdev3.vo.SignUpVO">
+    	INSERT INTO member VALUES (#{memCode},#{id},#{pw},#{name}, #{nickname}, #{tmCode}, #{birth}, #{recBalloon}, #{balloon}, #{icon}, #{sesAbsent}, #{stuAbsent}, #{totPenalty});
+    </insert><!-- 회원가입 -->
  	
  	<select id="getUserInfo" resultType="com.prography.appdev3.vo.UserInfoVO">
  		select * from member;
