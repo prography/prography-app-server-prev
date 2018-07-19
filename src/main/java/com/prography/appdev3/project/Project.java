@@ -7,6 +7,7 @@ import java.util.Map;
 import org.jboss.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired; 
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -167,26 +168,61 @@ public class Project {
 	}
 	
 
-	//회원정보(member table)출력
-	@RequestMapping(value = "/getUsersInfo", method = RequestMethod.GET)   //GET method 샘플*****(너가 원래 짜놓은 파일이랑 이거 비교해서 "GET으로 바꾸기" 바꿔놔!)
-	public @ResponseBody UserInfoResultVO getUserInfo() {
-        
-		UserInfoResultVO result = new UserInfoResultVO();
+	//회원정보(member table)출력 (? 쿼리스트링이 없으면 전체 회원 정보 다 가져오고 ? 쿼리스트링이 있으면 조건에 맞는 회원 정보만 불러오는 메소드)
+	@RequestMapping(value = "/getUserInfo", method = RequestMethod.GET)   //#getUsersInfo => getUserInfo
+	public @ResponseBody UserInfoResultVO getUserInfo(@RequestParam(value="memCode", required=false) String memCode, @RequestParam(value="tmCode", required=false) String tmCode) {
+       UserInfoResultVO result = new UserInfoResultVO();
+    	List<UserInfoVO> userInfoList = new ArrayList<UserInfoVO>();
+    	
+    	if(memCode!=null){
+    		try {
+
+				userInfoList = dataMapper.getUserInfoByMemCode(memCode);
+				
+				result.setSuccess(true);
+				result.setResultUserInfo(userInfoList);
+			}catch (Exception e) {
+				
+				e.printStackTrace();	
+
+				result.setSuccess(false);
+				result.setResultUserInfo(null);
+			}
+    	}
+    	else if(tmCode!=null){
+    		try {
+
+				userInfoList = dataMapper.getUserInfoByTeam(tmCode);
+				
+				result.setSuccess(true);
+				result.setResultUserInfo(userInfoList);
+			}catch (Exception e) {
+				
+				e.printStackTrace();	
+
+				result.setSuccess(false);
+				result.setResultUserInfo(null);
+			}
+    	}
+    	else{
+    		try {
+
+				userInfoList = dataMapper.getUserInfo();
+				
+				result.setSuccess(true);
+				result.setResultUserInfo(userInfoList);
+			}catch (Exception e) {
+				
+				e.printStackTrace();	
+
+				result.setSuccess(false);
+				result.setResultUserInfo(null);
+			}
+    	}
 		
-		List<UserInfoVO> userInfoList = new ArrayList<UserInfoVO>();
-		try {
-
-			userInfoList = dataMapper.getUsersInfo();
-			
-			result.setSuccess(true);
-			result.setResultUserInfo(userInfoList);
-		}catch (Exception e) {
-			
-			e.printStackTrace();
-
-			result.setSuccess(false);
-			result.setResultUserInfo(null);
-		}
+		
+		
+		
 		
 	           
 		return result;
