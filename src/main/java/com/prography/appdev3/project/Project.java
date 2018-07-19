@@ -168,7 +168,7 @@ public class Project {
 	
 
 	//회원정보(member table)출력
-	@RequestMapping(value = "/getUserInfo", method = RequestMethod.GET)   //GET method 샘플*****(너가 원래 짜놓은 파일이랑 이거 비교해서 "GET으로 바꾸기" 바꿔놔!)
+	@RequestMapping(value = "/getUsersInfo", method = RequestMethod.GET)   //GET method 샘플*****(너가 원래 짜놓은 파일이랑 이거 비교해서 "GET으로 바꾸기" 바꿔놔!)
 	public @ResponseBody UserInfoResultVO getUserInfo() {
         
 		UserInfoResultVO result = new UserInfoResultVO();
@@ -255,19 +255,20 @@ public class Project {
 	
 	
 	//주차별 스터디(study table)
-	@RequestMapping(value = "/getStudyManage", method = RequestMethod.POST, consumes = "application/json")	//GET으로 바꾸기*****    
-	public @ResponseBody StudyManageResultVO getStudyManage(@RequestBody Map<String, Object> json) {
+	@RequestMapping(value = "/getStudyManage", method = RequestMethod.GET)	//GET으로 바꾸기*****    
+	public @ResponseBody StudyManageResultVO getStudyManage() {
 		
-		String getStudyManage = (String)json.get("getStudyManage");
-        
+		
 		StudyManageResultVO result = new StudyManageResultVO();
+		
+		List<StudyManageVO> studyManageList = new ArrayList<StudyManageVO>();
 		
 		try {
 
-			List<StudyManageVO> resultStudyManage = dataMapper.getStudyManage();
+			studyManageList = dataMapper.getStudyManage();
 			
 			result.setSuccess(true);
-			result.setResultStudyManage(resultStudyManage);
+			result.setResultStudyManage(studyManageList);
 		}catch (Exception e) {
 			// TODO: handle exception
 			
@@ -406,19 +407,18 @@ public class Project {
 	
 	
 	//주차에 따른 개인별 세션출결(session attendance table)
-	@RequestMapping(value = "/getSessionAttendance", method = RequestMethod.POST, consumes = "application/json")   	//GET으로 바꾸기***** 
-	public @ResponseBody SessionAttendanceResultVO getSessionAttendance(@RequestBody Map<String, Object> json) {
+	@RequestMapping(value = "/getSessionAttendance", method = RequestMethod.GET)   	//GET으로 바꾸기***** 
+	public @ResponseBody SessionAttendanceResultVO getSessionAttendance() {
 		
-		String getSessionAttendance = (String)json.get("getSessionAttendance");
-        
 		SessionAttendanceResultVO result = new SessionAttendanceResultVO();
 		
+		List<SessionAttendanceVO> sesAttendanceList = new ArrayList<SessionAttendanceVO>();
 		try {
 
-			List<SessionAttendanceVO> resultSesAttendance = dataMapper.getSessionAttendance();
+			sesAttendanceList = dataMapper.getSessionAttendance();
 			
 			result.setSuccess(true);
-			result.setResultSesAttendance(resultSesAttendance);
+			result.setResultSesAttendance(sesAttendanceList);
 		}catch (Exception e) {
 			// TODO: handle exception
 			
@@ -434,19 +434,19 @@ public class Project {
 
 	
 	//주차별 세션, 세션정보(session table)
-	@RequestMapping(value = "/getSessionManage", method = RequestMethod.POST, consumes = "application/json")    	//GET으로 바꾸기*****
-	public @ResponseBody SessionManageResultVO getSessionManage(@RequestBody Map<String, Object> json) {
+	@RequestMapping(value = "/getSessionManage", method = RequestMethod.GET)    	//GET으로 바꾸기*****
+	public @ResponseBody SessionManageResultVO getSessionManage() {
 		
-		String getSessionManage = (String)json.get("getSessionManage");
 	         
 		SessionManageResultVO result = new SessionManageResultVO();
+		List<SessionManageVO> sessionManageList = new ArrayList<SessionManageVO>();
 		
 		try {
 
-			List<SessionManageVO> resultSessionManage = dataMapper.getSessionManage();
+			sessionManageList = dataMapper.getSessionManage();
 			
 			result.setSuccess(true);
-			result.setResultSessionManage(resultSessionManage);
+			result.setResultSessionManage(sessionManageList);
 		}catch (Exception e) {
 			// TODO: handle exception
 			
@@ -498,19 +498,18 @@ public class Project {
 	
 	
 	//자유게시판(free table)출력
-	@RequestMapping(value = "/getFreeBoard", method = RequestMethod.POST, consumes = "application/json")    	//GET으로 바꾸기*****
-	public @ResponseBody FreeBoardResultVO getFreeBoard(@RequestBody Map<String, Object> json) {
+	@RequestMapping(value = "/getFreeBoard", method = RequestMethod.GET)    	//GET으로 바꾸기*****
+	public @ResponseBody FreeBoardResultVO getFreeBoard() {
 		
-		String getFreeBoard = (String)json.get("getFreeBoard");
-        
 		FreeBoardResultVO result = new FreeBoardResultVO();
+		List<FreeBoardVO> freeBoardList = new ArrayList<FreeBoardVO>();
 		
 		try {
 
-			List<FreeBoardVO> resultFreeBoard = dataMapper.getFreeBoard();
+			freeBoardList = dataMapper.getFreeBoard();
 			
 			result.setSuccess(true);
-			result.setResultFreeBoard(resultFreeBoard);
+			result.setResultFreeBoard(freeBoardList);
 		}catch (Exception e) {
 			// TODO: handle exception
 			
