@@ -37,34 +37,34 @@ import com.prography.appdev3.vo.TeamInfoVO;
 import com.prography.appdev3.vo.UserInfoResultVO;
 import com.prography.appdev3.vo.UserInfoVO;
 
-@RestController //ï¿½ï¿½ Å¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Û¼ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ Å¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
-				//ï¿½ï¿½ ï¿½ï¿½ï¿½Ì¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ø¼ï¿½ rest apiï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ä¸¦ ï¿½ï¿½ï¿½ï¿½ï¿½î³»ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ ï¿½Æ´Ï¶ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ã³ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Æ®ï¿½Ñ·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½î³¾ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+@RestController //ÀÌ Å¬·¡½º¸¦ ¼Û¼ö½ÅÀ» ´ã´çÇÏ´Â Å¬·¡½º·Î ÁöÁ¤
+				//ÀÌ ¾ÆÀÌ¸¦ »ç¿ëÇØ¼­ rest api¸¦ ¸¸µé¼ö ÀÖÀ½ ºä¸¦ ¸¸µé¾î³»´Â °Í »Ó ¾Æ´Ï¶ó µ¥ÀÌÅÍ Ã³¸®¸¦ À§ÇÑ ÄÁÆ®·Ñ·¯¸¦ ¸¸µé¾î³¾ ¼ö ÀÖÀ½
 public class Project {
 	Logger logger = Logger.getLogger(this.getClass());
 
-	@Autowired	//beanï¿½Ì¶ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Ì°Å¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï¸ï¿½  getter setterï¿½ï¿½ ï¿½Úµï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
-    private dataMapper dataMapper;//dataMapperï¿½ï¿½ï¿½ï¿½
+	@Autowired	//beanÀÌ¶û ºñ½ÁÇÑ ¾Ö ÀÌ°Å¸¦ ¼±¾ðÇÏ¸é  getter setter¸¦ ÀÚµ¿À¸·Î ¸¸µéÀ½
+    private dataMapper dataMapper;//dataMapper¿¬°á
 
 
 
 
-	//È¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½=====================================================================================================================================
+	//È¸¿ø°ü¸®=====================================================================================================================================
 
 
 
-	//ï¿½Î±ï¿½ï¿½ï¿½
+	//·Î±×ÀÎ
 	@RequestMapping(value = "/Login", method = RequestMethod.POST,consumes = "application/json")
-	public @ResponseBody LoginResultVO UserCheck(@RequestBody Map<String, Object> json) {//ï¿½Û¿ï¿½ï¿½ï¿½ ï¿½ï¿½Ã¼ï¿½ï¿½ ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ì½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Þ¾Æ¿ï¿½
-		// @RequestBody ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ì¼ï¿½ï¿½ï¿½ @RequestMappingï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ POST ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ûµï¿½ HTTP ï¿½ï¿½Ã» ï¿½ï¿½ï¿½ï¿½ï¿½Í¸ï¿½ String Å¸ï¿½ï¿½ï¿½ï¿½ body ï¿½Ä¶ï¿½ï¿½ï¿½ï¿½Í·ï¿½ ï¿½ï¿½ï¿½ÞµÈ´ï¿½.(ï¿½ï¿½ï¿½ï¿½)
-		// ï¿½×¸ï¿½ï¿½ï¿½ @ResponseBody ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ì¼ï¿½ï¿½ï¿½ @RequestMapping ï¿½Þ¼ï¿½ï¿½å¿¡ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ç¸ï¿½ ï¿½Ø´ï¿½ ï¿½Þ¼ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ HTTP ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Í·ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ñ´ï¿½.
-		// simpleTest() ï¿½Þ¼ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ String Å¸ï¿½ï¿½ï¿½Ì¹Ç·ï¿½ String ï¿½ï¿½ï¿½ï¿½ï¿½Í¸ï¿½ HTTP ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Í·ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ñ´ï¿½.(ï¿½Û½ï¿½)
+	public @ResponseBody LoginResultVO UserCheck(@RequestBody Map<String, Object> json) {//¾Û¿¡¼­ °´Ã¼·Î ÁÖ´Â °ÍÀ» Á¦ÀÌ½¼À¸·Î ¹Þ¾Æ¿È
+		// @RequestBody ¾î³ëÅ×ÀÌ¼ÇÀº @RequestMapping¿¡ ÀÇÇØ POST ¹æ½ÄÀ¸·Î Àü¼ÛµÈ HTTP ¿äÃ» µ¥ÀÌÅÍ¸¦ String Å¸ÀÔÀÇ body ÆÄ¶ó¹ÌÅÍ·Î Àü´ÞµÈ´Ù.(¼ö½Å)
+		// ±×¸®°í @ResponseBody ¾î³ëÅ×ÀÌ¼ÇÀÌ @RequestMapping ¸Þ¼­µå¿¡¼­ Àû¿ëµÇ¸é ÇØ´ç ¸Þ¼­µåÀÇ ¸®ÅÏ °ªÀ» HTTP ÀÀ´ä µ¥ÀÌÅÍ·Î »ç¿ëÇÑ´Ù.
+		// simpleTest() ¸Þ¼­µåÀÇ ¸®ÅÏ °ªÀÌ String Å¸ÀÔÀÌ¹Ç·Î String µ¥ÀÌÅÍ¸¦ HTTP ÀÀ´ä µ¥ÀÌÅÍ·Î Àü¼ÛÇÑ´Ù.(¼Û½Å)
 
 
 
 		logger.debug("user check > " + json.get("id") + "/" + json.get("pw"));
 
 
-		String id = (String)json.get("id");//ï¿½Ì¸ï¿½ dataMapper.javaï¿½Ì¸ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï°ï¿½
+		String id = (String)json.get("id");//ÀÌ¸§ dataMapper.javaÀÌ¸§°ú µ¿ÀÏÇÏ°Ô
 		String pw = (String)json.get("pw");
 
 
@@ -80,7 +80,7 @@ public class Project {
 			}
 			else {
 				login.setSuccess(false);
-				login.setMessage("ï¿½ï¿½ï¿½Ìµï¿½ ï¿½Ç´ï¿½ ï¿½ï¿½ï¿½Ð¹ï¿½È£ï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ï¿½ï¿½ ï¿½Ê½ï¿½ï¿½Ï´ï¿½.");
+				login.setMessage("¾ÆÀÌµð ¶Ç´Â ºñ¹Ð¹øÈ£°¡ ÀÏÄ¡ÇÏÁö ¾Ê½À´Ï´Ù.");
 			}
 
 		}
@@ -92,7 +92,7 @@ public class Project {
 	}
 
 
-	//È¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	//È¸¿ø°¡ÀÔ
 	@RequestMapping(value="/signUp", method = RequestMethod.POST, consumes = "application/json")
 	public @ResponseBody SignUpResultVO SignUpCheck (@RequestBody Map<String, Object> json) {
 
@@ -119,12 +119,12 @@ public class Project {
 
 			dataMapper.SignUpCheck(memCode, id, pw, name, nickname, tmCode, birth, recBalloon, balloon, icon, sesAbsent, stuAbsent, totPenalty);
 			signUp.setSuccess(true);
-			signUp.setMessage("È¯ï¿½ï¿½ï¿½Õ´Ï´ï¿½^_^");
+			signUp.setMessage("È¯¿µÇÕ´Ï´Ù^_^");
 
 		} catch (Exception e) {
 
 			signUp.setSuccess(false);
-			signUp.setMessage("ï¿½Ô·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ìµï¿½ï¿½ï¿½ ï¿½Ì¹ï¿½ ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½Ìµï¿½ï¿½Ô´Ï´ï¿½. ï¿½Ù¸ï¿½ ï¿½ï¿½ï¿½Ìµï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö¼ï¿½ï¿½ï¿½");
+			signUp.setMessage("ÀÔ·ÂÇÑ ¾ÆÀÌµð´Â ÀÌ¹Ì ÀÖ´Â ¾ÆÀÌµðÀÔ´Ï´Ù. ´Ù¸¥ ¾ÆÀÌµð·Î °¡ÀÔÇØÁÖ¼¼¿ä");
 			e.printStackTrace();
 		}
 		return signUp;
@@ -133,7 +133,7 @@ public class Project {
 	}
 
 
-	//IDï¿½ßºï¿½È®ï¿½ï¿½
+	//IDÁßº¹È®ÀÎ
 	@RequestMapping(value = "/idCheck", method = RequestMethod.POST, consumes = "application/json")
 	public @ResponseBody IdCheckResultVO IdCheck(@RequestBody Map<String, Object> json) {
 
@@ -149,13 +149,13 @@ public class Project {
 //			logger.debug("user check > " + idCheckResult.size());
 			if(idCheckResult.isEmpty()) {
 				idCheck.setSuccess(true);
-				idCheck.setMessage("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½Ìµï¿½ï¿½Ô´Ï´ï¿½");
+				idCheck.setMessage("»ç¿ëÇÒ ¼ö ÀÖ´Â ¾ÆÀÌµðÀÔ´Ï´Ù");
 
 
 			}
 			else {
 				idCheck.setSuccess(false);
-				idCheck.setMessage("ï¿½Ô·ï¿½ï¿½Ï½ï¿½ ï¿½ï¿½ï¿½Ìµï¿½ï¿½ï¿½ ï¿½Ì¹ï¿½ ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½Ìµï¿½ ï¿½Ô´Ï´ï¿½. ï¿½Ù¸ï¿½ ï¿½ï¿½ï¿½Ìµï¿½ï¿½ï¿½ ï¿½Ô·ï¿½ï¿½ï¿½ï¿½Ö¼ï¿½ï¿½ï¿½");
+				idCheck.setMessage("ÀÔ·ÂÇÏ½Å ¾ÆÀÌµð´Â ÀÌ¹Ì ÀÖ´Â ¾ÆÀÌµð ÀÔ´Ï´Ù. ´Ù¸¥ ¾ÆÀÌµð¸¦ ÀÔ·ÂÇØÁÖ¼¼¿ä");
 
 			}
 
@@ -168,14 +168,14 @@ public class Project {
 	}
 
 
-	//È¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½(member table)ï¿½ï¿½ï¿½ï¿½ (? ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ã¼ È¸ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ? ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ç¿ï¿½ ï¿½Â´ï¿½ È¸ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ò·ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Þ¼Òµï¿½)
+	//È¸¿øÁ¤º¸(member table)Ãâ·Â (? Äõ¸®½ºÆ®¸µÀÌ ¾øÀ¸¸é ÀüÃ¼ È¸¿ø Á¤º¸ ´Ù °¡Á®¿À°í ? Äõ¸®½ºÆ®¸µÀÌ ÀÖÀ¸¸é Á¶°Ç¿¡ ¸Â´Â È¸¿ø Á¤º¸¸¸ ºÒ·¯¿À´Â ¸Þ¼Òµå)
 	@RequestMapping(value = "/getUserInfo", method = RequestMethod.GET)   //#getUsersInfo => getUserInfo
 	public @ResponseBody UserInfoResultVO getUserInfo(@RequestParam(value="memCode", required=false) Integer memCode, @RequestParam(value="tmCode", required=false) Integer tmCode) {
        UserInfoResultVO result = new UserInfoResultVO();
     	List<UserInfoVO> userInfoList = new ArrayList<UserInfoVO>();
     	if(memCode!=null){
     		try {
-    			
+
 				userInfoList = dataMapper.getUserInfoByMemCode(memCode);
 
 				result.setSuccess(true);
@@ -233,10 +233,10 @@ public class Project {
 
 
 
-	//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½=========================================================================================================================================
+	//ÆÀÆäÀÌÁö=========================================================================================================================================
 
 
-	//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½(team table) ï¿½ï¿½ï¿½ï¿½
+	//ÆÀÁ¤º¸(team table) Ãâ·Â
 	@RequestMapping(value = "/getTeamInfo", method = RequestMethod.GET)
 	public @ResponseBody TeamInfoResultVO getTeamInfo() {
 
@@ -261,7 +261,7 @@ public class Project {
    }
 
 
-	//ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Íµï¿½ï¿½ï¿½ï¿½ï¿½(study attendance table)
+	//ÆÀº° ½ºÅÍµðÃâ°á(study attendance table)
 	@RequestMapping(value = "/getStudyAttendance", method = RequestMethod.POST, consumes = "application/json")
 	public @ResponseBody StudyAttendanceResultVO getStudyAttendance(@RequestBody Map<String, Object> json) {
 
@@ -289,8 +289,8 @@ public class Project {
    }
 
 
-	//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Íµï¿½(study table)
-	@RequestMapping(value = "/getStudyManage", method = RequestMethod.GET)	//GETï¿½ï¿½ï¿½ï¿½ ï¿½Ù²Ù±ï¿½*****
+	//ÁÖÂ÷º° ½ºÅÍµð(study table)
+	@RequestMapping(value = "/getStudyManage", method = RequestMethod.GET)	//GETÀ¸·Î ¹Ù²Ù±â*****
 	public @ResponseBody StudyManageResultVO getStudyManage() {
 
 
@@ -318,7 +318,7 @@ public class Project {
    }
 
 
-	//ï¿½ï¿½ï¿½Íµï¿½ï¿½Þ¸ï¿½ ï¿½Û¾ï¿½ï¿½ï¿½
+	//½ºÅÍµð¸Þ¸ð ±Û¾²±â
 	@RequestMapping(value="/postStuMemo", method = RequestMethod.POST, consumes = "application/json")
 	public @ResponseBody PostStuMemoResultVO PostStuMemo (@RequestBody Map<String, Object> json) {
 
@@ -336,11 +336,11 @@ public class Project {
 
 			dataMapper.PostStuMemo(stuCode, tmCode, picture, absentee, memo, uploadTime);
 			postStuMemo.setSuccess(true);
-			postStuMemo.setMessage("ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ÏµÇ¾ï¿½ï¿½ï¿½ï¿½Ï´ï¿½");
+			postStuMemo.setMessage("±ÛÀÌ µî·ÏµÇ¾ú½À´Ï´Ù");
 
-			String[] absentee_array=absentee.split(",");	//*****json ï¿½Ä½ï¿½ï¿½Ø¼ï¿½ ï¿½Ì¸ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
-			for(String name:absentee_array) {				//*****ï¿½Ä½Ìµï¿½ ï¿½Ì¸ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½á¼®È½ï¿½ï¿½ï¿½ï¿½ 1 ï¿½ï¿½ï¿½ï¿½
-				try {											//*****sql ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ try catch.
+			String[] absentee_array=absentee.split(",");	//*****json ÆÄ½ÌÇØ¼­ ÀÌ¸§À» ¾òÀ½
+			for(String name:absentee_array) {				//*****ÆÄ½ÌµÈ ÀÌ¸§ÀÇ ¸â¹öÀÇ °á¼®È½¼ö¸¦ 1 ´õÇÔ
+				try {											//*****sql ¿¡·¯°¡ ³¯ ¼ö ÀÖÀ¸´Ï try catch.
 					dataMapper.updateStuAbsent(name);
 				}
 				catch (Exception e){
@@ -351,7 +351,7 @@ public class Project {
 		} catch (Exception e) {
 
 			postStuMemo.setSuccess(false);
-			postStuMemo.setMessage("ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ß½ï¿½ï¿½Ï´ï¿½");
+			postStuMemo.setMessage("±ÛÀ» µî·ÏÇÏÁö ¸øÇß½À´Ï´Ù");
 			e.printStackTrace();
 		}
 		return postStuMemo;
@@ -362,14 +362,14 @@ public class Project {
 
 
 
-	//ï¿½ï¿½ï¿½Íµï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½
+	//½ºÅÍµð ºÒÂüÀÚ ¸®½ºÆ® Ãâ·Â
 	@RequestMapping(value = "/selectAbsentee", method = RequestMethod.POST, consumes = "application/json")
-	public @ResponseBody UserInfoResultVO SelectAbsentee(@RequestBody Map<String, Object> json) {//ï¿½ï¿½ï¿½Ì½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	public @ResponseBody UserInfoResultVO SelectAbsentee(@RequestBody Map<String, Object> json) {//Á¦ÀÌ½¼À¸·Î °á°ú¸®ÅÏ
 
 		int tmCode = (int)json.get("tmCode");
 
-		UserInfoResultVO SelectAbsentee = new UserInfoResultVO();//ï¿½Ô¼ï¿½
-		ArrayList<UserInfoVO> tmMemberList= new ArrayList<UserInfoVO>();//ï¿½ï¿½ï¿½ï¿½Æ®
+		UserInfoResultVO SelectAbsentee = new UserInfoResultVO();//ÇÔ¼ö
+		ArrayList<UserInfoVO> tmMemberList= new ArrayList<UserInfoVO>();//¸®½ºÆ®
 
 
 		try {
@@ -399,14 +399,14 @@ public class Project {
 
 
 
-	//ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Íµï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+	//°³ÀÎ ´©Àû ½ºÅÍµð Ãâ°á Ãâ·Â
 		@RequestMapping(value = "/getStuAbsent", method = RequestMethod.POST, consumes = "application/json")
-		public @ResponseBody UserInfoResultVO GetStuAbsent(@RequestBody Map<String, Object> json) {//ï¿½ï¿½ï¿½Ì½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+		public @ResponseBody UserInfoResultVO GetStuAbsent(@RequestBody Map<String, Object> json) {//Á¦ÀÌ½¼À¸·Î °á°ú¸®ÅÏ
 
 			int memCode = (int)json.get("memCode");
 
-			UserInfoResultVO GetStuAbsent = new UserInfoResultVO();//ï¿½Ô¼ï¿½
-			ArrayList<UserInfoVO> totStuAbsent= new ArrayList<UserInfoVO>();//ï¿½ï¿½ï¿½ï¿½Æ®
+			UserInfoResultVO GetStuAbsent = new UserInfoResultVO();//ÇÔ¼ö
+			ArrayList<UserInfoVO> totStuAbsent= new ArrayList<UserInfoVO>();//¸®½ºÆ®
 
 
 			try {
@@ -438,11 +438,11 @@ public class Project {
 
 
 
-	//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½============================================================================================================================================
+	//¼¼¼ÇÆäÀÌÁö============================================================================================================================================
 
 
-	//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Îºï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½(session attendance table)
-	@RequestMapping(value = "/getSessionAttendance", method = RequestMethod.GET)   	//GETï¿½ï¿½ï¿½ï¿½ ï¿½Ù²Ù±ï¿½*****
+	//ÁÖÂ÷¿¡ µû¸¥ °³ÀÎº° ¼¼¼ÇÃâ°á(session attendance table)
+	@RequestMapping(value = "/getSessionAttendance", method = RequestMethod.GET)   	//GETÀ¸·Î ¹Ù²Ù±â*****
 	public @ResponseBody SessionAttendanceResultVO getSessionAttendance() {
 
 		SessionAttendanceResultVO result = new SessionAttendanceResultVO();
@@ -468,8 +468,8 @@ public class Project {
    }
 
 
-	//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½(session table)
-	@RequestMapping(value = "/getSessionManage", method = RequestMethod.GET)    	//GETï¿½ï¿½ï¿½ï¿½ ï¿½Ù²Ù±ï¿½*****
+	//ÁÖÂ÷º° ¼¼¼Ç, ¼¼¼ÇÁ¤º¸(session table)
+	@RequestMapping(value = "/getSessionManage", method = RequestMethod.GET)    	//GETÀ¸·Î ¹Ù²Ù±â*****
 	public @ResponseBody SessionManageResultVO getSessionManage() {
 
 
@@ -497,7 +497,7 @@ public class Project {
 
 
 
-	//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô·ï¿½
+	//¼¼¼ÇÁ¤º¸ÀÔ·Â
 	@RequestMapping(value="/postSesInfo", method = RequestMethod.POST, consumes = "application/json")
 	public @ResponseBody SessionManageResultVO PostSesInfo (@RequestBody Map<String, Object> json) {
 
@@ -514,12 +514,12 @@ public class Project {
 
 			dataMapper.PostSesInfo(sesCode, sesDate, sesInfo, sesContent);
 			postSesInfo.setSuccess(true);
-			postSesInfo.setMessage("ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ÏµÇ¾ï¿½ï¿½ï¿½ï¿½Ï´ï¿½");
+			postSesInfo.setMessage("±ÛÀÌ µî·ÏµÇ¾ú½À´Ï´Ù");
 
 		} catch (Exception e) {
 
 			postSesInfo.setSuccess(false);
-			postSesInfo.setMessage("ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ß½ï¿½ï¿½Ï´ï¿½");
+			postSesInfo.setMessage("±ÛÀ» µî·ÏÇÏÁö ¸øÇß½À´Ï´Ù");
 			e.printStackTrace();
 		}
 		return postSesInfo;
@@ -529,11 +529,11 @@ public class Project {
 
 
 
-	//ï¿½ï¿½ï¿½ï¿½ï¿½Ô½ï¿½ï¿½ï¿½=================================================================================================================================================
+	//ÀÚÀ¯°Ô½ÃÆÇ=================================================================================================================================================
 
 
-	//ï¿½ï¿½ï¿½ï¿½ï¿½Ô½ï¿½ï¿½ï¿½(free table)ï¿½ï¿½ï¿½ï¿½
-	@RequestMapping(value = "/getFreeBoard", method = RequestMethod.GET)    	//GETï¿½ï¿½ï¿½ï¿½ ï¿½Ù²Ù±ï¿½*****
+	//ÀÚÀ¯°Ô½ÃÆÇ(free table)Ãâ·Â
+	@RequestMapping(value = "/getFreeBoard", method = RequestMethod.GET)    	//GETÀ¸·Î ¹Ù²Ù±â*****
 	public @ResponseBody FreeBoardResultVO getFreeBoard() {
 
 		FreeBoardResultVO result = new FreeBoardResultVO();
@@ -559,7 +559,7 @@ public class Project {
    }
 
 
-	//ï¿½ï¿½ï¿½ï¿½ï¿½Ô½ï¿½ï¿½ï¿½ ï¿½Û¾ï¿½ï¿½ï¿½
+	//ÀÚÀ¯°Ô½ÃÆÇ ±Û¾²±â
 	@RequestMapping(value="/postFreeBoard", method = RequestMethod.POST, consumes = "application/json")
 	public @ResponseBody PostFreeResultVO PostFreeBoard (@RequestBody Map<String, Object> json) {
 
@@ -578,12 +578,12 @@ public class Project {
 
 			dataMapper.PostFreeBoard(freNum, freTitle, freContent, freDate, memCode);
 			postFreeBoard.setSuccess(true);
-			postFreeBoard.setMessage("ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ÏµÇ¾ï¿½ï¿½ï¿½ï¿½Ï´ï¿½");
+			postFreeBoard.setMessage("±ÛÀÌ µî·ÏµÇ¾ú½À´Ï´Ù");
 
 		} catch (Exception e) {
 
 			postFreeBoard.setSuccess(false);
-			postFreeBoard.setMessage("ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ß½ï¿½ï¿½Ï´ï¿½");
+			postFreeBoard.setMessage("±ÛÀ» µî·ÏÇÏÁö ¸øÇß½À´Ï´Ù");
 			e.printStackTrace();
 		}
 		return postFreeBoard;
