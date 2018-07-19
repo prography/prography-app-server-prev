@@ -38,36 +38,29 @@ import com.prography.appdev3.vo.TeamInfoVO;
 import com.prography.appdev3.vo.UserInfoResultVO;
 import com.prography.appdev3.vo.UserInfoVO;
 
-@RestController //이 클래스를 송수신을 담당하는 클래스로 지정
-				//이 아이를 사용해서 rest api를 만들수 있음 뷰를 만들어내는 것 뿐 아니라 데이터 처리를 위한 컨트롤러를 만들어낼 수 있음
+@RestController // 이 클래스를 송수신을 담당하는 클래스로 지정
+				// 이 아이를 사용해서 rest api를 만들수 있음 뷰를 만들어내는 것 뿐 아니라 데이터 처리를 위한 컨트롤러를 만들어낼 수 있음
 public class Project {
 	Logger logger = Logger.getLogger(this.getClass());
 
-	@Autowired	//bean이랑 비슷한 애 이거를 선언하면  getter setter를 자동으로 만들음
-    private dataMapper dataMapper;//dataMapper연결
+	@Autowired // bean이랑 비슷한 애 이거를 선언하면 getter setter를 자동으로 만들음
+	private dataMapper dataMapper;// dataMapper연결
 
+	// member=====================================================================================================================================
 
-
-
-	//member=====================================================================================================================================
-
-
-
-	//로그인
-	@RequestMapping(value = "/Login", method = RequestMethod.POST,consumes = "application/json")
-	public @ResponseBody LoginResultVO UserCheck(@RequestBody Map<String, Object> json) {//앱에서 객체로 주는 것을 제이슨으로 받아옴
-		// @RequestBody 어노테이션은 @RequestMapping에 의해 POST 방식으로 전송된 HTTP 요청 데이터를 String 타입의 body 파라미터로 전달된다.(수신)
-		// 그리고 @ResponseBody 어노테이션이 @RequestMapping 메서드에서 적용되면 해당 메서드의 리턴 값을 HTTP 응답 데이터로 사용한다.
+	// 로그인
+	@RequestMapping(value = "/Login", method = RequestMethod.POST, consumes = "application/json")
+	public @ResponseBody LoginResultVO UserCheck(@RequestBody Map<String, Object> json) {// 앱에서 객체로 주는 것을 제이슨으로 받아옴
+		// @RequestBody 어노테이션은 @RequestMapping에 의해 POST 방식으로 전송된 HTTP 요청 데이터를 String 타입의
+		// body 파라미터로 전달된다.(수신)
+		// 그리고 @ResponseBody 어노테이션이 @RequestMapping 메서드에서 적용되면 해당 메서드의 리턴 값을 HTTP 응답
+		// 데이터로 사용한다.
 		// simpleTest() 메서드의 리턴 값이 String 타입이므로 String 데이터를 HTTP 응답 데이터로 전송한다.(송신)
-
-
 
 		logger.debug("user check > " + json.get("id") + "/" + json.get("pw"));
 
-
-		String id = (String)json.get("id");//이름 dataMapper.java이름과 동일하게
-		String pw = (String)json.get("pw");
-
+		String id = (String) json.get("id");// 이름 dataMapper.java이름과 동일하게
+		String pw = (String) json.get("pw");
 
 		LoginResultVO login = new LoginResultVO();
 		ArrayList<LoginVO> loginresult = new ArrayList<LoginVO>();
@@ -75,25 +68,22 @@ public class Project {
 		try {
 			loginresult = dataMapper.UserCheck(id, pw);
 
-			if(loginresult.size()>0) {
+			if (loginresult.size() > 0) {
 				login.setSuccess(true);
 				login.setMessage(id);
-			}
-			else {
+			} else {
 				login.setSuccess(false);
 				login.setMessage("아이디 또는 비밀번호가 일치하지 않습니다.");
 			}
 
-		}
-		catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return login;
 
 	}
 
-
-	//ID중복확인
+	// ID중복확인
 	@RequestMapping(value = "/idCheck", method = RequestMethod.POST, consumes = "application/json")
 	public @ResponseBody IdCheckResultVO IdCheck(@RequestBody Map<String, Object> json) {
 
@@ -102,18 +92,15 @@ public class Project {
 		IdCheckResultVO idCheck = new IdCheckResultVO();
 		ArrayList<UserInfoVO> idCheckResult = new ArrayList<UserInfoVO>();
 
-
 		try {
 
-			idCheckResult=dataMapper.IdCheck(id);
-//			logger.debug("user check > " + idCheckResult.size());
-			if(idCheckResult.isEmpty()) {
+			idCheckResult = dataMapper.IdCheck(id);
+			// logger.debug("user check > " + idCheckResult.size());
+			if (idCheckResult.isEmpty()) {
 				idCheck.setSuccess(true);
 				idCheck.setMessage("사용할 수 있는 아이디입니다");
 
-
-			}
-			else {
+			} else {
 				idCheck.setSuccess(false);
 				idCheck.setMessage("입력하신 아이디는 이미 있는 아이디 입니다. 다른 아이디를 입력해주세요");
 
@@ -127,120 +114,100 @@ public class Project {
 
 	}
 
-	
-	
-	
-	
-	//회원가입
-		@RequestMapping(value="/member", method = RequestMethod.POST, consumes = "application/json")
-		public @ResponseBody SignUpResultVO SignUpCheck (@RequestBody Map<String, Object> json) {
+	// 회원가입
+	@RequestMapping(value = "/member", method = RequestMethod.POST, consumes = "application/json")
+	public @ResponseBody SignUpResultVO SignUpCheck(@RequestBody Map<String, Object> json) {
 
-			SignUpResultVO signUp = new SignUpResultVO();
+		SignUpResultVO signUp = new SignUpResultVO();
 
+		int memCode = (int) json.get("memCode");
+		String id = (String) json.get("id");
+		String pw = (String) json.get("pw");
+		String name = (String) json.get("name");
+		String nickname = (String) json.get("nickname");
+		int tmCode = (int) json.get("tmCode");
+		String birth = (String) json.get("birth");
+		int recBalloon = (int) json.get("recBalloon");
+		int balloon = (int) json.get("balloon");
+		String icon = (String) json.get("icon");
+		int sesAbsent = (int) json.get("sesAbsent");
+		int stuAbsent = (int) json.get("stuAbsent");
+		int totPenalty = (int) json.get("totPenalty");
 
-			int memCode = (int) json.get("memCode");
-			String id = (String) json.get("id");
-			String pw = (String) json.get("pw");
-			String name = (String) json.get("name");
-			String nickname = (String) json.get("nickname");
-			int tmCode = (int) json.get("tmCode");
-			String birth = (String) json.get("birth");
-			int recBalloon = (int) json.get("recBalloon");
-			int balloon = (int) json.get("balloon");
-			String icon = (String) json.get("icon");
-			int sesAbsent = (int) json.get("sesAbsent");
-			int stuAbsent = (int) json.get("stuAbsent");
-			int totPenalty = (int) json.get("totPenalty");
+		try {
 
+			dataMapper.SignUpCheck(memCode, id, pw, name, nickname, tmCode, birth, recBalloon, balloon, icon, sesAbsent,
+					stuAbsent, totPenalty);
+			signUp.setSuccess(true);
+			signUp.setMessage("환영합니다^_^");
 
+		} catch (Exception e) {
 
-			try {
-
-				dataMapper.SignUpCheck(memCode, id, pw, name, nickname, tmCode, birth, recBalloon, balloon, icon, sesAbsent, stuAbsent, totPenalty);
-				signUp.setSuccess(true);
-				signUp.setMessage("환영합니다^_^");
-
-			} catch (Exception e) {
-
-				signUp.setSuccess(false);
-				signUp.setMessage("입력한 아이디는 이미 있는 아이디입니다. 다른 아이디로 가입해주세요");
-				e.printStackTrace();
-			}
-			return signUp;
-
-
+			signUp.setSuccess(false);
+			signUp.setMessage("입력한 아이디는 이미 있는 아이디입니다. 다른 아이디로 가입해주세요");
+			e.printStackTrace();
 		}
-	
+		return signUp;
 
-	//회원정보(member table)출력
-	@RequestMapping(value = "/member", method = RequestMethod.GET)   //#getUsersInfo => getUserInfo
-	public @ResponseBody UserInfoResultVO getUserInfo(@RequestParam(value="memCode", required=false) Integer memCode, @RequestParam(value="tmCode", required=false) Integer tmCode) {
-       UserInfoResultVO result = new UserInfoResultVO();
-    	List<UserInfoVO> userInfoList = new ArrayList<UserInfoVO>();
-    	if(memCode!=null){
-    		try {
+	}
+
+	// 회원정보(member table)출력
+	@RequestMapping(value = "/member", method = RequestMethod.GET) // #getUsersInfo => getUserInfo
+	public @ResponseBody UserInfoResultVO getUserInfo(
+			@RequestParam(value = "memCode", required = false) Integer memCode,
+			@RequestParam(value = "tmCode", required = false) Integer tmCode) {
+		UserInfoResultVO result = new UserInfoResultVO();
+		List<UserInfoVO> userInfoList = new ArrayList<UserInfoVO>();
+		if (memCode != null) {
+			try {
 
 				userInfoList = dataMapper.getUserInfoByMemCode(memCode);
 
 				result.setSuccess(true);
 				result.setResultUserInfo(userInfoList);
-			}catch (Exception e) {
+			} catch (Exception e) {
 
 				e.printStackTrace();
 
 				result.setSuccess(false);
 				result.setResultUserInfo(null);
 			}
-    	}
-    	else if(tmCode!=null){
-    		try {
+		} else if (tmCode != null) {
+			try {
 
 				userInfoList = dataMapper.getUserInfoByTeam(tmCode);
 
 				result.setSuccess(true);
 				result.setResultUserInfo(userInfoList);
-			}catch (Exception e) {
+			} catch (Exception e) {
 
 				e.printStackTrace();
 
 				result.setSuccess(false);
 				result.setResultUserInfo(null);
 			}
-    	}
-    	else{
-    		try {
+		} else {
+			try {
 
 				userInfoList = dataMapper.getUserInfo();
 
 				result.setSuccess(true);
 				result.setResultUserInfo(userInfoList);
-			}catch (Exception e) {
+			} catch (Exception e) {
 
 				e.printStackTrace();
 
 				result.setSuccess(false);
 				result.setResultUserInfo(null);
 			}
-    	}
-
-
-
-
-
+		}
 
 		return result;
-   }
+	}
 
+	// 팀페이지=========================================================================================================================================
 
-
-
-
-
-
-	//팀페이지=========================================================================================================================================
-
-
-	//팀정보(team table) 출력
+	// 팀정보(team table) 출력
 	@RequestMapping(value = "/getTeamInfo", method = RequestMethod.GET)
 	public @ResponseBody TeamInfoResultVO getTeamInfo() {
 
@@ -252,7 +219,7 @@ public class Project {
 
 			result.setSuccess(true);
 			result.setResultTeamInfo(teamInfoList);
-		}catch (Exception e) {
+		} catch (Exception e) {
 
 			e.printStackTrace();
 
@@ -260,16 +227,14 @@ public class Project {
 			result.setResultTeamInfo(null);
 		}
 
-
 		return result;
-   }
+	}
 
-
-	//팀별 스터디출결(study attendance table)
+	// 팀별 스터디출결(study attendance table)
 	@RequestMapping(value = "/getStudyAttendance", method = RequestMethod.POST, consumes = "application/json")
 	public @ResponseBody StudyAttendanceResultVO getStudyAttendance(@RequestBody Map<String, Object> json) {
 
-		String getStudyAttendance = (String)json.get("getStudyAttendance");
+		String getStudyAttendance = (String) json.get("getStudyAttendance");
 
 		StudyAttendanceResultVO result = new StudyAttendanceResultVO();
 
@@ -279,7 +244,7 @@ public class Project {
 
 			result.setSuccess(true);
 			result.setResultStuAttendance(resultStuAttendance);
-		}catch (Exception e) {
+		} catch (Exception e) {
 			// TODO: handle exception
 
 			e.printStackTrace();
@@ -288,15 +253,12 @@ public class Project {
 			result.setResultStuAttendance(null);
 		}
 
-
 		return result;
-   }
+	}
 
-
-	//주차별 스터디(study table)
-	@RequestMapping(value = "/getStudyManage", method = RequestMethod.GET)	//GET으로 바꾸기*****
+	// 주차별 스터디(study table)
+	@RequestMapping(value = "/getStudyManage", method = RequestMethod.GET) // GET으로 바꾸기*****
 	public @ResponseBody StudyManageResultVO getStudyManage() {
-
 
 		StudyManageResultVO result = new StudyManageResultVO();
 
@@ -308,7 +270,7 @@ public class Project {
 
 			result.setSuccess(true);
 			result.setResultStudyManage(studyManageList);
-		}catch (Exception e) {
+		} catch (Exception e) {
 			// TODO: handle exception
 
 			e.printStackTrace();
@@ -317,14 +279,12 @@ public class Project {
 			result.setResultStudyManage(null);
 		}
 
-
 		return result;
-   }
+	}
 
-
-	//스터디메모 글쓰기
-	@RequestMapping(value="/postStuMemo", method = RequestMethod.POST, consumes = "application/json")
-	public @ResponseBody PostStuMemoResultVO PostStuMemo (@RequestBody Map<String, Object> json) {
+	// 스터디메모 글쓰기
+	@RequestMapping(value = "/postStuMemo", method = RequestMethod.POST, consumes = "application/json")
+	public @ResponseBody PostStuMemoResultVO PostStuMemo(@RequestBody Map<String, Object> json) {
 
 		PostStuMemoResultVO postStuMemo = new PostStuMemoResultVO();
 
@@ -335,19 +295,17 @@ public class Project {
 		String memo = (String) json.get("memo");
 		String uploadTime = (String) json.get("uploadTime");
 
-
 		try {
 
 			dataMapper.PostStuMemo(stuCode, tmCode, picture, absentee, memo, uploadTime);
 			postStuMemo.setSuccess(true);
 			postStuMemo.setMessage("글이 등록되었습니다");
 
-			String[] absentee_array=absentee.split(",");	//*****json 파싱해서 이름을 얻음
-			for(String name:absentee_array) {				//*****파싱된 이름의 멤버의 결석횟수를 1 더함
-				try {											//*****sql 에러가 날 수 있으니 try catch.
+			String[] absentee_array = absentee.split(","); // *****json 파싱해서 이름을 얻음
+			for (String name : absentee_array) { // *****파싱된 이름의 멤버의 결석횟수를 1 더함
+				try { // *****sql 에러가 날 수 있으니 try catch.
 					dataMapper.updateStuAbsent(name);
-				}
-				catch (Exception e){
+				} catch (Exception e) {
 					e.printStackTrace();
 				}
 			}
@@ -360,93 +318,76 @@ public class Project {
 		}
 		return postStuMemo;
 
-
 	}
 
-
-
-
-	//스터디 불참자 리스트 출력
+	// 스터디 불참자 리스트 출력
 	@RequestMapping(value = "/selectAbsentee", method = RequestMethod.POST, consumes = "application/json")
-	public @ResponseBody UserInfoResultVO SelectAbsentee(@RequestBody Map<String, Object> json) {//제이슨으로 결과리턴
+	public @ResponseBody UserInfoResultVO SelectAbsentee(@RequestBody Map<String, Object> json) {// 제이슨으로 결과리턴
 
-		int tmCode = (int)json.get("tmCode");
+		int tmCode = (int) json.get("tmCode");
 
-		UserInfoResultVO SelectAbsentee = new UserInfoResultVO();//함수
-		ArrayList<UserInfoVO> tmMemberList= new ArrayList<UserInfoVO>();//리스트
-
+		UserInfoResultVO SelectAbsentee = new UserInfoResultVO();// 함수
+		ArrayList<UserInfoVO> tmMemberList = new ArrayList<UserInfoVO>();// 리스트
 
 		try {
 
-			 tmMemberList = dataMapper.selectAbsentee(tmCode);
+			tmMemberList = dataMapper.selectAbsentee(tmCode);
 
-			 if(tmMemberList.size() > 0) {
+			if (tmMemberList.size() > 0) {
 
-				 SelectAbsentee.setSuccess(true);
-				 SelectAbsentee.setSelectAbsentee(tmMemberList);
+				SelectAbsentee.setSuccess(true);
+				SelectAbsentee.setSelectAbsentee(tmMemberList);
 
-			 }
+			}
 
-			 else {
-				 SelectAbsentee.setSuccess(false);
-			 }
+			else {
+				SelectAbsentee.setSuccess(false);
+			}
 
-
-		}catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 
 		}
 
-
 		return SelectAbsentee;
-   }
+	}
 
+	// 개인 누적 스터디 출결 출력
+	@RequestMapping(value = "/getStuAbsent", method = RequestMethod.POST, consumes = "application/json")
+	public @ResponseBody UserInfoResultVO GetStuAbsent(@RequestBody Map<String, Object> json) {// 제이슨으로 결과리턴
 
+		int memCode = (int) json.get("memCode");
 
-	//개인 누적 스터디 출결 출력
-		@RequestMapping(value = "/getStuAbsent", method = RequestMethod.POST, consumes = "application/json")
-		public @ResponseBody UserInfoResultVO GetStuAbsent(@RequestBody Map<String, Object> json) {//제이슨으로 결과리턴
+		UserInfoResultVO GetStuAbsent = new UserInfoResultVO();// 함수
+		ArrayList<UserInfoVO> totStuAbsent = new ArrayList<UserInfoVO>();// 리스트
 
-			int memCode = (int)json.get("memCode");
+		try {
 
-			UserInfoResultVO GetStuAbsent = new UserInfoResultVO();//함수
-			ArrayList<UserInfoVO> totStuAbsent= new ArrayList<UserInfoVO>();//리스트
+			totStuAbsent = dataMapper.getStuAbsent(memCode);
 
+			if (totStuAbsent.size() > 0) {
 
-			try {
-
-				 totStuAbsent = dataMapper.getStuAbsent(memCode);
-
-				 if(totStuAbsent.size() > 0) {
-
-					 GetStuAbsent.setSuccess(true);
-					 GetStuAbsent.setGetStuAbsent(totStuAbsent);
-
-				 }
-
-				 else {
-					 GetStuAbsent.setSuccess(false);
-				 }
-
-
-			}catch (Exception e) {
-				e.printStackTrace();
+				GetStuAbsent.setSuccess(true);
+				GetStuAbsent.setGetStuAbsent(totStuAbsent);
 
 			}
 
+			else {
+				GetStuAbsent.setSuccess(false);
+			}
 
-			return GetStuAbsent;
-	   }
+		} catch (Exception e) {
+			e.printStackTrace();
 
+		}
 
+		return GetStuAbsent;
+	}
 
+	// sessinAttendance===============================================================================================================
 
-
-	//세션페이지============================================================================================================================================
-
-
-	//주차에 따른 개인별 세션출결(session attendance table)
-	@RequestMapping(value = "/getSessionAttendance", method = RequestMethod.GET)   	//GET으로 바꾸기*****
+	// 주차에 따른 개인별 세션출결(session attendance table)
+	@RequestMapping(value = "/getSessionAttendance", method = RequestMethod.GET) // GET으로 바꾸기*****
 	public @ResponseBody SessionAttendanceResultVO getSessionAttendance() {
 
 		SessionAttendanceResultVO result = new SessionAttendanceResultVO();
@@ -458,7 +399,7 @@ public class Project {
 
 			result.setSuccess(true);
 			result.setResultSesAttendance(sesAttendanceList);
-		}catch (Exception e) {
+		} catch (Exception e) {
 			// TODO: handle exception
 
 			e.printStackTrace();
@@ -467,26 +408,25 @@ public class Project {
 			result.setResultSesAttendance(null);
 		}
 
-
 		return result;
-   }
+	}
 
+	// session============================================================================================================================================
 
-	//주차별 세션, 세션정보(session table)
-	@RequestMapping(value = "/getSessionManage", method = RequestMethod.GET)    	//GET으로 바꾸기*****
+	// 주차별 세션, 세션정보(session table)
+	@RequestMapping(value = "/session", method = RequestMethod.GET) // GET으로 바꾸기*****
 	public @ResponseBody SessionManageResultVO getSessionManage() {
 
-
 		SessionManageResultVO result = new SessionManageResultVO();
-		List<SessionManageVO> sessionManageList = new ArrayList<SessionManageVO>();
+		List<SessionManageVO> sessionList = new ArrayList<SessionManageVO>();
 
 		try {
 
-			sessionManageList = dataMapper.getSessionManage();
+			sessionList = dataMapper.getSession();
 
 			result.setSuccess(true);
-			result.setResultSessionManage(sessionManageList);
-		}catch (Exception e) {
+			result.setResultSessionManage(sessionList);
+		} catch (Exception e) {
 			// TODO: handle exception
 
 			e.printStackTrace();
@@ -495,49 +435,40 @@ public class Project {
 			result.setResultSessionManage(null);
 		}
 
-
 		return result;
-   }
+	}
 
+	// 세션정보입력
+	@RequestMapping(value = "/session", method = RequestMethod.POST, consumes = "application/json")
+	public @ResponseBody SessionManageResultVO PostSession(@RequestBody Map<String, Object> json) {
 
-
-	//세션정보입력
-	@RequestMapping(value="/postSesInfo", method = RequestMethod.POST, consumes = "application/json")
-	public @ResponseBody SessionManageResultVO PostSesInfo (@RequestBody Map<String, Object> json) {
-
-		SessionManageResultVO postSesInfo = new SessionManageResultVO();
+		SessionManageResultVO postSession = new SessionManageResultVO();
 
 		int sesCode = (int) json.get("sesCode");
 		String sesDate = (String) json.get("sesDate");
 		String sesInfo = (String) json.get("sesInfo");
 		String sesContent = (String) json.get("sesContent");
 
-
-
 		try {
 
-			dataMapper.PostSesInfo(sesCode, sesDate, sesInfo, sesContent);
-			postSesInfo.setSuccess(true);
-			postSesInfo.setMessage("글이 등록되었습니다");
+			dataMapper.PostSession(sesCode, sesDate, sesInfo, sesContent);
+			postSession.setSuccess(true);
+			postSession.setMessage("글이 등록되었습니다");
 
 		} catch (Exception e) {
 
-			postSesInfo.setSuccess(false);
-			postSesInfo.setMessage("글을 등록하지 못했습니다");
+			postSession.setSuccess(false);
+			postSession.setMessage("글을 등록하지 못했습니다");
 			e.printStackTrace();
 		}
-		return postSesInfo;
-
+		return postSession;
 
 	}
 
+	// freeBoard=================================================================================================================================================
 
-
-	//freeBoard=================================================================================================================================================
-
-
-	//자유게시판(free table)출력
-	@RequestMapping(value = "/freeBoard", method = RequestMethod.GET)    	//GET으로 바꾸기*****
+	// 자유게시판(free table)출력
+	@RequestMapping(value = "/freeBoard", method = RequestMethod.GET) // GET으로 바꾸기*****
 	public @ResponseBody FreeBoardResultVO getFreeBoard() {
 
 		FreeBoardResultVO result = new FreeBoardResultVO();
@@ -549,7 +480,7 @@ public class Project {
 
 			result.setSuccess(true);
 			result.setResultFreeBoard(freeBoardList);
-		}catch (Exception e) {
+		} catch (Exception e) {
 			// TODO: handle exception
 
 			e.printStackTrace();
@@ -558,25 +489,20 @@ public class Project {
 			result.setResultFreeBoard(null);
 		}
 
-
 		return result;
-   }
+	}
 
-
-	//자유게시판 글쓰기
-	@RequestMapping(value="/freeBoard", method = RequestMethod.POST, consumes = "application/json")
-	public @ResponseBody PostFreeResultVO PostFreeBoard (@RequestBody Map<String, Object> json) {
+	// 자유게시판 글쓰기
+	@RequestMapping(value = "/freeBoard", method = RequestMethod.POST, consumes = "application/json")
+	public @ResponseBody PostFreeResultVO PostFreeBoard(@RequestBody Map<String, Object> json) {
 
 		PostFreeResultVO result = new PostFreeResultVO();
-
 
 		int freNum = (int) json.get("freNum");
 		String freTitle = (String) json.get("freTitle");
 		String freContent = (String) json.get("freContent");
 		String freDate = (String) json.get("freDate");
 		int memCode = (int) json.get("memCode");
-
-
 
 		try {
 
@@ -592,24 +518,22 @@ public class Project {
 		}
 		return result;
 
-
 	}
-	
-	
-	
-	
-	@RequestMapping(value = "/freeBoard", method = RequestMethod.DELETE)    	
-	public @ResponseBody DeleteFreeResultVO DeleteFreeBoard(@RequestParam(value="freNum", required=false) Integer freNum, @RequestParam(value="memCode", required=false) Integer memCode) {
+
+	@RequestMapping(value = "/freeBoard", method = RequestMethod.DELETE)
+	public @ResponseBody DeleteFreeResultVO DeleteFreeBoard(
+			@RequestParam(value = "freNum", required = false) Integer freNum,
+			@RequestParam(value = "memCode", required = false) Integer memCode) {
 
 		DeleteFreeResultVO result = new DeleteFreeResultVO();
-		
-		int authorCode=dataMapper.getFreeBoardByFreNum(freNum).getMemCode();
-		if(memCode==authorCode) {	//여기에 운영진 글 삭제 권한 추가하기!
-			try {			
+
+		int authorCode = dataMapper.getFreeBoardByFreNum(freNum).getMemCode();
+		if (memCode == authorCode) { // 여기에 운영진 글 삭제 권한 추가하기!
+			try {
 				dataMapper.DeleteFreeBoard(freNum);
 				result.setSuccess(true);
 				result.setMessage("글이 삭제되었습니다.");
-			}catch (Exception e) {
+			} catch (Exception e) {
 				// TODO: handle exception
 
 				e.printStackTrace();
@@ -617,15 +541,12 @@ public class Project {
 				result.setSuccess(false);
 				result.setMessage("글을 삭제하지 못했습니다.");
 			}
-		}
-		else {
+		} else {
 			result.setSuccess(false);
 			result.setMessage("작성자 및 운영진만 글을 삭제할 수 있습니다.");
 		}
 
-
 		return result;
-   }
-
+	}
 
 }

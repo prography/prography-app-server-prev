@@ -37,8 +37,7 @@ public interface dataMapper {
 	// 팀 정보DB
 	public ArrayList<TeamInfoVO> getTeamsInfo() throws Exception;
 
-	// 세션 정보 입력
-	public void PostSesInfo(@Param("sesCode") int sesCode, @Param("sesDate") String sesDate, @Param("sesInfo") String sesInfo, @Param("sesContent") String sesContent);
+	
 
 	// 스터디 결석자 고르기
 	public ArrayList<UserInfoVO> selectAbsentee(@Param("tmCode") int tmCode);
@@ -62,13 +61,18 @@ public interface dataMapper {
 	// 주차에 따른 개인별 세션출결DB
 	public ArrayList<SessionAttendanceVO> getSessionAttendance() throws Exception;
 
+	
+	
+	//session table========================================================================================================
+	
 	// 주차별 세션DB
-	public ArrayList<SessionManageVO> getSessionManage() throws Exception;
+	public ArrayList<SessionManageVO> getSession() throws Exception;
+	// 세션 정보 입력
+	public void PostSession(@Param("sesCode") int sesCode, @Param("sesDate") String sesDate, @Param("sesInfo") String sesInfo, @Param("sesContent") String sesContent);
 	
 	
+	//free table========================================================================================================
 	
-	//free table=====================================================================================================================================================
-
 	// 자유게시판DB
 	public ArrayList<FreeBoardVO> getFreeBoard() throws Exception;
 	public FreeBoardVO getFreeBoardByFreNum(@Param("freNum") int freNum);
