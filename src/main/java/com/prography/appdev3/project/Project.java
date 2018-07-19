@@ -170,11 +170,11 @@ public class Project {
 
 	//ȸ������(member table)���� (? ������Ʈ���� ������ ��ü ȸ�� ���� �� �������� ? ������Ʈ���� ������ ���ǿ� �´� ȸ�� ������ �ҷ����� �޼ҵ�)
 	@RequestMapping(value = "/getUserInfo", method = RequestMethod.GET)   //#getUsersInfo => getUserInfo
-	public @ResponseBody UserInfoResultVO getUserInfo(@RequestParam(value="memCode", required=false) String memCode, @RequestParam(value="tmCode", required=false) String tmCode) {
+	public @ResponseBody UserInfoResultVO getUserInfo(@RequestParam(value="memCode", required=false) int memCode, @RequestParam(value="tmCode", required=false) int tmCode) {
        UserInfoResultVO result = new UserInfoResultVO();
     	List<UserInfoVO> userInfoList = new ArrayList<UserInfoVO>();
 
-    	if(memCode!=null){
+    	if(String.valueOf(memCode)!=null){
     		try {
 
 				userInfoList = dataMapper.getUserInfoByMemCode(memCode);
@@ -189,7 +189,7 @@ public class Project {
 				result.setResultUserInfo(null);
 			}
     	}
-    	else if(tmCode!=null){
+    	else if(String.valueOf(tmCode)!=null){
     		try {
 
 				userInfoList = dataMapper.getUserInfoByTeam(tmCode);
