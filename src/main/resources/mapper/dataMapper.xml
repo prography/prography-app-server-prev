@@ -21,9 +21,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
  	
  	
- 	<select id="getUsersInfo" resultType="com.prography.appdev3.vo.UserInfoVO">
+ 	<select id="getUserInfo" resultType="com.prography.appdev3.vo.UserInfoVO">
  		select * from member;
  	</select>
+ 	<select id="getUserInfoByName" resultType="com.prography.appdev3.vo.UserInfoVO">
+ 		select * from member where memCode = #{memCode};
+ 	</select>
+ 	<select id="getUserInfoByTeam" resultType="com.prography.appdev3.vo.UserInfoVO">
+ 		select * from member where tmCode = #{tmCode};
+ 	</select>
+ 	
+ 	
+ 	
  	
  	<!-- *****스터디 출석 정보 업데이트  -->
  	<update id="updateStuAbsent" parameterType="com.prography.appdev3.vo.UserInfoVO">	
@@ -77,6 +86,23 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  	<select id="getFreeBoard" resultType="com.prography.appdev3.vo.FreeBoardVO">
 		select * from free;
  	</select>
+ 	<select id="getFreeBoardByFreNum" resultType="com.prography.appdev3.vo.FreeBoardVO">
+		select * from free where freNum = #{freNum};
+ 	</select>
+ 	<select id="getFreeBoardByKeyword" resultType="com.prography.appdev3.vo.FreeBoardVO">
+		select * from free where freTitle LIKE freTitle = '%#{keyword}% ' or freContent = '%#{keyword}%;
+ 	</select>
+ 	<select id="getFreeBoardByMemCode" resultType="com.prography.appdev3.vo.FreeBoardVO">
+		select * from free where memCode = #{memCode};
+ 	</select>
+ 	
+ 	
+ 	
+ 	
+ 	<!-- 자유게시판DB입력 -->
+ 	<insert id="PostFreeBoard" parameterType = "com.prography.appdev3.vo.PostFreeBoardVO">
+    	INSERT INTO free VALUES (#{freNum},#{freTitle},#{freContent},#{freDate}, #{memCode});
+    </insert>
  	
  	
  	

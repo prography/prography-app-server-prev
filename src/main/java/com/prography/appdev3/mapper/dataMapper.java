@@ -30,7 +30,9 @@ public interface dataMapper {
 
 	public void addUserInfo(UserInfoVO userInfo) throws Exception;
 
-	public ArrayList<UserInfoVO> getUsersInfo() throws Exception;
+	public ArrayList<UserInfoVO> getUserInfo() throws Exception;
+	public ArrayList<UserInfoVO> getUserInfoByName(@Param("freNum") int freNum) throws Exception;
+	public ArrayList<UserInfoVO> getUserInfoByTeam(@Param("tmCode") int tmCode) throws Exception;
 
 	// 팀 정보DB
 	public ArrayList<TeamInfoVO> getTeamsInfo() throws Exception;
@@ -55,7 +57,7 @@ public interface dataMapper {
 			@Param("picture") String picture, @Param("absentee") String absentee, @Param("memo") String memo, @Param("uploadTime") String uploadTime);
 	
 	//***** 스터디 결석 업데이트
-	public void updateStuAbsent(String memberName);
+	public void updateStuAbsent(String name);
 	
 	// 주차에 따른 개인별 세션출결DB
 	public ArrayList<SessionAttendanceVO> getSessionAttendance() throws Exception;
@@ -65,7 +67,10 @@ public interface dataMapper {
 
 	// 자유게시판DB
 	public ArrayList<FreeBoardVO> getFreeBoard() throws Exception;
-
+	public ArrayList<FreeBoardVO> getFreeBoardByFreNum(@Param("freNum") int freNum);
+	public ArrayList<FreeBoardVO> getFreeBoardByKeyword(@Param("keyword") String keyword);
+	public ArrayList<FreeBoardVO> getFreeBoardByMemCode(@Param("memCode") int memCode);
+	
 	public void PostFreeBoard(@Param("freNum") int freNum, @Param("freTitle") String freTitle,
 			@Param("freContent") String freContent, @Param("freDate") String freDate, @Param("memCode") int memCode);
 

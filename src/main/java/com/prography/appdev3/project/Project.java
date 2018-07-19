@@ -168,7 +168,7 @@ public class Project {
 	
 
 	//회원정보(member table)출력
-	@RequestMapping(value = "/getUsersInfo", method = RequestMethod.GET)   //GET method 샘플*****(너가 원래 짜놓은 파일이랑 이거 비교해서 "GET으로 바꾸기" 바꿔놔!)
+	@RequestMapping(value = "/getUserInfo", method = RequestMethod.GET)   //GET method 샘플*****(너가 원래 짜놓은 파일이랑 이거 비교해서 "GET으로 바꾸기" 바꿔놔!)
 	public @ResponseBody UserInfoResultVO getUserInfo() {
         
 		UserInfoResultVO result = new UserInfoResultVO();
@@ -176,7 +176,7 @@ public class Project {
 		List<UserInfoVO> userInfoList = new ArrayList<UserInfoVO>();
 		try {
 
-			userInfoList = dataMapper.getUsersInfo();
+			userInfoList = dataMapper.getUserInfo();
 			
 			result.setSuccess(true);
 			result.setResultUserInfo(userInfoList);
