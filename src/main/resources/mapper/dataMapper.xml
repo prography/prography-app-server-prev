@@ -83,7 +83,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  	
  	
  	
- 	<!-- 자유게시판DB -->
+ 	<!-- free table=====================================================================================================-->
+ 	
+ 	
+ 	<!-- 자유게시판DB 출력 및 검색 -->
  	<select id="getFreeBoard" resultType="com.prography.appdev3.vo.FreeBoardVO">
 		select * from free;
  	</select>
@@ -104,7 +107,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     	INSERT INTO free VALUES (#{freNum},#{freTitle},#{freContent},#{freDate}, #{memCode});
     </insert>
  	
- 	<!-- 자유게시판DB입력 -->
+ 	<!-- 자유게시판DB삭제 -->
  	<delete id="DeleteFreeBoard">
  		DELETE FROM free WHERE freNum=#{freNum};
  	</delete>

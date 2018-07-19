@@ -64,6 +64,10 @@ public interface dataMapper {
 
 	// 주차별 세션DB
 	public ArrayList<SessionManageVO> getSessionManage() throws Exception;
+	
+	
+	
+	//free table=====================================================================================================================================================
 
 	// 자유게시판DB
 	public ArrayList<FreeBoardVO> getFreeBoard() throws Exception;

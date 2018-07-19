@@ -178,7 +178,6 @@ public class Project {
        UserInfoResultVO result = new UserInfoResultVO();
     	List<UserInfoVO> userInfoList = new ArrayList<UserInfoVO>();
     	if(memCode!=null){
-    		
     		try {
 
 				userInfoList = dataMapper.getUserInfoByMemCode(memCode);
@@ -534,11 +533,11 @@ public class Project {
 
 
 
-	//자유게시판=================================================================================================================================================
+	//freeBoard=================================================================================================================================================
 
 
 	//자유게시판(free table)출력
-	@RequestMapping(value = "/getFreeBoard", method = RequestMethod.GET)    	//GET으로 바꾸기*****
+	@RequestMapping(value = "/freeBoard", method = RequestMethod.GET)    	//GET으로 바꾸기*****
 	public @ResponseBody FreeBoardResultVO getFreeBoard() {
 
 		FreeBoardResultVO result = new FreeBoardResultVO();
@@ -565,7 +564,7 @@ public class Project {
 
 
 	//자유게시판 글쓰기
-	@RequestMapping(value="/postFreeBoard", method = RequestMethod.POST, consumes = "application/json")
+	@RequestMapping(value="/freeBoard", method = RequestMethod.POST, consumes = "application/json")
 	public @ResponseBody PostFreeResultVO PostFreeBoard (@RequestBody Map<String, Object> json) {
 
 		PostFreeResultVO result = new PostFreeResultVO();
@@ -599,7 +598,7 @@ public class Project {
 	
 	
 	
-	@RequestMapping(value = "/getFreeBoard", method = RequestMethod.DELETE)    	
+	@RequestMapping(value = "/freeBoard", method = RequestMethod.DELETE)    	
 	public @ResponseBody DeleteFreeResultVO DeleteFreeBoard(@RequestParam(value="freNum", required=false) Integer freNum, @RequestParam(value="memCode", required=false) Integer memCode) {
 
 		DeleteFreeResultVO result = new DeleteFreeResultVO();
