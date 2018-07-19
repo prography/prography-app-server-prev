@@ -205,20 +205,57 @@ public class Project {
 		return result;
 	}
 
-	// 팀페이지=========================================================================================================================================
+	
+	// 개인 누적 스터디 출결 출력
+		@RequestMapping(value = "/getStuAbsent", method = RequestMethod.POST, consumes = "application/json")
+		public @ResponseBody UserInfoResultVO GetStuAbsent(@RequestBody Map<String, Object> json) {// 제이슨으로 결과리턴
 
-	// 팀정보(team table) 출력
-	@RequestMapping(value = "/getTeamInfo", method = RequestMethod.GET)
+			int memCode = (int) json.get("memCode");
+
+			UserInfoResultVO GetStuAbsent = new UserInfoResultVO();// 함수
+			ArrayList<UserInfoVO> totStuAbsent = new ArrayList<UserInfoVO>();// 리스트
+
+			try {
+
+				totStuAbsent = dataMapper.getStuAbsent(memCode);
+
+				if (totStuAbsent.size() > 0) {
+
+					GetStuAbsent.setSuccess(true);
+					GetStuAbsent.setGetStuAbsent(totStuAbsent);
+
+				}
+
+				else {
+					GetStuAbsent.setSuccess(false);
+				}
+
+			} catch (Exception e) {
+				e.printStackTrace();
+
+			}
+
+			return GetStuAbsent;
+		}
+	
+	
+	
+	
+	
+	// team=========================================================================================================================================
+
+	@RequestMapping(value = "/team", method = RequestMethod.GET)
 	public @ResponseBody TeamInfoResultVO getTeamInfo() {
 
 		TeamInfoResultVO result = new TeamInfoResultVO();
+		List<TeamInfoVO> teamList = new ArrayList<TeamInfoVO>();
 
 		try {
 
-			List<TeamInfoVO> teamInfoList = dataMapper.getTeamsInfo();
+			teamList = dataMapper.getTeamsInfo();
 
 			result.setSuccess(true);
-			result.setResultTeamInfo(teamInfoList);
+			result.setResultTeamInfo(teamList);
 		} catch (Exception e) {
 
 			e.printStackTrace();
@@ -229,6 +266,11 @@ public class Project {
 
 		return result;
 	}
+	
+	
+	
+	
+	
 
 	// 팀별 스터디출결(study attendance table)
 	@RequestMapping(value = "/getStudyAttendance", method = RequestMethod.POST, consumes = "application/json")
@@ -352,37 +394,16 @@ public class Project {
 		return SelectAbsentee;
 	}
 
-	// 개인 누적 스터디 출결 출력
-	@RequestMapping(value = "/getStuAbsent", method = RequestMethod.POST, consumes = "application/json")
-	public @ResponseBody UserInfoResultVO GetStuAbsent(@RequestBody Map<String, Object> json) {// 제이슨으로 결과리턴
-
-		int memCode = (int) json.get("memCode");
-
-		UserInfoResultVO GetStuAbsent = new UserInfoResultVO();// 함수
-		ArrayList<UserInfoVO> totStuAbsent = new ArrayList<UserInfoVO>();// 리스트
-
-		try {
-
-			totStuAbsent = dataMapper.getStuAbsent(memCode);
-
-			if (totStuAbsent.size() > 0) {
-
-				GetStuAbsent.setSuccess(true);
-				GetStuAbsent.setGetStuAbsent(totStuAbsent);
-
-			}
-
-			else {
-				GetStuAbsent.setSuccess(false);
-			}
-
-		} catch (Exception e) {
-			e.printStackTrace();
-
-		}
-
-		return GetStuAbsent;
-	}
+	
+	
+	// studyAttendance===============================================================================================================
+	
+	
+	
+	
+	
+	
+	
 
 	
 	

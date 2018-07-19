@@ -16,7 +16,7 @@ import com.prography.appdev3.vo.UserInfoVO;
 
 public interface dataMapper {
 
-	// 사용자 정보DB
+	// member table========================================================================================================
 	public ArrayList<LoginVO> UserCheck(@Param("id") String id, @Param("pw") String pw);// 누가 로그인하는지 알려줌
 
 	public void SignUpCheck(@Param("memCode") int memCode, @Param("id") String id, @Param("pw") String pw,
@@ -35,9 +35,19 @@ public interface dataMapper {
 
 	public ArrayList<UserInfoVO> getUserInfoByTeam(@Param("tmCode") int tmCode) throws Exception;
 
-	// 팀 정보DB
+	
+	
+	
+	
+	
+	// team table========================================================================================================
 	public ArrayList<TeamInfoVO> getTeamsInfo() throws Exception;
 
+	
+	
+	
+	
+	
 	// 스터디 결석자 고르기
 	public ArrayList<UserInfoVO> selectAbsentee(@Param("tmCode") int tmCode);
 

@@ -32,9 +32,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 
 
-
-
-
 	<!-- *****스터디 출석 정보 업데이트 -->
 	<update id="updateStuAbsent" parameterType="com.prography.appdev3.vo.UserInfoVO">
 		update member set
@@ -43,10 +40,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</update>
 
 
-	<!-- 팀 정보DB -->
+
+
+
+	<!-- team table===================================================================================================== -->
+
 	<select id="getTeamsInfo" resultType="com.prography.appdev3.vo.TeamInfoVO">
 		select * from team;
 	</select>
+
+
 
 
 
