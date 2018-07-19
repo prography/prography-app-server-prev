@@ -8,16 +8,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<!-- member table===================================================================================================== -->
 
 
-	<select id="UserCheck" parameterType="String" resultType="com.prography.appdev3.vo.LoginVO">
+	<select id="userCheck" parameterType="String" resultType="com.prography.appdev3.vo.LoginVO">
 		select * from member where id = #{id} and pw = #{pw};
 	</select><!-- 로그인 -->
 
-	<select id="IdCheck" resultType="com.prography.appdev3.vo.IdCheckVO">
+	<select id="idCheck" resultType="com.prography.appdev3.vo.IdCheckVO">
 		select id from member where id = #{id};
 	</select><!-- id 중복확인 -->
 
 
-	<insert id="SignUpCheck" parameterType="com.prography.appdev3.vo.SignUpVO">
+	<insert id="signUpCheck" parameterType="com.prography.appdev3.vo.SignUpVO">
 		INSERT INTO member VALUES (#{memCode},#{id},#{pw},#{name}, #{nickname},#{tmCode}, #{birth}, #{recBalloon}, #{balloon}, #{icon}, #{sesAbsent}, #{stuAbsent}, #{totPenalty});
 	</insert><!-- 회원가입 -->
 
@@ -30,15 +30,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="getUserInfoByTeam" resultType="com.prography.appdev3.vo.UserInfoVO">
 		select * from member where tmCode = #{tmCode};
 	</select>
-
-
-	<!-- *****스터디 출석 정보 업데이트 -->
-	<update id="updateStuAbsent" parameterType="com.prography.appdev3.vo.UserInfoVO">
-		update member set
-		stuAbsent = stuAbsent+1
-		where name = #{name}
-	</update>
-
+	<!-- getStuAbsent/selectAbsentee-->
 
 
 
@@ -58,9 +50,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select * from studyAttendance;
 	</select>
 	
-	<insert id="PostStuMemo" parameterType="com.prography.appdev3.vo.PostStuMemoVO">
+	<insert id="postStuMemo" parameterType="com.prography.appdev3.vo.PostStuMemoVO">
 		insert into studyAttendance VALUES (#{stuCode},#{tmCode},#{picture},#{absentee}, #{memo}, #{uploadTime});
 	</insert>
+
+	<!-- *****스터디 출석 정보 업데이트 -->
+	<update id="updateStuAbsent" parameterType="com.prography.appdev3.vo.UserInfoVO">
+		update member set
+		stuAbsent = stuAbsent+1
+		where name = #{name}
+	</update>
 
 
 
@@ -85,7 +84,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select * from sessionAttendance;
 	</select>
 
-	<insert id="PostSessionAttendance" parameterType="com.prography.appdev3.vo.SessionAttendanceVO">
+	<insert id="postSessionAttendance" parameterType="com.prography.appdev3.vo.SessionAttendanceVO">
 		INSERT INTO sessionAttendance VALUES (#{sesCode},#{memCode},#{sesAttendance},#{late}, #{penalty});
 	</insert>
 
@@ -100,7 +99,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select * from session;
 	</select>
 
-	<insert id="PostSession" parameterType="com.prography.appdev3.vo.SessionManageVO">
+	<insert id="postSession" parameterType="com.prography.appdev3.vo.SessionManageVO">
 		INSERT INTO session VALUES (#{sesCode},#{sesDate},#{sesInfo},#{sesContent});
 	</insert>
 
@@ -128,12 +127,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 
 	<!-- 자유게시판DB입력 -->
-	<insert id="PostFreeBoard" parameterType="com.prography.appdev3.vo.PostFreeBoardVO">
+	<insert id="postFreeBoard" parameterType="com.prography.appdev3.vo.PostFreeBoardVO">
 		INSERT INTO free VALUES (#{freNum},#{freTitle},#{freContent},#{freDate},#{memCode});
 	</insert>
 
 	<!-- 자유게시판DB삭제 -->
-	<delete id="DeleteFreeBoard">
+	<delete id="deleteFreeBoard">
 		DELETE FROM free WHERE freNum=#{freNum};
 	</delete>
 

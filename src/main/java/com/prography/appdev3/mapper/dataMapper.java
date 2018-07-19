@@ -17,26 +17,26 @@ import com.prography.appdev3.vo.UserInfoVO;
 public interface dataMapper {
 
 	// member table========================================================================================================
-	public ArrayList<LoginVO> UserCheck(@Param("id") String id, @Param("pw") String pw);// 누가 로그인하는지 알려줌
+	public ArrayList<LoginVO> userCheck(@Param("id") String id, @Param("pw") String pw);// 누가 로그인하는지 알려줌
 
-	public void SignUpCheck(@Param("memCode") int memCode, @Param("id") String id, @Param("pw") String pw,
+	public ArrayList<UserInfoVO> idCheck(@Param("id") String id);
+	
+	public void signUpCheck(@Param("memCode") int memCode, @Param("id") String id, @Param("pw") String pw,
 			@Param("name") String name, @Param("nickname") String nickname, @Param("tmCode") int tmCode,
 			@Param("birth") String birth, @Param("recBalloon") int recBalloon, @Param("balloon") int balloon,
 			@Param("icon") String icon, @Param("sesAbsent") int sesAbsent, @Param("stuAbsent") int stuAbsent,
 			@Param("totPenalty") int totPenalty);
 
-	public ArrayList<UserInfoVO> IdCheck(@Param("id") String id);
-
-	public void addUserInfo(UserInfoVO userInfo) throws Exception;
-
 	public ArrayList<UserInfoVO> getUserInfo() throws Exception;
-
 	public ArrayList<UserInfoVO> getUserInfoByMemCode(@Param("memCode") int memCode) throws Exception;
-
 	public ArrayList<UserInfoVO> getUserInfoByTeam(@Param("tmCode") int tmCode) throws Exception;
 
 	
-	
+	// 개인 누적 스터디 출결 출력
+	public ArrayList<UserInfoVO> getStuAbsent(@Param("memCode") int memCode);
+
+	// 스터디 결석자 고르기
+	public ArrayList<UserInfoVO> selectAbsentee(@Param("tmCode") int tmCode);
 	
 	
 	
@@ -46,31 +46,15 @@ public interface dataMapper {
 	
 	
 	
-	
-	
-	// 스터디 결석자 고르기
-	public ArrayList<UserInfoVO> selectAbsentee(@Param("tmCode") int tmCode);
-
-	// 팀별 스터디 출결DB
-	public ArrayList<StudyAttendanceVO> getStudyAttendance() throws Exception;
-
-	// 개인 누적 스터디 출결 출력
-	public ArrayList<UserInfoVO> getStuAbsent(@Param("memCode") int memCode);
-
-	
-
-	// 스터디 메모 글쓰기
-	public void PostStuMemo(@Param("stuCode") int stuCode, @Param("tmCode") int tmCode,
-			@Param("picture") String picture, @Param("absentee") String absentee, @Param("memo") String memo,
-			@Param("uploadTime") String uploadTime);
-
-	// ***** 스터디 결석 업데이트
-	public void updateStuAbsent(String name);
-	
-	
 	// studyAttendance table========================================================================================================
 	
+	public ArrayList<StudyAttendanceVO> getStudyAttendance() throws Exception;
+
+	public void postStudyAttendance(@Param("stuCode") int stuCode, @Param("tmCode") int tmCode,
+			@Param("picture") String picture, @Param("absentee") String absentee, @Param("memo") String memo, @Param("uploadTime") String uploadTime);
 	
+	// ***** 스터디 결석 업데이트
+	public void updateStuAbsent(String name);
 	
 	
 	
@@ -84,7 +68,7 @@ public interface dataMapper {
 
 	public ArrayList<SessionAttendanceVO> getSessionAttendance() throws Exception;
 
-	public void PostSessionAttendance(@Param("sesCode") int sesCode, @Param("memCode") int memCode, @Param("sesAttendance") int sesAttendance, @Param("late") int late, @Param("penalty") int penalty);
+	public void postSessionAttendance(@Param("sesCode") int sesCode, @Param("memCode") int memCode, @Param("sesAttendance") int sesAttendance, @Param("late") int late, @Param("penalty") int penalty);
 
 
 	
@@ -93,7 +77,7 @@ public interface dataMapper {
 
 	public ArrayList<SessionManageVO> getSession() throws Exception;
 	
-	public void PostSession(@Param("sesCode") int sesCode, @Param("sesDate") String sesDate, @Param("sesInfo") String sesInfo, @Param("sesContent") String sesContent);
+	public void postSession(@Param("sesCode") int sesCode, @Param("sesDate") String sesDate, @Param("sesInfo") String sesInfo, @Param("sesContent") String sesContent);
 	
 	
 	
@@ -107,10 +91,10 @@ public interface dataMapper {
 
 	public ArrayList<FreeBoardVO> getFreeBoardByMemCode(@Param("memCode") int memCode);
 
-	public void PostFreeBoard(@Param("freNum") int freNum, @Param("freTitle") String freTitle,
+	public void postFreeBoard(@Param("freNum") int freNum, @Param("freTitle") String freTitle,
 			@Param("freContent") String freContent, @Param("freDate") String freDate, @Param("memCode") int memCode);
 
-	public void DeleteFreeBoard(Integer freNum);
+	public void deleteFreeBoard(Integer freNum);
 
 	
 
