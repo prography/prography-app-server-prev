@@ -67,12 +67,14 @@ public interface dataMapper {
 
 	// 자유게시판DB
 	public ArrayList<FreeBoardVO> getFreeBoard() throws Exception;
-	public ArrayList<FreeBoardVO> getFreeBoardByFreNum(@Param("freNum") int freNum);
+	public FreeBoardVO getFreeBoardByFreNum(@Param("freNum") int freNum);
 	public ArrayList<FreeBoardVO> getFreeBoardByKeyword(@Param("keyword") String keyword);
 	public ArrayList<FreeBoardVO> getFreeBoardByMemCode(@Param("memCode") int memCode);
 	
 	public void PostFreeBoard(@Param("freNum") int freNum, @Param("freTitle") String freTitle,
 			@Param("freContent") String freContent, @Param("freDate") String freDate, @Param("memCode") int memCode);
+
+	public void DeleteFreeBoard(Integer freNum);
 
 	
 	

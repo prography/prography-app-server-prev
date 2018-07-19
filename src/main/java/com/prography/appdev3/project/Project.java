@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.apache.commons.*;
 
 import com.prography.appdev3.mapper.dataMapper;
+import com.prography.appdev3.vo.DeleteFreeResultVO;
 import com.prography.appdev3.vo.FreeBoardResultVO;
 import com.prography.appdev3.vo.FreeBoardVO;
 import com.prography.appdev3.vo.IdCheckResultVO;
@@ -168,7 +169,7 @@ public class Project {
 	}
 
 
-	//회원정보(member table)출력 (? 쿼리스트링이 없으면 전체 회원 정보 다 가져오고 ? 쿼리스트링이 있으면 조건에 맞는 회원 정보만 불러오는 메소드)
+	//회원정보(member table)출력
 	@RequestMapping(value = "/getUserInfo", method = RequestMethod.GET)   //#getUsersInfo => getUserInfo
 	public @ResponseBody UserInfoResultVO getUserInfo(@RequestParam(value="memCode", required=false) Integer memCode, @RequestParam(value="tmCode", required=false) Integer tmCode) {
        UserInfoResultVO result = new UserInfoResultVO();
@@ -563,7 +564,7 @@ public class Project {
 	@RequestMapping(value="/postFreeBoard", method = RequestMethod.POST, consumes = "application/json")
 	public @ResponseBody PostFreeResultVO PostFreeBoard (@RequestBody Map<String, Object> json) {
 
-		PostFreeResultVO postFreeBoard = new PostFreeResultVO();
+		PostFreeResultVO result = new PostFreeResultVO();
 
 
 		int freNum = (int) json.get("freNum");
@@ -577,19 +578,51 @@ public class Project {
 		try {
 
 			dataMapper.PostFreeBoard(freNum, freTitle, freContent, freDate, memCode);
-			postFreeBoard.setSuccess(true);
-			postFreeBoard.setMessage("글이 등록되었습니다");
+			result.setSuccess(true);
+			result.setMessage("글이 등록되었습니다");
 
 		} catch (Exception e) {
 
-			postFreeBoard.setSuccess(false);
-			postFreeBoard.setMessage("글을 등록하지 못했습니다");
+			result.setSuccess(false);
+			result.setMessage("글을 등록하지 못했습니다");
 			e.printStackTrace();
 		}
-		return postFreeBoard;
+		return result;
 
 
 	}
+	
+	
+	
+	
+	@RequestMapping(value = "/getFreeBoard", method = RequestMethod.DELETE)    	
+	public @ResponseBody DeleteFreeResultVO DeleteFreeBoard(@RequestParam(value="freNum", required=false) Integer freNum, @RequestParam(value="memCode", required=false) Integer memCode) {
+
+		DeleteFreeResultVO result = new DeleteFreeResultVO();
+		
+		int authorCode=dataMapper.getFreeBoardByFreNum(freNum).getMemCode();
+		if(memCode==authorCode) {	//여기에 운영진 글 삭제 권한 추가하기!
+			try {			
+				dataMapper.DeleteFreeBoard(freNum);
+				result.setSuccess(true);
+				result.setMessage("글이 삭제되었습니다.");
+			}catch (Exception e) {
+				// TODO: handle exception
+
+				e.printStackTrace();
+
+				result.setSuccess(false);
+				result.setMessage("글을 삭제하지 못했습니다.");
+			}
+		}
+		else {
+			result.setSuccess(false);
+			result.setMessage("작성자 및 운영진만 글을 삭제할 수 있습니다.");
+		}
+
+
+		return result;
+   }
 
 
 }
