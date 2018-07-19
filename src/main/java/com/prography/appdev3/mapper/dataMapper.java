@@ -57,8 +57,7 @@ public interface dataMapper {
 	// 개인 누적 스터디 출결 출력
 	public ArrayList<UserInfoVO> getStuAbsent(@Param("memCode") int memCode);
 
-	// 주차별 스터디DB
-	public ArrayList<StudyManageVO> getStudyManage() throws Exception;
+	
 
 	// 스터디 메모 글쓰기
 	public void PostStuMemo(@Param("stuCode") int stuCode, @Param("tmCode") int tmCode,
@@ -68,6 +67,16 @@ public interface dataMapper {
 	// ***** 스터디 결석 업데이트
 	public void updateStuAbsent(String name);
 	
+	
+	// studyAttendance table========================================================================================================
+	
+	
+	
+	
+	
+	// study table========================================================================================================
+	
+	public ArrayList<StudyManageVO> getStudy() throws Exception;
 	
 	
 

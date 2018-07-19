@@ -48,27 +48,32 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="getTeamsInfo" resultType="com.prography.appdev3.vo.TeamInfoVO">
 		select * from team;
 	</select>
-
-
-
-
-
-	<!-- 팀별 스터디 출결DB -->
+	
+	
+	
+	
+	<!-- studyAttendance table===================================================================================================== -->
+	
 	<select id="getStudyAttendance" resultType="com.prography.appdev3.vo.StudyAttendanceVO">
 		select * from studyAttendance;
 	</select>
+	
+	<insert id="PostStuMemo" parameterType="com.prography.appdev3.vo.PostStuMemoVO">
+		insert into studyAttendance VALUES (#{stuCode},#{tmCode},#{picture},#{absentee}, #{memo}, #{uploadTime});
+	</insert>
 
 
 
-	<!-- 주차별 스터디DB -->
-	<select id="getStudyManage" resultType="com.prography.appdev3.vo.StudyManageVO">
+
+
+	<!-- study table===================================================================================================== -->
+
+	<select id="getStudy" resultType="com.prography.appdev3.vo.StudyManageVO">
 		select * from study;
 	</select>
 
 
-	<insert id="PostStuMemo" parameterType="com.prography.appdev3.vo.PostStuMemoVO">
-		insert into studyAttendance VALUES (#{stuCode},#{tmCode},#{picture},#{absentee}, #{memo}, #{uploadTime});
-	</insert>
+	
 
 
 

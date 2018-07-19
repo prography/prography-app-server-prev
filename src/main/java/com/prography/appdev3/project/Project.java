@@ -298,69 +298,9 @@ public class Project {
 		return result;
 	}
 
-	// 주차별 스터디(study table)
-	@RequestMapping(value = "/getStudyManage", method = RequestMethod.GET) // GET으로 바꾸기*****
-	public @ResponseBody StudyManageResultVO getStudyManage() {
+	
 
-		StudyManageResultVO result = new StudyManageResultVO();
-
-		List<StudyManageVO> studyManageList = new ArrayList<StudyManageVO>();
-
-		try {
-
-			studyManageList = dataMapper.getStudyManage();
-
-			result.setSuccess(true);
-			result.setResultStudyManage(studyManageList);
-		} catch (Exception e) {
-			// TODO: handle exception
-
-			e.printStackTrace();
-
-			result.setSuccess(false);
-			result.setResultStudyManage(null);
-		}
-
-		return result;
-	}
-
-	// 스터디메모 글쓰기
-	@RequestMapping(value = "/postStuMemo", method = RequestMethod.POST, consumes = "application/json")
-	public @ResponseBody PostStuMemoResultVO PostStuMemo(@RequestBody Map<String, Object> json) {
-
-		PostStuMemoResultVO postStuMemo = new PostStuMemoResultVO();
-
-		int stuCode = (int) json.get("stuCode");
-		int tmCode = (int) json.get("tmCode");
-		String picture = (String) json.get("picture");
-		String absentee = (String) json.get("absentee");
-		String memo = (String) json.get("memo");
-		String uploadTime = (String) json.get("uploadTime");
-
-		try {
-
-			dataMapper.PostStuMemo(stuCode, tmCode, picture, absentee, memo, uploadTime);
-			postStuMemo.setSuccess(true);
-			postStuMemo.setMessage("글이 등록되었습니다");
-
-			String[] absentee_array = absentee.split(","); // *****json 파싱해서 이름을 얻음
-			for (String name : absentee_array) { // *****파싱된 이름의 멤버의 결석횟수를 1 더함
-				try { // *****sql 에러가 날 수 있으니 try catch.
-					dataMapper.updateStuAbsent(name);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-
-		} catch (Exception e) {
-
-			postStuMemo.setSuccess(false);
-			postStuMemo.setMessage("글을 등록하지 못했습니다");
-			e.printStackTrace();
-		}
-		return postStuMemo;
-
-	}
+	
 
 	// 스터디 불참자 리스트 출력
 	@RequestMapping(value = "/selectAbsentee", method = RequestMethod.POST, consumes = "application/json")
@@ -398,15 +338,79 @@ public class Project {
 	
 	// studyAttendance===============================================================================================================
 	
+	// 스터디메모 글쓰기
+		@RequestMapping(value = "/postStuMemo", method = RequestMethod.POST, consumes = "application/json")
+		public @ResponseBody PostStuMemoResultVO PostStuMemo(@RequestBody Map<String, Object> json) {
+
+			PostStuMemoResultVO postStuMemo = new PostStuMemoResultVO();
+
+			int stuCode = (int) json.get("stuCode");
+			int tmCode = (int) json.get("tmCode");
+			String picture = (String) json.get("picture");
+			String absentee = (String) json.get("absentee");
+			String memo = (String) json.get("memo");
+			String uploadTime = (String) json.get("uploadTime");
+
+			try {
+
+				dataMapper.PostStuMemo(stuCode, tmCode, picture, absentee, memo, uploadTime);
+				postStuMemo.setSuccess(true);
+				postStuMemo.setMessage("글이 등록되었습니다");
+
+				String[] absentee_array = absentee.split(","); // *****json 파싱해서 이름을 얻음
+				for (String name : absentee_array) { // *****파싱된 이름의 멤버의 결석횟수를 1 더함
+					try { // *****sql 에러가 날 수 있으니 try catch.
+						dataMapper.updateStuAbsent(name);
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+
+			} catch (Exception e) {
+
+				postStuMemo.setSuccess(false);
+				postStuMemo.setMessage("글을 등록하지 못했습니다");
+				e.printStackTrace();
+			}
+			return postStuMemo;
+
+		}
 	
 	
 	
 	
+	
+	
+	// study==========================================================================================================================
+	
+	//주차별 스터디 출력
+	@RequestMapping(value = "/study", method = RequestMethod.GET) 
+	public @ResponseBody StudyManageResultVO getStudyManage() {
+
+		StudyManageResultVO result = new StudyManageResultVO();
+
+		List<StudyManageVO> studyList = new ArrayList<StudyManageVO>();
+
+		try {
+
+			studyList = dataMapper.getStudy();
+
+			result.setSuccess(true);
+			result.setResultStudyManage(studyList);
+		} catch (Exception e) {
+			// TODO: handle exception
+
+			e.printStackTrace();
+
+			result.setSuccess(false);
+			result.setResultStudyManage(null);
+		}
+
+		return result;
+	}
 	
 	
 
-	
-	
 	
 	
 	
