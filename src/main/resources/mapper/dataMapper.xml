@@ -50,7 +50,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select * from studyAttendance;
 	</select>
 	
-	<insert id="postStuMemo" parameterType="com.prography.appdev3.vo.PostStuMemoVO">
+	<insert id="postStudyAttendance" parameterType="com.prography.appdev3.vo.PostStuMemoVO">
 		insert into studyAttendance VALUES (#{stuCode},#{tmCode},#{picture},#{absentee}, #{memo}, #{uploadTime});
 	</insert>
 
