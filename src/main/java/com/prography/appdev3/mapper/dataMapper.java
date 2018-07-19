@@ -31,7 +31,7 @@ public interface dataMapper {
 	public void addUserInfo(UserInfoVO userInfo) throws Exception;
 
 	public ArrayList<UserInfoVO> getUserInfo() throws Exception;
-	public ArrayList<UserInfoVO> getUserInfoByName(@Param("freNum") int freNum) throws Exception;
+	public ArrayList<UserInfoVO> getUserInfoByMemCode(@Param("memCode") int memCode) throws Exception;
 	public ArrayList<UserInfoVO> getUserInfoByTeam(@Param("tmCode") int tmCode) throws Exception;
 
 	// ÆÀ Á¤º¸DB

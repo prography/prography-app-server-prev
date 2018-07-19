@@ -24,12 +24,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  	<select id="getUserInfo" resultType="com.prography.appdev3.vo.UserInfoVO">
  		select * from member;
  	</select>
- 	<select id="getUserInfoByName" resultType="com.prography.appdev3.vo.UserInfoVO">
+ 	<select id="getUserInfoByMemCode" resultType="com.prography.appdev3.vo.UserInfoVO">
  		select * from member where memCode = #{memCode};
  	</select>
  	<select id="getUserInfoByTeam" resultType="com.prography.appdev3.vo.UserInfoVO">
  		select * from member where tmCode = #{tmCode};
  	</select>
+ 	
  	
  	
  	
