@@ -70,6 +70,8 @@ public interface dataMapper {
 
 	public void postSessionAttendance(@Param("sesCode") int sesCode, @Param("memCode") int memCode, @Param("sesAttendance") int sesAttendance, @Param("late") int late, @Param("penalty") int penalty);
 
+	// ***** 세션 결석 업데이트
+	public void updateSesAbsent(int memCode);
 
 	
 	

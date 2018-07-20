@@ -449,6 +449,14 @@ public class Project {
 			dataMapper.postSessionAttendance(sesCode, memCode, sesAttendance, late, penalty);
 			PostSessionAttendance.setSuccess(true);
 			PostSessionAttendance.setMessage("세션 출결정보가 등록되었습니다");
+			
+			if (sesAttendance == 0) {//출석정보가 0이면 결석횟수를 1더함
+				try {
+					dataMapper.updateSesAbsent(memCode);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
 
 		} catch (Exception e) {
 
@@ -518,6 +526,9 @@ public class Project {
 		return postSession;
 
 	}
+	
+	
+	
 
 	
 	
@@ -550,7 +561,7 @@ public class Project {
 				result.setResultFreeBoard(null);
 			}
 		} else if (keyword != null) { //키워드로 글 검색(제목,본문에서 일치하는 결과 출력)
-																								//########################ERROR##########################
+			//########################ERROR##########################
 			try {
 
 				freeBoardList =  dataMapper.getFreeBoardByKeyword(keyword);
