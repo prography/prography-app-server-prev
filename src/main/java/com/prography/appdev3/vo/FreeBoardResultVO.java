@@ -22,5 +22,9 @@ public class FreeBoardResultVO {	//free table¿ª arrayList∑Œ π≠æÓ¡‹
 	public void setResultFreeBoard(List<FreeBoardVO> freeBoardList) {
 		this.freeBoardList = freeBoardList;
 	}
+	public void setMessage(String string) {
+		// TODO Auto-generated method stub
+		
+	}
 	
 }

@@ -161,7 +161,7 @@ public class Project {
 		if (memCode != null) {
 			try {
 
-				userInfoList = dataMapper.getUserInfoByMemCode(memCode);
+				userInfoList = dataMapper.getUserInfoByMemCode(memCode);//memCode로 누구정보 가져올건지 출력
 
 				result.setSuccess(true);
 				result.setResultUserInfo(userInfoList);
@@ -527,26 +527,66 @@ public class Project {
 
 	// 자유게시판(free table)출력
 	@RequestMapping(value = "/freeBoard", method = RequestMethod.GET)
-	public @ResponseBody FreeBoardResultVO getFreeBoard() {
+	public @ResponseBody FreeBoardResultVO getFreeBoard(
+			@RequestParam(value = "memCode", required = false) Integer memCode, 
+			@RequestParam(value = "keyword", required = false) String keyword) {
 
 		FreeBoardResultVO result = new FreeBoardResultVO();
 		List<FreeBoardVO> freeBoardList = new ArrayList<FreeBoardVO>();
+		
+		if (memCode != null) { //내가 쓴글 보기
 
-		try {
+			try {
 
-			freeBoardList = dataMapper.getFreeBoard();
+				freeBoardList = dataMapper.getFreeBoardByMemCode(memCode);
 
-			result.setSuccess(true);
-			result.setResultFreeBoard(freeBoardList);
-		} catch (Exception e) {
-			// TODO: handle exception
+				result.setSuccess(true);
+				result.setResultFreeBoard(freeBoardList);
+			} catch (Exception e) {
+				
+				e.printStackTrace();
 
-			e.printStackTrace();
+				result.setSuccess(false);
+				result.setResultFreeBoard(null);
+			}
+		} else if (keyword != null) { //키워드로 글 검색(제목,본문에서 일치하는 결과 출력)
+																								//########################ERROR##########################
+			try {
 
-			result.setSuccess(false);
-			result.setResultFreeBoard(null);
+				freeBoardList =  dataMapper.getFreeBoardByKeyword(keyword);
+
+				result.setSuccess(true);
+				result.setResultFreeBoard(freeBoardList);
+			} catch (Exception e) {
+				
+				e.printStackTrace();
+
+				result.setSuccess(false);
+				result.setMessage("검색 결과가 없습니다.");
+				result.setResultFreeBoard(null);
+			}
+			
+			
+		} else { //글 리스트 출력
+			
+			try {
+
+				freeBoardList = dataMapper.getFreeBoard();
+
+				result.setSuccess(true);
+				result.setResultFreeBoard(freeBoardList);
+			} catch (Exception e) {
+				
+				e.printStackTrace();
+
+				result.setSuccess(false);
+				result.setResultFreeBoard(null);
+			}
+			
 		}
-
+		
+		
+		
 		return result;
 	}
 

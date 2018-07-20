@@ -28,15 +28,15 @@ public interface dataMapper {
 			@Param("totPenalty") int totPenalty);
 
 	public ArrayList<UserInfoVO> getUserInfo() throws Exception;
-	public ArrayList<UserInfoVO> getUserInfoByMemCode(@Param("memCode") int memCode) throws Exception;
-	public ArrayList<UserInfoVO> getUserInfoByTeam(@Param("tmCode") int tmCode) throws Exception;
+	public ArrayList<UserInfoVO> getUserInfoByMemCode(@Param("memCode") int memCode) throws Exception;//######
+	public ArrayList<UserInfoVO> getUserInfoByTeam(@Param("tmCode") int tmCode) throws Exception;//######
 
 	
 	// 개인 누적 스터디 출결 출력
-	public ArrayList<UserInfoVO> getStuAbsent(@Param("memCode") int memCode);
+	public ArrayList<UserInfoVO> getStuAbsent(@Param("memCode") int memCode);//######
 
 	// 스터디 결석자 고르기
-	public ArrayList<UserInfoVO> selectAbsentee(@Param("tmCode") int tmCode);
+	public ArrayList<UserInfoVO> selectAbsentee(@Param("tmCode") int tmCode);//######
 	
 	
 	
@@ -85,11 +85,11 @@ public interface dataMapper {
 
 	public ArrayList<FreeBoardVO> getFreeBoard() throws Exception;
 
-	public FreeBoardVO getFreeBoardByFreNum(@Param("freNum") int freNum);
+	public FreeBoardVO getFreeBoardByFreNum(@Param("freNum") int freNum);//######
 
-	public ArrayList<FreeBoardVO> getFreeBoardByKeyword(@Param("keyword") String keyword);
+	public ArrayList<FreeBoardVO> getFreeBoardByKeyword(@Param("keyword") String keyword);//######
 
-	public ArrayList<FreeBoardVO> getFreeBoardByMemCode(@Param("memCode") int memCode);
+	public ArrayList<FreeBoardVO> getFreeBoardByMemCode(@Param("memCode") int memCode);//######
 
 	public void postFreeBoard(@Param("freNum") int freNum, @Param("freTitle") String freTitle,
 			@Param("freContent") String freContent, @Param("freDate") String freDate, @Param("memCode") int memCode);
