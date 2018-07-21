@@ -30,6 +30,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="getUserInfoByTeam" resultType="com.prography.appdev3.vo.UserInfoVO">
 		select * from member where tmCode = #{tmCode};
 	</select>
+	<select id="getUserInfoByBirth" resultType="com.prography.appdev3.vo.UserInfoVO">
+		select * from member where birth like concat('%-',#{month},'-%');
+	</select>	
+	
 	<!-- getStuAbsent/selectAbsentee-->
 	
 	<select id="getPenaltyRanking" resultType= "java.lang.String">
@@ -92,12 +96,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		INSERT INTO sessionAttendance VALUES (#{sesCode},#{memCode},#{sesAttendance},#{late}, #{penalty});
 	</insert>
 	
-	<!-- 세션 출석 정보 업데이트 -->
+	<select id="getPenaltyByMemCode" resultType= "com.prography.appdev3.vo.SessionAttendanceVO">
+		select * from sessionAttendance where memCode = #{memCode};
+	</select><!-- 주차 지각비 출력 -->
+	
 	<update id="updateSesAbsent" parameterType="com.prography.appdev3.vo.UserInfoVO">
 		update member set
 		sesAbsent = sesAbsent+1
 		where memCode = #{memCode}
-	</update>
+	</update><!-- 세션 출석 정보 업데이트 -->
 
 
 
@@ -129,7 +136,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<select id="getFreeBoardByKeyword" resultType="com.prography.appdev3.vo.FreeBoardVO">
-		select * from free where freTitle LIKE freTitle = '%#{keyword}% ' or freContent = '%#{keyword}%;
+		select * from free where freTitle LIKE  concat('%',#{keyword},'%') or freContent LIKE  concat('%',#{keyword},'%');
 	</select>
 	
 	<select id="getFreeBoardByMemCode" resultType="com.prography.appdev3.vo.FreeBoardVO">

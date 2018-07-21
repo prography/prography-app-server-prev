@@ -30,7 +30,8 @@ public interface dataMapper {
 	public ArrayList<UserInfoVO> getUserInfo() throws Exception;
 	public ArrayList<UserInfoVO> getUserInfoByMemCode(@Param("memCode") int memCode) throws Exception;//#####
 	public ArrayList<UserInfoVO> getUserInfoByTeam(@Param("tmCode") int tmCode) throws Exception;//#####
-
+	public ArrayList<UserInfoVO> getUserInfoByBirth(@Param("month") int month) throws Exception;//#####
+	
 	//세션 결석 업데이트
 	public void updateSesAbsent(int memCode);
 	
@@ -69,7 +70,9 @@ public interface dataMapper {
 	public ArrayList<SessionAttendanceVO> getSessionAttendance() throws Exception;
 
 	public void postSessionAttendance(@Param("sesCode") int sesCode, @Param("memCode") int memCode, @Param("sesAttendance") int sesAttendance, @Param("late") int late, @Param("penalty") int penalty);
-
+	
+	//주차 지각비 출력
+	public ArrayList<SessionAttendanceVO> getPenaltyByMemCode(@Param("memCode") int memCode) throws Exception;
 
 	
 	
