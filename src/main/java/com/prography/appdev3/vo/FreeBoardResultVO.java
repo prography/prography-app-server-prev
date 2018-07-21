@@ -7,6 +7,7 @@ public class FreeBoardResultVO {	//free table¿ª arrayList∑Œ π≠æÓ¡‹
 
 	
 	private boolean success = false;
+	public String Message = "";
 	private List<FreeBoardVO> freeBoardList = new ArrayList<FreeBoardVO>();
 	
 	
@@ -22,5 +23,13 @@ public class FreeBoardResultVO {	//free table¿ª arrayList∑Œ π≠æÓ¡‹
 	public void setResultFreeBoard(List<FreeBoardVO> freeBoardList) {
 		this.freeBoardList = freeBoardList;
 	}
+	public String getMessage() {
+		return Message;
+	}
+	public void setMessage(String message) {
+		Message = message;
+	}
+	
+	
 	
 }
