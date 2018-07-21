@@ -206,69 +206,69 @@ public class Project {
 		return result;
 	}
 	
-	// 개인 누적 스터디 출결 출력
-		@RequestMapping(value = "/getStuAbsent", method = RequestMethod.POST, consumes = "application/json")
-		public @ResponseBody UserInfoResultVO getStuAbsent(@RequestBody Map<String, Object> json) {// 제이슨으로 결과리턴
-
-			int memCode = (int) json.get("memCode");
-
-			UserInfoResultVO GetStuAbsent = new UserInfoResultVO();// 함수
-			ArrayList<UserInfoVO> totStuAbsent = new ArrayList<UserInfoVO>();// 리스트
-
-			try {
-
-				totStuAbsent = dataMapper.getStuAbsent(memCode);
-
-				if (totStuAbsent.size() > 0) {
-
-					GetStuAbsent.setSuccess(true);
-					GetStuAbsent.setGetStuAbsent(totStuAbsent);
-
-				}
-
-				else {
-					GetStuAbsent.setSuccess(false);
-				}
-
-			} catch (Exception e) {
-				e.printStackTrace();
-
-			}
-
-			return GetStuAbsent;
-		}
+//	// 개인 누적 스터디 출결 출력
+//		@RequestMapping(value = "/getStuAbsent", method = RequestMethod.POST, consumes = "application/json")
+//		public @ResponseBody UserInfoResultVO getStuAbsent(@RequestBody Map<String, Object> json) {// 제이슨으로 결과리턴
+//
+//			int memCode = (int) json.get("memCode");
+//
+//			UserInfoResultVO GetStuAbsent = new UserInfoResultVO();// 함수
+//			ArrayList<UserInfoVO> totStuAbsent = new ArrayList<UserInfoVO>();// 리스트
+//
+//			try {
+//
+//				totStuAbsent = dataMapper.getUserInfo(memCode);
+//
+//				if (totStuAbsent.size() > 0) {
+//
+//					GetStuAbsent.setSuccess(true);
+//					GetStuAbsent.setGetStuAbsent(totStuAbsent);
+//
+//				}
+//
+//				else {
+//					GetStuAbsent.setSuccess(false);
+//				}
+//
+//			} catch (Exception e) {
+//				e.printStackTrace();
+//
+//			}
+//
+//			return GetStuAbsent;
+//		}
 	
-		// 스터디 불참자 리스트 출력
-		@RequestMapping(value = "/selectAbsentee", method = RequestMethod.POST, consumes = "application/json")
-		public @ResponseBody UserInfoResultVO SelectAbsentee(@RequestBody Map<String, Object> json) {// 제이슨으로 결과리턴
-
-			int tmCode = (int) json.get("tmCode");
-
-			UserInfoResultVO SelectAbsentee = new UserInfoResultVO();// 함수
-			ArrayList<UserInfoVO> tmMemberList = new ArrayList<UserInfoVO>();// 리스트
-
-			try {
-
-				tmMemberList = dataMapper.selectAbsentee(tmCode);
-
-				if (tmMemberList.size() > 0) {
-
-					SelectAbsentee.setSuccess(true);
-					SelectAbsentee.setSelectAbsentee(tmMemberList);
-
-				}
-
-				else {
-					SelectAbsentee.setSuccess(false);
-				}
-
-			} catch (Exception e) {
-				e.printStackTrace();
-
-			}
-
-			return SelectAbsentee;
-		}
+//		// 스터디 불참자 리스트 출력
+//		@RequestMapping(value = "/selectAbsentee", method = RequestMethod.POST, consumes = "application/json")
+//		public @ResponseBody UserInfoResultVO SelectAbsentee(@RequestBody Map<String, Object> json) {// 제이슨으로 결과리턴
+//
+//			int tmCode = (int) json.get("tmCode");
+//
+//			UserInfoResultVO SelectAbsentee = new UserInfoResultVO();// 함수
+//			ArrayList<UserInfoVO> tmMemberList = new ArrayList<UserInfoVO>();// 리스트
+//
+//			try {
+//
+//				tmMemberList = dataMapper.getUserInfoByTeam(tmCode);
+//
+//				if (tmMemberList.size() > 0) {
+//
+//					SelectAbsentee.setSuccess(true);
+//					SelectAbsentee.setSelectAbsentee(tmMemberList);
+//
+//				}
+//
+//				else {
+//					SelectAbsentee.setSuccess(false);
+//				}
+//
+//			} catch (Exception e) {
+//				e.printStackTrace();
+//
+//			}
+//
+//			return SelectAbsentee;
+//		}
 	
 	
 	
@@ -450,6 +450,14 @@ public class Project {
 			dataMapper.postSessionAttendance(sesCode, memCode, sesAttendance, late, penalty);
 			PostSessionAttendance.setSuccess(true);
 			PostSessionAttendance.setMessage("세션 출결정보가 등록되었습니다");
+			
+			if (sesAttendance == 0) {//출석정보가 0이면 결석횟수 1더함
+				try {
+					dataMapper.updateSesAbsent(memCode);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
 
 		} catch (Exception e) {
 

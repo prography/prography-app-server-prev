@@ -31,12 +31,9 @@ public interface dataMapper {
 	public ArrayList<UserInfoVO> getUserInfoByMemCode(@Param("memCode") int memCode) throws Exception;//#####
 	public ArrayList<UserInfoVO> getUserInfoByTeam(@Param("tmCode") int tmCode) throws Exception;//#####
 
+	//세션 결석 업데이트
+	public void updateSesAbsent(int memCode);
 	
-	// 개인 누적 스터디 출결 출력
-	public ArrayList<UserInfoVO> getStuAbsent(@Param("memCode") int memCode);//#####
-
-	// 스터디 결석자 고르기
-	public ArrayList<UserInfoVO> selectAbsentee(@Param("tmCode") int tmCode);//#####
 	
 	
 	
