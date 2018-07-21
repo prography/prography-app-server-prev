@@ -34,6 +34,9 @@ public interface dataMapper {
 	//세션 결석 업데이트
 	public void updateSesAbsent(int memCode);
 	
+	//지각비 명예의 전당
+	public ArrayList<String> getPenaltyRanking() throws Exception;
+	
 	
 	
 	

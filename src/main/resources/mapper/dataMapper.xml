@@ -31,6 +31,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select * from member where tmCode = #{tmCode};
 	</select>
 	<!-- getStuAbsent/selectAbsentee-->
+	
+	<select id="getPenaltyRanking" resultType= "java.lang.String">
+		select name from member order by totPenalty DESC;
+	</select><!-- 지각비 랭킹 -->
 
 
 

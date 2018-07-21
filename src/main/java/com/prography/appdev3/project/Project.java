@@ -176,7 +176,7 @@ public class Project {
 		} else if (tmCode != null) {
 			try {
 
-				userInfoList = dataMapper.getUserInfoByTeam(tmCode);
+				userInfoList = dataMapper.getUserInfoByTeam(tmCode); //스터디메모 등록시 결석자 후보 출력
 
 				result.setSuccess(true);
 				result.setResultUserInfo(userInfoList);
@@ -190,7 +190,7 @@ public class Project {
 		} else {
 			try {
 
-				userInfoList = dataMapper.getUserInfo();
+				userInfoList = dataMapper.getUserInfo();//전체 회원정보 출력
 
 				result.setSuccess(true);
 				result.setResultUserInfo(userInfoList);
@@ -206,69 +206,36 @@ public class Project {
 		return result;
 	}
 	
-//	// 개인 누적 스터디 출결 출력
-//		@RequestMapping(value = "/getStuAbsent", method = RequestMethod.POST, consumes = "application/json")
-//		public @ResponseBody UserInfoResultVO getStuAbsent(@RequestBody Map<String, Object> json) {// 제이슨으로 결과리턴
-//
-//			int memCode = (int) json.get("memCode");
-//
-//			UserInfoResultVO GetStuAbsent = new UserInfoResultVO();// 함수
-//			ArrayList<UserInfoVO> totStuAbsent = new ArrayList<UserInfoVO>();// 리스트
-//
-//			try {
-//
-//				totStuAbsent = dataMapper.getUserInfo(memCode);
-//
-//				if (totStuAbsent.size() > 0) {
-//
-//					GetStuAbsent.setSuccess(true);
-//					GetStuAbsent.setGetStuAbsent(totStuAbsent);
-//
-//				}
-//
-//				else {
-//					GetStuAbsent.setSuccess(false);
-//				}
-//
-//			} catch (Exception e) {
-//				e.printStackTrace();
-//
-//			}
-//
-//			return GetStuAbsent;
-//		}
 	
-//		// 스터디 불참자 리스트 출력
-//		@RequestMapping(value = "/selectAbsentee", method = RequestMethod.POST, consumes = "application/json")
-//		public @ResponseBody UserInfoResultVO SelectAbsentee(@RequestBody Map<String, Object> json) {// 제이슨으로 결과리턴
-//
-//			int tmCode = (int) json.get("tmCode");
-//
-//			UserInfoResultVO SelectAbsentee = new UserInfoResultVO();// 함수
-//			ArrayList<UserInfoVO> tmMemberList = new ArrayList<UserInfoVO>();// 리스트
-//
-//			try {
-//
-//				tmMemberList = dataMapper.getUserInfoByTeam(tmCode);
-//
-//				if (tmMemberList.size() > 0) {
-//
-//					SelectAbsentee.setSuccess(true);
-//					SelectAbsentee.setSelectAbsentee(tmMemberList);
-//
-//				}
-//
-//				else {
-//					SelectAbsentee.setSuccess(false);
-//				}
-//
-//			} catch (Exception e) {
-//				e.printStackTrace();
-//
-//			}
-//
-//			return SelectAbsentee;
-//		}
+	//지각비 랭킹 출력
+	@RequestMapping(value = "/getPenaltyRanking", method = RequestMethod.GET)
+			public @ResponseBody ArrayList<String> getPenaltyRanking() {
+	
+				//UserInfoResultVO result = new UserInfoResultVO();
+				
+				//List<UserInfoVO> temp = new ArrayList<UserInfoVO>();
+				//List<UserInfoVO> penaltyRankingList= new ArrayList<UserInfoVO>();
+				
+				ArrayList<String> penaltyRankingList = new ArrayList<String>();
+				try {
+	
+					ArrayList<String> temp = dataMapper.getPenaltyRanking();
+					for(int i=0;i<3;i++) {
+						penaltyRankingList.add(temp.get(i));
+					}
+					
+					//result.setSuccess(true);
+					//result.setResultUserInfo(penaltyRankingList);
+				} catch (Exception e) {
+	
+					e.printStackTrace();
+	
+					//result.setSuccess(false);
+					//result.setResultUserInfo(null);
+				}
+	
+				return penaltyRankingList;
+			}
 	
 	
 	
