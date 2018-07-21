@@ -175,7 +175,7 @@ public class Project {
 		} else if (tmCode != null) {
 			try {
 
-				userInfoList = dataMapper.getUserInfoByTeam(tmCode);
+				userInfoList = dataMapper.getUserInfoByTeam(tmCode); //스터디 메모 등록할때 결적자 후보 출력
 
 				result.setSuccess(true);
 				result.setResultUserInfo(userInfoList);
@@ -189,7 +189,7 @@ public class Project {
 		} else {
 			try {
 
-				userInfoList = dataMapper.getUserInfo();
+				userInfoList = dataMapper.getUserInfo(); // 전체 회원정보 출력
 
 				result.setSuccess(true);
 				result.setResultUserInfo(userInfoList);
@@ -269,6 +269,36 @@ public class Project {
 			return SelectAbsentee;
 		}
 	
+		
+		//지각비 랭킹
+		@RequestMapping(value = "/getPenaltyRanking", method = RequestMethod.GET)
+		public @ResponseBody UserInfoResultVO getPenaltyRanking() {
+
+			UserInfoResultVO result = new UserInfoResultVO();
+			
+			List<UserInfoVO> penaltyRankingList = new ArrayList<UserInfoVO>();
+
+			try {
+
+				penaltyRankingList = dataMapper.getPenaltyRanking();
+
+				result.setSuccess(true);
+				result.setResultUserInfo(penaltyRankingList);
+			} catch (Exception e) {
+
+				e.printStackTrace();
+
+				result.setSuccess(false);
+				result.setResultUserInfo(null);
+			}
+
+			return result;
+		}
+		
+		
+		
+		
+		
 	
 	
 	
@@ -297,6 +327,10 @@ public class Project {
 
 		return result;
 	}
+	
+	
+	
+	
 	
 	
 	

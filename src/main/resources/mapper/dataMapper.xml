@@ -16,7 +16,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select id from member where id = #{id};
 	</select><!-- id 중복확인 -->
 
-
 	<insert id="signUpCheck" parameterType="com.prography.appdev3.vo.SignUpVO">
 		INSERT INTO member VALUES (#{memCode},#{id},#{pw},#{name}, #{nickname},#{tmCode}, #{birth}, #{recBalloon}, #{balloon}, #{icon}, #{sesAbsent}, #{stuAbsent}, #{totPenalty});
 	</insert><!-- 회원가입 -->
@@ -24,13 +23,19 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="getUserInfo" resultType="com.prography.appdev3.vo.UserInfoVO">
 		select * from member;
 	</select>
+	
 	<select id="getUserInfoByMemCode" resultType="com.prography.appdev3.vo.UserInfoVO">
 		select * from member where memCode = #{memCode};
 	</select>
+	
 	<select id="getUserInfoByTeam" resultType="com.prography.appdev3.vo.UserInfoVO">
 		select * from member where tmCode = #{tmCode};
-	</select>
-	<!-- getStuAbsent/selectAbsentee-->
+	</select><!-- 팀메모 등록시 불참자 선택 -->
+	
+	<select id="getPenaltyRanking" resultType="com.prography.appdev3.vo.IdCheckVO">
+		select name from member order by totPenalty desc;
+	</select><!-- 지각비 랭킹 -->
+	
 
 
 
@@ -58,6 +63,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<update id="updateStuAbsent" parameterType="com.prography.appdev3.vo.UserInfoVO">
 		update member set
 		stuAbsent = stuAbsent+1
+		where name = #{name}
+	</update>
+	
+	<!-- 총 지각비 업데이트 -->
+	<update id="updateStuAbsent" parameterType="com.prography.appdev3.vo.UserInfoVO">
+		update member set
+		stuAbsent = stuAbsent + penalty
 		where name = #{name}
 	</update>
 
