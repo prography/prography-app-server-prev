@@ -6,6 +6,8 @@ import java.util.List;
 public class TeamInfoResultVO { 	//team table¿ª arrayList∑Œ π≠æÓ¡‹
 
 	private boolean success = false;
+	public String message = "";
+	
 	private List<TeamInfoVO> teamInfoList = new ArrayList<TeamInfoVO>();
 	
 	
@@ -20,6 +22,12 @@ public class TeamInfoResultVO { 	//team table¿ª arrayList∑Œ π≠æÓ¡‹
 	}
 	public void setResultTeamInfo(List<TeamInfoVO> teamInfoList) {
 		this.teamInfoList = teamInfoList;
+	}
+	public String getMessage() {
+		return message;
+	}
+	public void setMessage(String message) {
+		this.message = message;
 	}
 	
 }

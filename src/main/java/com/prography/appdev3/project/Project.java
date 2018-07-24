@@ -145,9 +145,9 @@ public class Project {
 		return nicknameCheck;
 
 	}
+	
 
-	
-	
+
 
 	// 회원가입
 	@RequestMapping(value = "/member", method = RequestMethod.POST, consumes = "application/json")
@@ -174,7 +174,7 @@ public class Project {
 			dataMapper.signUpCheck(memCode, id, pw, name, nickname, tmCode, birth, recBalloon, balloon, icon, sesAbsent,
 					stuAbsent, totPenalty);
 			signUp.setSuccess(true);
-			signUp.setMessage("환영합니다^_^");
+			signUp.setMessage("회원가입이 완료되었습니다");
 
 		} catch (Exception e) {
 
@@ -227,7 +227,7 @@ public class Project {
 		else if (month != null) {
 			try {
 				
-				userInfoList = dataMapper.getUserInfoByBirth(month); //스터디메모 등록시 결석자 후보 출력
+				userInfoList = dataMapper.getUserInfoByBirth(month); //해당 월 입력시 생일자 출력
 
 				result.setSuccess(true);
 				result.setResultUserInfo(userInfoList);
@@ -307,28 +307,52 @@ public class Project {
 	// team=========================================================================================================================================
 
 	@RequestMapping(value = "/team", method = RequestMethod.GET)
-	public @ResponseBody TeamInfoResultVO getTeamInfo() {
+	public @ResponseBody TeamInfoResultVO getTeamInfo(
+			@RequestParam(value = "tmName", required = false) String tmName) {
 
 		TeamInfoResultVO result = new TeamInfoResultVO();
 		List<TeamInfoVO> teamList = new ArrayList<TeamInfoVO>();
 
-		try {
+		if (tmName != null) {
 
-			teamList = dataMapper.getTeamsInfo();
+			try {
 
-			result.setSuccess(true);
-			result.setResultTeamInfo(teamList);
-		} catch (Exception e) {
+				teamList = dataMapper.getTmCodeByTmName(tmName);//팀이름으로 팀코드출력 
 
-			e.printStackTrace();
+				result.setSuccess(true);
+				result.setResultTeamInfo(teamList);
+			} catch (Exception e) {
 
-			result.setSuccess(false);
-			result.setResultTeamInfo(null);
+				e.printStackTrace();
+
+				result.setSuccess(false);
+				result.setResultTeamInfo(null);
+				
+			}
+		}
+		
+		else {
+			try {
+
+				teamList = dataMapper.getTeamsInfo();//전체 팀정보 출력
+
+				result.setSuccess(true);
+				result.setResultTeamInfo(teamList);
+			} catch (Exception e) {
+
+				e.printStackTrace();
+
+				result.setSuccess(false);
+				result.setResultTeamInfo(null);
+			}
+
 		}
 
 		return result;
 	}
 	
+	
+
 	
 	
 

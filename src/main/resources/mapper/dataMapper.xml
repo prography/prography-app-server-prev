@@ -55,6 +55,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select * from team;
 	</select>
 	
+	<select id="getTmCodeByTmName" parameterType="String" resultType="com.prography.appdev3.vo.TeamInfoVO">
+		select tmCode from team where tmName = #{tmName};
+	</select><!-- 팀이름으로 팀코드찾기 -->
+	
+	
 	
 	
 	

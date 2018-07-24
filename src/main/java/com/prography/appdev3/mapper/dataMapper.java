@@ -45,6 +45,10 @@ public interface dataMapper {
 	
 	// team table========================================================================================================
 	public ArrayList<TeamInfoVO> getTeamsInfo() throws Exception;
+	
+	public ArrayList<TeamInfoVO> getTmCodeByTmName(@Param("tmName") String tmName);//팀이름으로 팀코드찾기
+	
+
 
 	
 	
