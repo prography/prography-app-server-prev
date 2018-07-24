@@ -22,6 +22,7 @@ import com.prography.appdev3.vo.IdCheckResultVO;
 import com.prography.appdev3.vo.IdCheckVO;
 import com.prography.appdev3.vo.LoginResultVO;
 import com.prography.appdev3.vo.LoginVO;
+import com.prography.appdev3.vo.NicknameCheckResultVO;
 import com.prography.appdev3.vo.PostFreeResultVO;
 import com.prography.appdev3.vo.PostStuMemoResultVO;
 import com.prography.appdev3.vo.SessionAttendanceResultVO;
@@ -113,6 +114,40 @@ public class Project {
 		return idCheck;
 
 	}
+	
+	//닉네임 중복확인
+	@RequestMapping(value = "/nicknameCheck", method = RequestMethod.POST, consumes = "application/json")
+	public @ResponseBody NicknameCheckResultVO nicknameCheck(@RequestBody Map<String, Object> json) {
+
+		String nickname = (String) json.get("nickname");
+
+		NicknameCheckResultVO nicknameCheck = new NicknameCheckResultVO();
+		ArrayList<UserInfoVO> NicknameCheckResult = new ArrayList<UserInfoVO>();
+
+		try {
+
+			NicknameCheckResult = dataMapper.nicknameCheck(nickname);
+			// logger.debug("user check > " + idCheckResult.size());
+			if (NicknameCheckResult.isEmpty()) {
+				nicknameCheck.setSuccess(true);
+				nicknameCheck.setMessage("사용할 수 있는 닉네임입니다");
+
+			} else {
+				nicknameCheck.setSuccess(false);
+				nicknameCheck.setMessage("입력하신 닉네임는 이미 있는 닉네임 입니다. 다른 닉네임을 입력해주세요");
+
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return nicknameCheck;
+
+	}
+
+	
+	
 
 	// 회원가입
 	@RequestMapping(value = "/member", method = RequestMethod.POST, consumes = "application/json")
@@ -524,12 +559,13 @@ public class Project {
 
 		int sesCode = (int) json.get("sesCode");
 		String sesDate = (String) json.get("sesDate");
+		String sesPlace = (String) json.get("sesPlace");
 		String sesInfo = (String) json.get("sesInfo");
 		String sesContent = (String) json.get("sesContent");
 
 		try {
 
-			dataMapper.postSession(sesCode, sesDate, sesInfo, sesContent);
+			dataMapper.postSession(sesCode, sesDate, sesPlace, sesInfo, sesContent);
 			postSession.setSuccess(true);
 			postSession.setMessage("글이 등록되었습니다");
 

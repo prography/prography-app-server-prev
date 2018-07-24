@@ -15,6 +15,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="idCheck" resultType="com.prography.appdev3.vo.IdCheckVO">
 		select id from member where id = #{id};
 	</select><!-- id 중복확인 -->
+	
+	<select id="nicknameCheck" resultType="com.prography.appdev3.vo.NicknameCheckVO">
+		select nickname from member where nickname = #{nickname};
+	</select><!-- nickname 중복확인 -->
+
+	
 
 
 	<insert id="signUpCheck" parameterType="com.prography.appdev3.vo.SignUpVO">
@@ -118,7 +124,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 
 	<insert id="postSession" parameterType="com.prography.appdev3.vo.SessionManageVO">
-		INSERT INTO session VALUES (#{sesCode},#{sesDate},#{sesInfo},#{sesContent});
+		INSERT INTO session VALUES (#{sesCode},#{sesDate},#{sesPlace},#{sesInfo},#{sesContent});
 	</insert>
 
 
