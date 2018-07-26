@@ -27,6 +27,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="getUserInfoByMemCode" resultType="com.prography.appdev3.vo.UserInfoVO">
 		select * from member where memCode = #{memCode};
 	</select>
+	<select id="getMemCodeById" resultType="com.prography.appdev3.vo.UserInfoVO">
+		select memCode from member where id = #{id};
+	</select>
+	<select id="getTmCodeById" resultType="com.prography.appdev3.vo.UserInfoVO">
+		select tmCode from member where id = #{id};
+	</select>
+	
 	<select id="getUserInfoByTeam" resultType="com.prography.appdev3.vo.UserInfoVO">
 		select * from member where tmCode = #{tmCode};
 	</select>
@@ -55,7 +62,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<!-- studyAttendance table===================================================================================================== -->
 	
 	<select id="getStudyAttendance" resultType="com.prography.appdev3.vo.StudyAttendanceVO">
-		select * from studyAttendance;
+		select * from studyAttendance where tmCode=#{tmCode};
 	</select>
 	
 	<insert id="postStudyAttendance" parameterType="com.prography.appdev3.vo.PostStuMemoVO">
@@ -121,9 +128,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		INSERT INTO session VALUES (#{sesCode},#{sesDate},#{sesInfo},#{sesContent});
 	</insert>
 
-
-
-
+	<select id="getSessionByDate" resultType="com.prography.appdev3.vo.SessionManageVO">
+		select * from session where session.sesDate = ( select min(sesDate) from session where sesDate >= Cast(#{sesDate} as datetime));
+	</select>
+	
 	<!-- free table===================================================================================================== -->
 
 	<!-- 자유게시판DB 출력 및 검색 -->

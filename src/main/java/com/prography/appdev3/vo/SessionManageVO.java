@@ -3,6 +3,7 @@ package com.prography.appdev3.vo;
 public class SessionManageVO {	//session table: 林瞒喊 技记包府
 	
 	private int sesCode = 0;
+	private String sesPlace="";
 	private String sesDate = "";
 	private String sesInfo = "";
 	private String sesContent = "";
@@ -19,6 +20,12 @@ public class SessionManageVO {	//session table: 林瞒喊 技记包府
 	}
 	public void setSesDate(String sesDate) {
 		this.sesDate = sesDate;
+	}
+	public String getSesPlace() {
+		return sesPlace;
+	}
+	public void setSesPlace(String sesPlace) {
+		this.sesPlace=sesPlace;
 	}
 	public String getSesInfo() {
 		return sesInfo;

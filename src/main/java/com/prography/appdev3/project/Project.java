@@ -70,10 +70,14 @@ public class Project {
 
 			if (loginresult.size() > 0) {
 				login.setSuccess(true);
-				login.setMessage(id);
+				int memCode=dataMapper.getMemCodeById(id).get(0).getMemcode();
+				int tmCode=dataMapper.getTmCodeById(id).get(0).getTmCode();
+				login.setMemCode(memCode);
+				login.setTmCode(tmCode);
 			} else {
 				login.setSuccess(false);
-				login.setMessage("아이디 또는 비밀번호가 일치하지 않습니다.");
+				login.setMemCode(-1);
+				login.setTmCode(-1);
 			}
 
 		} catch (Exception e) {
@@ -156,7 +160,7 @@ public class Project {
 	public @ResponseBody UserInfoResultVO getUserInfo(
 			@RequestParam(value = "memCode", required = false) Integer memCode,
 			@RequestParam(value = "tmCode", required = false) Integer tmCode,
-			@RequestParam(value = "month", required = false) Integer month) {
+			@RequestParam(value = "month", required = false) String month) {
 		UserInfoResultVO result = new UserInfoResultVO();
 		List<UserInfoVO> userInfoList = new ArrayList<UserInfoVO>();
 		if (memCode != null) {
@@ -224,17 +228,8 @@ public class Project {
 
 	
 	
-	
-	
-	//지각비 출력
-	@RequestMapping(value = "/penalty", method = RequestMethod.GET)
-	public @ResponseBody ArrayList<Integer> getPenalty() {
-		
-		
-		return null;
-			
-	
-	}
+
+
 	//지각비 랭킹 출력
 	@RequestMapping(value = "/getPenaltyRanking", method = RequestMethod.GET)
 			public @ResponseBody ArrayList<String> getPenaltyRanking() {
@@ -302,7 +297,8 @@ public class Project {
 	
 	//스터디출결 출력
 	@RequestMapping(value = "/studyAttendance", method = RequestMethod.GET)
-	public @ResponseBody StudyAttendanceResultVO getStudyAttendance() {
+	public @ResponseBody StudyAttendanceResultVO getStudyAttendance(
+			@RequestParam(value = "tmCode", required = true) Integer tmCode) {
 
 		StudyAttendanceResultVO result = new StudyAttendanceResultVO();
 		
@@ -310,7 +306,7 @@ public class Project {
 
 		try {
 
-			stuAttendanceList = dataMapper.getStudyAttendance();
+			stuAttendanceList = dataMapper.getStudyAttendance(tmCode);
 
 			result.setSuccess(true);
 			result.setResultStuAttendance(stuAttendanceList);
@@ -406,12 +402,12 @@ public class Project {
 	
 	@RequestMapping(value = "/sessionAttendance", method = RequestMethod.GET)
 	public @ResponseBody SessionAttendanceResultVO getSessionAttendance(
-			@RequestParam(value = "memCode", required = false) Integer memCode) {
+			@RequestParam(value = "memCode", required = true) Integer memCode) {
 
 		SessionAttendanceResultVO result = new SessionAttendanceResultVO();
 		List<SessionAttendanceVO> sesAttendanceList = new ArrayList<SessionAttendanceVO>();
 		
-		if (memCode != null) {// 주차 지각비 출력
+
 			
 			try {
 
@@ -427,23 +423,7 @@ public class Project {
 				result.setSuccess(false);
 				result.setResultSesAttendance(null);
 			}
-		}else {//세션 출결정보 출력
-			
-			try {
 
-				sesAttendanceList = dataMapper.getSessionAttendance();
-
-				result.setSuccess(true);
-				result.setResultSesAttendance(sesAttendanceList);
-			} catch (Exception e) {
-				
-
-				e.printStackTrace();
-
-				result.setSuccess(false);
-				result.setResultSesAttendance(null);
-			}
-		}
 
 		return result;
 	}
@@ -458,7 +438,16 @@ public class Project {
 		int memCode = (int) json.get("memCode");
 		int sesAttendance = (int) json.get("sesAttendance");
 		int late = (int) json.get("late");
-		int penalty = (int) json.get("penalty");
+		int penalty;
+		if(memCode/1000==1) {
+			penalty=late*1000;	
+		}
+		else {
+			penalty=late*500;
+		}
+		if(penalty>=10000) {
+			penalty=10000;
+		}
 
 		try {
 
@@ -493,25 +482,35 @@ public class Project {
 
 	// 세션정보 출력
 	@RequestMapping(value = "/session", method = RequestMethod.GET)
-	public @ResponseBody SessionManageResultVO getSession() {
+	public @ResponseBody SessionManageResultVO getSession(
+			@RequestParam(value="date", required=false) String date) {
 
 		SessionManageResultVO result = new SessionManageResultVO();
 		List<SessionManageVO> sessionList = new ArrayList<SessionManageVO>();
-
-		try {
-
-			sessionList = dataMapper.getSession();
-
+		
+		if(date!=null&&!date.isEmpty()) {
+			sessionList= dataMapper.getSessionByDate(date);
 			result.setSuccess(true);
 			result.setResultSessionManage(sessionList);
-		} catch (Exception e) {
-			// TODO: handle exception
-
-			e.printStackTrace();
-
-			result.setSuccess(false);
-			result.setResultSessionManage(null);
 		}
+		else {
+			try {
+
+				sessionList = dataMapper.getSession();
+
+				result.setSuccess(true);
+				result.setResultSessionManage(sessionList);
+			} catch (Exception e) {
+				// TODO: handle exception
+
+				e.printStackTrace();
+
+				result.setSuccess(false);
+				result.setResultSessionManage(null);
+			}
+		}
+		
+		
 
 		return result;
 	}
@@ -642,7 +641,7 @@ public class Project {
 		DeleteFreeResultVO result = new DeleteFreeResultVO();
 
 		int authorCode = dataMapper.getFreeBoardByFreNum(freNum).getMemCode();
-		if (memCode == authorCode) { // 여기에 운영진 글 삭제 권한 추가하기!
+		if (memCode == authorCode||(memCode/1000==1)) { // 운영진은 1000번대, 회원은 2000번대, 운영진에게 삭제 권한 부여
 			try {
 				dataMapper.deleteFreeBoard(freNum);
 				result.setSuccess(true);

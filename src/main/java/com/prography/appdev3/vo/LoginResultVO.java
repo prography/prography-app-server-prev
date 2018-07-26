@@ -3,7 +3,8 @@ package com.prography.appdev3.vo;
 public class LoginResultVO { //login성공 여부판단 및 메세지 출력
 	
 	public boolean success;
-	public String message = "";
+	public int memCode;
+	public int tmCode;
 	
 	
 	public boolean isSuccess() {
@@ -12,12 +13,17 @@ public class LoginResultVO { //login성공 여부판단 및 메세지 출력
 	public void setSuccess(boolean success) {
 		this.success = success;
 	}
-	public String getMessage() {
-		return message;
+	public int getMemCode() {
+		return memCode;
 	}
-	public void setMessage(String message) {
-		this.message = message;
+	public void setMemCode(int memCode) {
+		this.memCode= memCode;
 	}
-	
+	public int getTmCode() {
+		return tmCode;
+	}
+	public void setTmCode(int tmCode) {
+		this.tmCode= tmCode;
+	}
 
 }

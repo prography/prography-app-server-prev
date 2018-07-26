@@ -29,8 +29,11 @@ public interface dataMapper {
 
 	public ArrayList<UserInfoVO> getUserInfo() throws Exception;
 	public ArrayList<UserInfoVO> getUserInfoByMemCode(@Param("memCode") int memCode) throws Exception;//#####
+	public ArrayList<UserInfoVO> getMemCodeById(@Param("id") String id) throws Exception;//#####
+	public ArrayList<UserInfoVO> getTmCodeById(@Param("id") String id) throws Exception;//#####
+	
 	public ArrayList<UserInfoVO> getUserInfoByTeam(@Param("tmCode") int tmCode) throws Exception;//#####
-	public ArrayList<UserInfoVO> getUserInfoByBirth(@Param("month") int month) throws Exception;//#####
+	public ArrayList<UserInfoVO> getUserInfoByBirth(@Param("month") String month) throws Exception;//#####
 	
 	//세션 결석 업데이트
 	public void updateSesAbsent(int memCode);
@@ -49,7 +52,7 @@ public interface dataMapper {
 	
 	// studyAttendance table========================================================================================================
 	
-	public ArrayList<StudyAttendanceVO> getStudyAttendance() throws Exception;
+	public ArrayList<StudyAttendanceVO> getStudyAttendance(@Param("tmCode") int tmCode) throws Exception;
 
 	public void postStudyAttendance(@Param("stuCode") int stuCode, @Param("tmCode") int tmCode,
 			@Param("picture") String picture, @Param("absentee") String absentee, @Param("memo") String memo, @Param("uploadTime") String uploadTime);
@@ -82,7 +85,8 @@ public interface dataMapper {
 	
 	public void postSession(@Param("sesCode") int sesCode, @Param("sesDate") String sesDate, @Param("sesInfo") String sesInfo, @Param("sesContent") String sesContent);
 	
-	
+	public ArrayList<SessionManageVO> getSessionByDate(@Param("sesDate") String sesDate);
+
 	
 	// free table========================================================================================================
 
@@ -99,6 +103,7 @@ public interface dataMapper {
 
 	public void deleteFreeBoard(Integer freNum);
 
+	
 	
 
 }
