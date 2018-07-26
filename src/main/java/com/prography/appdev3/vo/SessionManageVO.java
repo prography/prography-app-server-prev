@@ -1,14 +1,15 @@
 package com.prography.appdev3.vo;
 
-public class SessionManageVO {	//session table: ÁÖÂ÷º° ¼¼¼Ç°ü¸®
-	
+public class SessionManageVO {	//session table: ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ç°ï¿½ï¿½ï¿½
+
 	private int sesCode = 0;
 	private String sesPlace="";
 	private String sesDate = "";
+	private String sesPlace = "";
 	private String sesInfo = "";
 	private String sesContent = "";
-	
-	
+
+
 	public int getSesCode() {
 		return sesCode;
 	}
@@ -25,7 +26,7 @@ public class SessionManageVO {	//session table: ÁÖÂ÷º° ¼¼¼Ç°ü¸®
 		return sesPlace;
 	}
 	public void setSesPlace(String sesPlace) {
-		this.sesPlace=sesPlace;
+		this.sesPlace = sesPlace;
 	}
 	public String getSesInfo() {
 		return sesInfo;

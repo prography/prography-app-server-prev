@@ -21,6 +21,8 @@ public interface dataMapper {
 
 	public ArrayList<UserInfoVO> idCheck(@Param("id") String id);
 	
+	public ArrayList<UserInfoVO> nicknameCheck(@Param("nickname") String nickname);//닉네임 중복확인
+	
 	public void signUpCheck(@Param("memCode") int memCode, @Param("id") String id, @Param("pw") String pw,
 			@Param("name") String name, @Param("nickname") String nickname, @Param("tmCode") int tmCode,
 			@Param("birth") String birth, @Param("recBalloon") int recBalloon, @Param("balloon") int balloon,
@@ -46,6 +48,10 @@ public interface dataMapper {
 	
 	// team table========================================================================================================
 	public ArrayList<TeamInfoVO> getTeamsInfo() throws Exception;
+	
+	public ArrayList<TeamInfoVO> getTmCodeByTmName(@Param("tmName") String tmName);//팀이름으로 팀코드찾기
+	
+
 
 	
 	
@@ -83,7 +89,7 @@ public interface dataMapper {
 
 	public ArrayList<SessionManageVO> getSession() throws Exception;
 	
-	public void postSession(@Param("sesCode") int sesCode, @Param("sesDate") String sesDate, @Param("sesInfo") String sesInfo, @Param("sesContent") String sesContent);
+	public void postSession(@Param("sesCode") int sesCode, @Param("sesDate") String sesDate, @Param("sesPlace") String sesPlace, @Param("sesInfo") String sesInfo, @Param("sesContent") String sesContent);
 	
 	public ArrayList<SessionManageVO> getSessionByDate(@Param("sesDate") String sesDate);
 

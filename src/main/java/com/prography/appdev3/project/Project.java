@@ -22,6 +22,7 @@ import com.prography.appdev3.vo.IdCheckResultVO;
 import com.prography.appdev3.vo.IdCheckVO;
 import com.prography.appdev3.vo.LoginResultVO;
 import com.prography.appdev3.vo.LoginVO;
+import com.prography.appdev3.vo.NicknameCheckResultVO;
 import com.prography.appdev3.vo.PostFreeResultVO;
 import com.prography.appdev3.vo.PostStuMemoResultVO;
 import com.prography.appdev3.vo.SessionAttendanceResultVO;
@@ -117,6 +118,40 @@ public class Project {
 		return idCheck;
 
 	}
+	
+	//닉네임 중복확인
+	@RequestMapping(value = "/nicknameCheck", method = RequestMethod.POST, consumes = "application/json")
+	public @ResponseBody NicknameCheckResultVO nicknameCheck(@RequestBody Map<String, Object> json) {
+
+		String nickname = (String) json.get("nickname");
+
+		NicknameCheckResultVO nicknameCheck = new NicknameCheckResultVO();
+		ArrayList<UserInfoVO> NicknameCheckResult = new ArrayList<UserInfoVO>();
+
+		try {
+
+			NicknameCheckResult = dataMapper.nicknameCheck(nickname);
+			// logger.debug("user check > " + idCheckResult.size());
+			if (NicknameCheckResult.isEmpty()) {
+				nicknameCheck.setSuccess(true);
+				nicknameCheck.setMessage("사용할 수 있는 닉네임입니다");
+
+			} else {
+				nicknameCheck.setSuccess(false);
+				nicknameCheck.setMessage("입력하신 닉네임는 이미 있는 닉네임 입니다. 다른 닉네임을 입력해주세요");
+
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return nicknameCheck;
+
+	}
+	
+
+
 
 	// 회원가입
 	@RequestMapping(value = "/member", method = RequestMethod.POST, consumes = "application/json")
@@ -143,7 +178,7 @@ public class Project {
 			dataMapper.signUpCheck(memCode, id, pw, name, nickname, tmCode, birth, recBalloon, balloon, icon, sesAbsent,
 					stuAbsent, totPenalty);
 			signUp.setSuccess(true);
-			signUp.setMessage("환영합니다^_^");
+			signUp.setMessage("회원가입이 완료되었습니다");
 
 		} catch (Exception e) {
 
@@ -196,7 +231,7 @@ public class Project {
 		else if (month != null) {
 			try {
 				
-				userInfoList = dataMapper.getUserInfoByBirth(month); //스터디메모 등록시 결석자 후보 출력
+				userInfoList = dataMapper.getUserInfoByBirth(month); //해당 월 입력시 생일자 출력
 
 				result.setSuccess(true);
 				result.setResultUserInfo(userInfoList);
@@ -267,28 +302,52 @@ public class Project {
 	// team=========================================================================================================================================
 
 	@RequestMapping(value = "/team", method = RequestMethod.GET)
-	public @ResponseBody TeamInfoResultVO getTeamInfo() {
+	public @ResponseBody TeamInfoResultVO getTeamInfo(
+			@RequestParam(value = "tmName", required = false) String tmName) {
 
 		TeamInfoResultVO result = new TeamInfoResultVO();
 		List<TeamInfoVO> teamList = new ArrayList<TeamInfoVO>();
 
-		try {
+		if (tmName != null) {
 
-			teamList = dataMapper.getTeamsInfo();
+			try {
 
-			result.setSuccess(true);
-			result.setResultTeamInfo(teamList);
-		} catch (Exception e) {
+				teamList = dataMapper.getTmCodeByTmName(tmName);//팀이름으로 팀코드출력 
 
-			e.printStackTrace();
+				result.setSuccess(true);
+				result.setResultTeamInfo(teamList);
+			} catch (Exception e) {
 
-			result.setSuccess(false);
-			result.setResultTeamInfo(null);
+				e.printStackTrace();
+
+				result.setSuccess(false);
+				result.setResultTeamInfo(null);
+				
+			}
+		}
+		
+		else {
+			try {
+
+				teamList = dataMapper.getTeamsInfo();//전체 팀정보 출력
+
+				result.setSuccess(true);
+				result.setResultTeamInfo(teamList);
+			} catch (Exception e) {
+
+				e.printStackTrace();
+
+				result.setSuccess(false);
+				result.setResultTeamInfo(null);
+			}
+
 		}
 
 		return result;
 	}
 	
+	
+
 	
 	
 
@@ -523,12 +582,13 @@ public class Project {
 
 		int sesCode = (int) json.get("sesCode");
 		String sesDate = (String) json.get("sesDate");
+		String sesPlace = (String) json.get("sesPlace");
 		String sesInfo = (String) json.get("sesInfo");
 		String sesContent = (String) json.get("sesContent");
 
 		try {
 
-			dataMapper.postSession(sesCode, sesDate, sesInfo, sesContent);
+			dataMapper.postSession(sesCode, sesDate, sesPlace, sesInfo, sesContent);
 			postSession.setSuccess(true);
 			postSession.setMessage("글이 등록되었습니다");
 
