@@ -41,7 +41,7 @@ public interface dataMapper {
 	public void updateSesAbsent(int memCode);
 	
 	//지각비 명예의 전당
-	public ArrayList<String> getPenaltyRanking() throws Exception;
+	public ArrayList<UserInfoVO> getPenaltyRanking() throws Exception;
 	
 	
 	

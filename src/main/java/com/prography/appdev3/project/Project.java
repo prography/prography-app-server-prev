@@ -267,32 +267,30 @@ public class Project {
 
 	//지각비 랭킹 출력
 	@RequestMapping(value = "/getPenaltyRanking", method = RequestMethod.GET)
-			public @ResponseBody ArrayList<String> getPenaltyRanking() {
+			public @ResponseBody UserInfoResultVO getPenaltyRanking() {
 	
-				//UserInfoResultVO result = new UserInfoResultVO();
+				UserInfoResultVO result = new UserInfoResultVO();
 				
-				//List<UserInfoVO> temp = new ArrayList<UserInfoVO>();
-				//List<UserInfoVO> penaltyRankingList= new ArrayList<UserInfoVO>();
 				
-				ArrayList<String> penaltyRankingList = new ArrayList<String>();
+				List<UserInfoVO> penaltyRankingList = new ArrayList<UserInfoVO>();
 				try {
 	
-					ArrayList<String> temp = dataMapper.getPenaltyRanking();
+					List<UserInfoVO>  temp = dataMapper.getPenaltyRanking();
 					for(int i=0;i<3;i++) {
 						penaltyRankingList.add(temp.get(i));
 					}
 					
-					//result.setSuccess(true);
-					//result.setResultUserInfo(penaltyRankingList);
+					result.setSuccess(true);
+					result.setResultUserInfo(penaltyRankingList);
 				} catch (Exception e) {
 	
 					e.printStackTrace();
 	
-					//result.setSuccess(false);
-					//result.setResultUserInfo(null);
+					result.setSuccess(false);
+					result.setResultUserInfo(null);
 				}
 	
-				return penaltyRankingList;
+				return result;
 			}
 	
 	
@@ -399,7 +397,7 @@ public class Project {
 				postStuMemo.setSuccess(true);
 				postStuMemo.setMessage("글이 등록되었습니다");
 
-				String[] absentee_array = absentee.split(","); // *****json 파싱해서 이름을 얻음
+				String[] absentee_array = absentee.split(", "); // *****json 파싱해서 이름을 얻음
 				for (String name : absentee_array) { // *****파싱된 이름의 멤버의 결석횟수를 1 더함
 					try { // *****sql 에러가 날 수 있으니 try catch.
 						dataMapper.updateStuAbsent(name);

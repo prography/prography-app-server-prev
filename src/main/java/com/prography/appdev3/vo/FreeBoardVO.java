@@ -7,8 +7,11 @@ public class FreeBoardVO {	//free table: 자유게시판 관리
 	private String freContent = "";
 	private String freDate = "";
 	private int memCode = 0;
+	private String nickName="";
 	
-	
+	public String getNickName() {
+		return nickName;
+	}
 	public int getFreNum() {
 		return freNum;
 	}

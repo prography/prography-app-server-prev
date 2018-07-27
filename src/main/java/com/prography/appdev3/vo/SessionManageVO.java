@@ -1,11 +1,10 @@
 package com.prography.appdev3.vo;
 
-public class SessionManageVO {	//session table: ������ ���ǰ���
+public class SessionManageVO {	//session table: 
 
 	private int sesCode = 0;
 	private String sesPlace="";
 	private String sesDate = "";
-	private String sesPlace = "";
 	private String sesInfo = "";
 	private String sesContent = "";
 
