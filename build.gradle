@@ -28,6 +28,11 @@ configurations {
 	providedRuntime
 }
 
+war {
+	baseName="server"
+	enabled=true	
+}
+
 dependencies {
 	compile('org.springframework.boot:spring-boot-starter-web')
 	providedRuntime('org.springframework.boot:spring-boot-starter-tomcat')
@@ -41,3 +46,5 @@ dependencies {
 	
 	compile group: 'org.bgee.log4jdbc-log4j2', name: 'log4jdbc-log4j2-jdbc4.1', version: '1.16'
 }
+[compileJava, compileTestJava]*.options*.encoding = 'euc-kr'
+

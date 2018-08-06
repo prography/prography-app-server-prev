@@ -12,14 +12,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
-import org.apache.commons.*;
-
 import com.prography.appdev3.mapper.dataMapper;
 import com.prography.appdev3.vo.DeleteFreeResultVO;
 import com.prography.appdev3.vo.FreeBoardResultVO;
 import com.prography.appdev3.vo.FreeBoardVO;
 import com.prography.appdev3.vo.IdCheckResultVO;
-import com.prography.appdev3.vo.IdCheckVO;
 import com.prography.appdev3.vo.LoginResultVO;
 import com.prography.appdev3.vo.LoginVO;
 import com.prography.appdev3.vo.NicknameCheckResultVO;
